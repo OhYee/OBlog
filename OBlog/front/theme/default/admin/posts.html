@@ -1,0 +1,105 @@
+{% extends "layout/admin.html" %} {% block admin_main %}
+<div id="app">
+    <div class="row center">
+
+        <div class="col s12">
+            <div class="row">
+                <div class="input-field col s8 offset-s1">
+                    <input placeholder="选择要编辑的文章..." id="search" type="text" v-model="searchwords">
+                </div>
+                <div class="col s2">
+                    <a class="waves-effect waves-light btn indigo darken-1" href="/admin/posts/edit/">新建
+                <i class="material-icons right">add</i>
+            </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s2">
+                    标题
+                </div>
+                <div class="col s1">
+                    URL
+                </div>
+                <div class="col s3">
+                    摘要
+                </div>
+                <div class="col s1">
+                    更新日期
+                </div>
+                <div class="col s1">
+                    阅读量
+                </div>
+                <div class="col s1">
+                    已发布
+                </div>
+                <div class="col s3">
+                    操作
+                </div>
+            </div>
+
+            <div v-if="loading">{% include "layout/loading.html" %}</div>
+            <div v-if="!loading">
+                <div class="row" v-for="post in posts">
+                    <div class="col s2">
+                        <a v-bind:href="'/post/'+post.url" target="_blank" class='truncate' v-text="post.title"></a>
+                    </div>
+                    <div class="col s1">
+                        <span class="truncate" v-text="post.url"></span>
+                    </div>
+                    <div class="col s3">
+                        <span class="truncate" v-text="post.abstruct"></span>
+                    </div>
+                    <div class="col s1" v-text="post.updatetime">
+                    </div>
+                    <div class="col s1" v-text="post.view">
+                    </div>
+                    <div class="col s1">
+                        <span class="green-text" v-if="post.published=='1'" style="font-size:1.5em">✔</span>
+                        <span class="red-text" v-if="post.published=='0'" style="font-size:1.5em">❌</span>
+                    </div>
+                    <div class="col s3">
+                        <form action="/admin/posts/delete/" method="post">
+                            <a class="waves-effect waves-light btn indigo darken-1" v-bind:href="'/admin/posts/edit/'+post.url">编辑</a>
+
+                            <input name="url" type="hidden" v-model="post.url" />
+                            <button class="waves-effect waves-light btn indigo darken-1" type="submit">删除</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %} {% block script %}
+<script>
+    $('ul li#管理后台').toggleClass('active');
+
+    var vue = new Vue({
+        el: '#app',
+        data: {
+            posts: [],
+            loading: true,
+            searchwords: "",
+        },
+        methods: {}
+    });
+
+    vue.$watch('searchwords', search);
+    $(document).ready($ => search(vue.searchwords));
+
+    function search(searchwords) {
+        vue.loading = true;
+        if (searchwords == '') {
+            fetchData('/api/allposts/', data => {
+                vue.posts = data;
+                vue.loading = false;
+            });
+        } else {
+            fetchData('/api/search_allposts/' + searchwords, data => {
+                vue.posts = data;
+                vue.loading = false;
+            });
+        }
+    }
+</script> {% endblock %}

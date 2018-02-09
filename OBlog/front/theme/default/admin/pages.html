@@ -1,0 +1,74 @@
+{% extends "layout/admin.html" %} {% block title %}导航管理{% endblock %} {% block admin_main %}
+
+<div class="row center">
+    <div class="col s12">
+        <div class="row">
+            <div class="col s4">
+                链接
+            </div>
+            <div class="col s4">
+                模板路径
+            </div>
+            <div class="col s4">
+                操作
+            </div>
+        </div>
+
+
+        <form action="/admin/pages/add/" method="post">
+            <div class="row">
+                <div class="input-field col s4">
+                    <input id="urlpath" name="urlpath" type="text" class="validate" pattern="^[\w\-\.,@?^=%&:~\+#]+(?:\/[\w\-\.,@?^=%&:~\+#]+)*$">
+                    <label for="urlpath">链接</label>
+                </div>
+                <div class="input-field col s4">
+                    <input id="filepath" name="filepath" type="text">
+                    <label for="filepath">模板路径</label>
+                </div>
+                <div class="input-field col s4">
+                    <button id="addbutton" class="waves-effect waves-light btn indigo darken-1" type="submit" name="action">新建</button>
+                </div>
+            </div>
+        </form>
+
+        {% for page in Pages %}
+        <form action="#" method="post">
+            <input name="oldurlpath" type="hidden" value="{{ page['urlpath'] }}" />
+            <div class="row">
+                <div class="input-field col s4">
+                    <input id="urlpath" name="urlpath" type="text" class="validate" pattern="^[\w\-\.,@?^=%&:~\+#]+(?:\/[\w\-\.,@?^=%&:~\+#]+)*$" value="{{ page['urlpath'] }}">
+                    <label for="urlpath">链接</label>
+                </div>
+                <div class="input-field col s4">
+                    <input id="filepath" name="filepath" type="text" value="{{ page['filepath'] }}">
+                    <label for="filepath">模板路径</label>
+                </div>
+                <div class="input-field col s4">
+                    <a id="updatebutton" class="waves-effect waves-light btn indigo darken-1">修改</a>
+                    <a id="deletebutton" class="waves-effect waves-light btn indigo darken-1">删除</a>
+                </div>
+            </div>
+        </form>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %} {% block script %}
+<script>
+    $('ul li#管理后台').toggleClass('active');
+
+
+    /* POST提交表单 */
+    $(document).on('click', '#updatebutton', function () {
+        var tform = $(this).parents("form");
+        tform.attr("action", "/admin/pages/update/");
+        tform.submit();
+    });
+    $(document).on('click', '#deletebutton', function () {
+        var tform = $(this).parents("form");
+        tform.attr("action", "/admin/pages/delete/");
+        tform.submit();
+    });
+
+</script> {% endblock %}

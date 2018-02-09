@@ -1,0 +1,210 @@
+{% extends "layout/admin.html" %} {% block title %}图片上传{% endblock %} {% block admin_main %}
+
+
+<ul class="collapsible popout" data-collapsible="accordion">
+    <li>
+        <div class="collapsible-header">
+            <i class="material-icons">filter_drama</i>
+            <code>/static/img</code>目录
+        </div>
+
+        <div class="collapsible-body">
+
+
+            <!-- 上传 -->
+            <form action="/admin/upload/add/" method="post" enctype="multipart/form-data">
+                <input name="path" type="hidden" value="0" />
+                <div class="row">
+                    <div class="col s8 file-field input-field">
+                        <input type="file" name="file">
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
+                    </div>
+                    <div class="col s4 input-field">
+                        <button class="btn-flat waves-effect waves-light white-text indigo right" type="submit" name="action">上传
+                            <i class="material-icons right">file_upload</i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <!-- 展示 -->
+            <ul class="row">
+                {% for img in imgList['img'] %}
+                <form action="" method="post">
+                    <input type="hidden" name="path" value="0" />
+                    <input type="hidden" name="oldfilename" value="{{ img }}">
+                    <li class="col l3 m4 s12 center">
+                        <div class="row" style="display:block">
+                            <div class="img-holder" style="height: 200px">
+                                <img class="materialboxed responsive-img" src="/static/img/{{ img }}" />
+                            </div>
+
+                            <div class="row">
+                                <div class="col s8">
+                                    <input type="text" name="filename" value="{{ img }}">
+                                </div>
+                                <div class="col s2">
+                                    <a id="edit" class="waves-effect waves-light white-text indigo" type="submit" name="action" style="border-radius:5px;">
+                                        <i class="material-icons center">mode_edit</i>
+                                    </a>
+                                </div>
+
+                                <div class="col s2">
+                                    <a id="delete" class="waves-effect waves-light white-text indigo" type="submit" name="action" style="border-radius:5px;">
+                                        <i class="material-icons center">delete_forever</i>
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+                </form>
+                {% endfor %}
+            </ul>
+
+        </div>
+
+    </li>
+    <li>
+        <div class="collapsible-header">
+            <i class="material-icons">library_books</i>
+            <code>/static/img/posts</code>目录
+        </div>
+        <div class="collapsible-body">
+
+            <!-- 上传 -->
+            <form action="/admin/upload/add/" method="post" enctype="multipart/form-data">
+                <input name="path" type="hidden" value="1" />
+                <div class="row">
+                    <div class="col s8 file-field input-field">
+                        <input type="file" name="file">
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
+                    </div>
+                    <div class="col s4 input-field">
+                        <button class="btn-flat waves-effect waves-light white-text indigo right" type="submit" name="action">上传
+                            <i class="material-icons right">file_upload</i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <!-- 展示 -->
+            <ul class="row">
+                {% for img in imgList['img/posts'] %}
+                <form action="" method="post">
+                    <input type="hidden" name="path" value="1" />
+                    <input type="hidden" name="oldfilename" value="{{ img }}">
+                    <li class="col l3 m4 s12 center">
+                        <div class="row" style="display:block">
+                            <div class="img-holder" style="height: 200px">
+                                <img class="materialboxed responsive-img" src="/static/img/posts/{{ img }}" />
+                            </div>
+
+                            <div class="row">
+                                <div class="col s8">
+                                    <input type="text" name="filename" value="{{ img }}">
+                                </div>
+                                <div class="col s2">
+                                    <a id="edit" class="waves-effect waves-light white-text indigo" type="submit" name="action" style="border-radius:5px;">
+                                        <i class="material-icons center">mode_edit</i>
+                                    </a>
+                                </div>
+
+                                <div class="col s2">
+                                    <a id="delete" class="waves-effect waves-light white-text indigo" type="submit" name="action" style="border-radius:5px;">
+                                        <i class="material-icons center">delete_forever</i>
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+                </form>
+                {% endfor %}
+            </ul>
+
+
+        </div>
+    </li>
+    <li>
+        <div class="collapsible-header">
+            <i class="material-icons">loyalty</i>
+            <code>/static/img/tags</code>目录
+        </div>
+        <div class="collapsible-body">
+
+
+            <!-- 上传 -->
+            <form action="/admin/upload/add/" method="post" enctype="multipart/form-data">
+                <input name="path" type="hidden" value="2" />
+                <div class="row">
+                    <div class="col s8 file-field input-field">
+                        <input type="file" name="file">
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
+                    </div>
+                    <div class="col s4 input-field">
+                        <button class="btn-flat waves-effect waves-light white-text indigo right" type="submit" name="action">上传
+                            <i class="material-icons right">file_upload</i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <!-- 展示 -->
+            <ul class="row">
+                {% for img in imgList['img/tags'] %}
+                <form action="" method="post">
+                    <input type="hidden" name="path" value="2" />
+                    <input type="hidden" name="oldfilename" value="{{ img }}">
+                    <li class="col l3 m4 s12 center">
+                        <div class="row" style="display:block">
+                            <div class="img-holder" style="height: 200px">
+                                <img class="materialboxed responsive-img" src="/static/img/tags/{{ img }}" />
+                            </div>
+
+                            <div class="row">
+                                <div class="col s8">
+                                    <input type="text" name="filename" value="{{ img }}">
+                                </div>
+                                <div class="col s2">
+                                    <a id="edit" class="waves-effect waves-light white-text indigo" type="submit" name="action" style="border-radius:5px;">
+                                        <i class="material-icons center">mode_edit</i>
+                                    </a>
+                                </div>
+
+                                <div class="col s2">
+                                    <a id="delete" class="waves-effect waves-light white-text indigo" type="submit" name="action" style="border-radius:5px;">
+                                        <i class="material-icons center">delete_forever</i>
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+                </form>
+                {% endfor %}
+            </ul>
+
+
+        </div>
+    </li>
+</ul>
+
+
+{% endblock %} {% block script %}
+<script>
+    $(document).on('click', '#edit', function () {
+        var tform = $(this).parents("form");
+        tform.attr("action", "/admin/upload/update/");
+        tform.submit();
+    });
+    $(document).on('click', '#delete', function () {
+        var tform = $(this).parents("form");
+        tform.attr("action", "/admin/upload/delete/");
+        tform.submit();
+    });
+
+</script> {% endblock %}

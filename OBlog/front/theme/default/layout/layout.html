@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+
+    <head>
+
+        <title>{% block title %}OhYee's Blog{% endblock %}</title>
+        {% include './layout/head.html' %} {% block meta %} {% endblock %}
+    </head>
+
+    <body>
+
+        {% include './layout/header.html' %}
+
+        <main>
+
+            {% block content %} {% endblock %}
+        </main>
+
+        {% include './layout/jscss.html' %} {% block script %}{% endblock %} {% include './layout/footer.html' %} {% with messages
+        = get_flashed_messages() %} {% if messages %} {% for message in messages %}
+        <script>
+            Materialize.toast('{{ message|safe }}', 3000, 'rounded')
+        </script> {% endfor %} {% endif %} {% endwith %}
+    </body>
+
+</html>

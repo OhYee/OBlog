@@ -1,0 +1,117 @@
+{% extends "layout/admin.html" %} {% block title %}导航管理{% endblock %} {% block admin_main %}
+
+<div class="row center">
+    <div class="col s12">
+        <div class="row">
+            <div class="col s2">
+                序号
+            </div>
+            <div class="col s2">
+                名称
+            </div>
+            <div class="col s2">
+                链接
+            </div>
+            <div class="col s2">
+                图标
+            </div>
+            <div class="col s4">
+                操作
+            </div>
+        </div>
+
+
+        <form action="/admin/nav/add/" method="post">
+            <div class="row">
+                <div class="input-field col s2">
+                    <input id="idx" name="idx" type="text" class="validate" pattern="[0-9]+">
+                    <label for="idx">序号</label>
+                </div>
+                <div class="input-field col s2">
+                    <input id="name" name="name" type="text">
+                    <label for="name">名称</label>
+                </div>
+                <div class="input-field col s2">
+                    <input id="url" name="url" type="text">
+                    <label for="url">链接</label>
+                </div>
+                <div class="input-field col s2">
+                    <input id="icon" name="icon" type="text">
+                    <label for="icon">图标</label>
+                </div>
+                <div class="input-field col s4">
+                    <button id="addbutton" class="waves-effect waves-light btn indigo darken-1 disabled" type="submit" name="action">新建</button>
+                </div>
+            </div>
+        </form>
+
+        {% for nav in Site['Nav'] %}
+        <form action="#" method="post">
+            <input name="oldname" type="hidden" value="{{ nav['name'] }}" />
+            <div class="row">
+                <div class="input-field col s2">
+                    <input id="idx" name="idx" type="text" class="validate" pattern="[0-9]+" value="{{ nav['idx'] }}" />
+                    <label for="idx">序号</label>
+                </div>
+                <div class="input-field col s2">
+                    <input id="name" name="name" type="text" value="{{ nav['name'] }}" />
+                    <label for="name">名称</label>
+                </div>
+                <div class="input-field col s2">
+                    <input id="url" name="url" type="text" value="{{ nav['url'] }}" />
+                    <label for="url">链接</label>
+                </div>
+                <div class="input-field col s2">
+                    <input id="icon" name="icon" type="text" value="{{ nav['icon'] }}" />
+                    <label for="icon">图标
+                        <i class="material-icons">{{ nav['icon'] }}</i>
+                    </label>
+                </div>
+                <div class="input-field col s4">
+                    <a id="updatebutton" class="waves-effect waves-light btn indigo darken-1">修改</a>
+                    <a id="deletebutton" class="waves-effect waves-light btn indigo darken-1">删除</a>
+                </div>
+            </div>
+        </form>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %} {% block script %} 
+<script>
+    $('ul li#管理后台').toggleClass('active');
+
+    /* 前端验证 */
+    $(document).on('input', '#idx', function () {
+        var pattern = /^[0-9]+$/;
+        console.log();
+        if (!pattern.exec(this.value)) {
+            console.log("false");
+            $(this).parent().parent().children().children("button#addbutton").toggleClass('disabled', true);
+            $(this).parent().parent().children().children("a#updatebutton").toggleClass('disabled', true);
+        } else {
+            console.log("true");
+            $(this).parent().parent().children().children("button#addbutton").toggleClass('disabled', false);
+            $(this).parent().parent().children().children("a#updatebutton").toggleClass('disabled', false);
+        }
+    });
+    
+    /* 图标自动显示 */
+    $(document).on('input', 'input#icon', function () {
+        $(this).parent().children("label").children("i").html(this.value);
+    });
+
+    /* POST提交表单 */
+    $(document).on('click', '#updatebutton', function () {
+        var tform = $(this).parents("form");
+        tform.attr("action", "/admin/nav/update/");
+        tform.submit();
+    });
+    $(document).on('click', '#deletebutton', function () {
+        var tform = $(this).parents("form");
+        tform.attr("action", "/admin/nav/delete/");
+        tform.submit();
+    });
+
+</script> {% endblock %}

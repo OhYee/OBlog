@@ -1,0 +1,24 @@
+<footer class="page-footer blue darken-1">
+    <div class="container center">
+        <p>友情链接</p>
+        <p>
+
+            {% for friend in Site["Friends"] %}
+            <span>
+                <a class="white-text" href="{{ friend['url'] }}">{{ friend['name'] }}</a>
+            </span> {% endfor %}
+        </p>
+    </div>
+    <div class="footer-copyright blue darken-2">
+        <div class="container center">
+            <p>全站访客 {{ Site['config']['view'] }}</p>
+            <p>
+                Blog designed by
+                <a class="white-text" href="https://www.oyohyee.com/">OhYee</a>
+            </p>
+            <p>
+                <a class="white-text" href="http://www.miitbeian.gov.cn/">{{ Site['config']['Record'] }}</a>
+            </p>
+        </div>
+    </div>
+</footer>

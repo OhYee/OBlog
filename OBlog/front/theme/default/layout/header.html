@@ -1,0 +1,70 @@
+<header>
+
+    <!-- PC端 -->
+    <!-- <div class="navbar-fixed"> -->
+    <nav class="hide-on-med-and-down  blue darken-3">
+
+        <div class="nav-wrapper particles-wrapper">
+            <div class="left" style="margin-left:15px">
+                <a href="/" class="brand-logo">
+                    <i class="icon-OhYee"></i> {{ Site['config']['blogname'] }}
+                </a>
+            </div>
+
+            <div class="right" style="margin-right:15px">
+
+                <ul class="mainnav">
+                    {% for Nav in Site['Nav'] %}
+                    <li id="{{ Nav['name'] }}">
+                        <a href="{{ Nav['url'] }}">
+                            <i class="material-icons left">{{ Nav['icon'] }}</i>{{ Nav['name'] }}</a>
+                    </li>
+                    {% endfor %} {% if session["admin"] %}
+                    <li id="管理后台">
+                        <a href="/admin/">管理后台</a>
+                    </li>
+                    <li>
+                        <a href="/admin/logout/">登出</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+
+
+        </div>
+    </nav>
+    <!-- </div> -->
+
+
+    <!-- 手机端 -->
+    <nav class="hide-on-large-only">
+        <div class="nav-wrapper blue darken-3 text-white">
+            <a href="#" data-activates="slide-out" class="button-collapse left">
+                <i class="material-icons">menu</i>
+            </a>
+            <a href="/" class="brand-logo center">
+                <i class="icon-OhYee"></i>
+            </a>
+        </div>
+    </nav>
+
+
+    <ul id="slide-out" class="side-nav">
+        {% for Nav in Site['Nav'] %}
+        <li id="{{ Nav['name'] }}">
+            <a href="{{ Nav['url'] }}">
+                <i class="material-icons left">{{ Nav['icon'] }}</i>{{ Nav['name'] }}</a>
+        </li>
+        {% endfor %} {% if session["admin"] %}
+        <li id="管理后台">
+            <a href="/admin/">管理后台</a>
+        </li>
+        <li>
+            <a href="/admin/logout/">登出</a>
+        </li>
+        {% endif %}
+    </ul>
+
+
+
+</header>

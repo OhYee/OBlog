@@ -1,0 +1,29 @@
+@font-face {
+    font-family: 'icon-OhYee';
+    src:  url('/static/fonts/icon-OhYee.eot?nz90s1');
+    src:  url('/static/fonts/icon-OhYee.eot?nz90s1#iefix') format('embedded-opentype'),
+      url('/static/fonts/icon-OhYee.ttf?nz90s1') format('truetype'),
+      url('/static/fonts/icon-OhYee.woff?nz90s1') format('woff'),
+      url('/static/fonts/icon-OhYee.svg?nz90s1#icon-OhYee') format('svg');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+.icon-OhYee {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icon-OhYee' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    /* line-height: 1; */
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-OhYee::before{
+    content: "\e904";
+}

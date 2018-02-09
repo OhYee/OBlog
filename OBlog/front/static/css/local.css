@@ -1,0 +1,355 @@
+footer p span:not(:first-child)::before {
+    content: "|";
+    padding: 0px 0.5em;
+}
+
+body {
+    background-color: #f6f6f6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 400;
+}
+h1, .h1 {
+    font-size: 44px;
+    line-height: 48px;
+}
+h2, .h2 {
+    font-size: 34px;
+    line-height: 40px;
+}
+
+h3, .h3 {
+    font-size: 24px;
+    line-height: 32px;
+}
+h4, .h4 {
+    font-size: 14px;
+    line-height: 24px;
+}
+h5, .h5 {
+    font-size: 14px;
+    line-height: 16px;
+}
+h6, .h6 {
+    font-size: 14px;
+    line-height: 8px;
+}
+
+
+/* main{
+    padding: 10px 0 10px 0;
+    margin: 10px 0 10px 0;
+} */
+
+strong,
+.bold {
+    font-weight: bold;
+}
+
+#console{
+    width:100%;
+    overflow:auto;
+    background-color:#000;
+    color:#ccc;
+    padding:20px;
+    font-family: Consolas;
+    overflow-y:scroll;
+}
+
+pre codeblock {
+    border-radius: 5px;
+    background: #ccc;
+    font-family: Consolas;
+}
+
+code {
+    border-radius: 5px;
+    border: 1px #ffaaaa dotted;
+    padding: 0 5px;
+    font-family: Consolas;
+    color: #c7254e;
+    background-color: #f9f2f4;
+    margin: 0px 2px 0px 2px;
+}
+
+
+/* nav{
+    background-image: url(/static/img/bg.gif);
+    background-color: opacity(0.3) !important;
+} */
+
+#particles {
+    width: 100%;
+    height: 100%;
+    /* z-index: -2; */
+}
+
+
+/* .particles-wrapper{
+    z-index: 0; 
+} */
+
+
+/* #particles *{
+    z-index: 2;
+} */
+
+#particles>canvas {
+    position: absolute;
+    z-index: 100;
+    /* pointer-events: none; */
+}
+
+.top-bottom {
+    margin: 10px 0 10px 0;
+    padding: 10px 0 10px 0;
+}
+
+.img-holder{
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+
+table.highlight>tbody>tr:hover {
+    background-color: #aaaaaa;
+}
+
+.digit{
+    color: #fff;
+    background-color: #727272;
+
+    border-radius: 3px;
+    padding: 2px 5px;
+
+    vertical-align:super;
+    font-size: 10px;
+}
+/* Bootstrap 部分 CSS 效果 */
+kbd {
+    font-family: Consolas;
+	padding: 2px 4px;
+	font-size: 90%;
+	color: #fff;
+	background-color: #000;
+	border-radius: 3px;
+	-webkit-box-shadow: inset 0 -1px 0 rgba(0,0,0,.25);
+	box-shadow: inset 0 -1px 0 rgba(0,0,0,.25)
+}
+
+code{
+    font-family: Consolas;
+    color: #c7254e;
+    background-color: #f9f2f4;
+    margin: 0px 2px 0px 2px;
+}
+.label{
+    font-family: Consolas;
+    display: inline;
+    color: #fff;
+    padding: 1px 3px 2px 3px;
+    margin: 0px 2px 0px 2px;
+    border-radius: 2px;
+}
+.label-red{
+    background: #d9534f;
+}
+.label-green{
+    background: #5cb85c;
+}
+.label-blue{
+    background: #428bca;
+}
+.label-sky{
+    background: #5bc0de;
+}
+.label-orange{
+    background: #f0ad4e;
+}
+
+/* OJ 题目部分 CSS 效果 */
+.oj{
+    display: block;
+    background: #f7f7f7;
+    color: #666;
+    border-radius: 5px;
+    padding: 5px 20px 5px 20px;
+    height: 100%;
+}
+.part:before{
+    content: attr(title);
+    color: #444;
+    font-weight: bold; 
+    font-size: 20px;
+}
+.clear {
+        clear: both;
+}
+.samp{
+    font-family: "Consolas";
+    display: block;
+}
+.input,
+.output{
+    display: block;
+    width: 45%;
+    height: 100%;
+}
+.input{
+    float: left;
+}
+.output{
+    float: right;
+}
+.oj blockquote{
+    /* 引用在 .oj 类中 显示颜色修改 */
+    background: #888;
+    color: #fff
+}
+
+/* 代码段部分隐藏 CSS 效果 */
+.hider_title{
+    font-family: "Microsoft Yahei";
+    cursor: pointer;
+    font-weight: bold;
+    /* background-color: #555; */
+    width: auto;
+}
+.fold_parent{
+    padding: 5px;
+    /* background-color: #555; */
+    border-radius: 5px;
+}
+.fold_hider .close:after{
+    content: "▼";
+}
+.fold_hider .open:after{
+    content: "▲";
+}
+
+/* blockquote-center 标签 */
+.blockquote-center {
+  position: relative;
+  margin: 40px 0;
+  padding: 0;
+  border-left: none;
+  text-align: center;
+}
+.blockquote-center::before, 
+.blockquote-center::after {
+    position: absolute;
+    content: ' ';
+    display: block;
+    width: 100%;
+    height: 24px;
+    opacity: 0.2;
+    background-repeat: no-repeat;
+    background-position: 0 -6px;
+    background-size: 22px 22px;
+  }
+.blockquote-center ::before {
+    top: -20px;
+    background-image: url($center-quote-left);
+    border-top: 1px solid #666;
+}
+.blockquote-center::after {
+    bottom: -20px;
+    background-image: url($center-quote-right);
+    border-bottom: 1px solid #666;
+    background-position: 100% 8px;
+  }
+
+.blockquote-center p,
+.blockquote-center div{ 
+    text-align: center; 
+}
+
+
+/* note 标签 */
+.note {
+  padding: 20px;
+  margin: 20px 0;
+  border: 1px solid #eee;
+  border-left-width: 5px;
+  border-radius: 3px;
+}
+.note h2,
+.note h3,
+.note h4,
+.note h5,
+.note h6 {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+.note p:last-child {
+  margin-bottom: 0;
+}
+.note code {
+  border-radius: 3px;
+}
+.note .note {
+  margin-top: -5px;
+}
+.default {
+  border-left-color: #777;
+}
+.default h2,
+.default h3,
+.default h4,
+.default h5,
+.default h6 {
+  color: #777;
+}
+.primary {
+  border-left-color: #428bca;
+}
+.primary h2,
+.primary h3,
+.primary h4,
+.primary h5,
+.primary h6 {
+  color: #428bca;
+}
+.success {
+  border-left-color: #5cb85c;
+}
+.success h2,
+.success h3,
+.success h4,
+.success h5,
+.success h6 {
+  color: #5cb85c;
+}
+.danger {
+  border-left-color: #d9534f;
+}
+.danger h2,
+.danger h3,
+.danger h4,
+.danger h5,
+.danger h6 {
+  color: #d9534f;
+}
+.warning {
+  border-left-color: #f0ad4e;
+}
+.warning h2,
+.warning h3,
+.warning h4,
+.warning h5,
+.warning h6 {
+  color: #f0ad4e;
+}
+.info {
+  border-left-color: #5bc0de;
+}
+.info h2,
+.info h3,
+.info h4,
+.info h5,
+.info h6 {
+  color: #5bc0de;
+}

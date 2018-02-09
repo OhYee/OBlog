@@ -1,0 +1,208 @@
+{% extends "layout/layout.html" %} {% block title %}{{ Post['title'] }}{% endblock %} {% block meta %}
+
+<meta name="keywords" content="{{ Post['keywords'] }}" />
+<meta name="description" content="{{ Post['abstruct'] }}" />
+
+<meta name="title" content="{{ Post['title'] }}">
+<meta name="displaydate" content="{{ Post['time'] }}">
+<meta property="og:site_name" content="{{ Site['config']['blogname'] }}">
+<meta name="copyright" content="(C) 2009 - 2018 {{ Site['config']['author'] }}">
+<meta name="author" content="{{ Site['config']['author'] }}" /> {% endblock %} {% block content %}
+
+<div class="hide-on-med-and-down" style="height:20px"></div>
+
+<div class="row">
+    <div class="col l8 offset-l2 s12">
+        <div class="card hoverable z-depth-3">
+            <div class="card-content">
+                <article>
+                    <a class="card-title">
+                        <span class="bold grey-text text-darken-4">{{ Post['title'] }}</span> {% if Post['published']=='0' %}
+                        <span class="red-text bold">[草稿]</span>{% endif %}{% if session["admin"] %}
+                        <a href="/admin/posts/edit/{{ Post['url'] }}" target="_blank" class="blue-text bold">[编辑]</a>{% endif %}
+                    </a>
+                    <time>
+                        <div class="dateline">
+                            <i class="material-icons tiny">today</i>
+                            {{ Post['time'] }}
+                        </div>
+                    </time>
+                    <div>
+                        <i class="material-icons tiny">visibility</i> {{ Post['view'] }}
+                    </div>
+                    <blockquote>
+                        {{ Post['abstruct'] }}
+                    </blockquote>
+
+                    <!-- 文章正文 -->
+                    <section>
+                        {{ Post['html']|safe }}
+                    </section>
+                    <!-- 文章结束 -->
+
+                    <div class="right">
+                        <author class="byline-name">
+                            <a href="/">
+                                <div class="chip">
+                                    <img src="/static/img/logo.svg" onerror='$(this).attr("style","display:none")' onload='$(this).attr("style","")'>{{ Site['config']['author'] }}
+                                </div>
+                            </a>
+
+                        </author>
+                    </div>
+
+                    <br>
+
+                    <div>
+                        <div class="center">
+                            <a class="waves-effect waves-light btn pink lighten-2" href="javascript:pay();">打赏</a>
+                        </div>
+
+                        <div id="money_modal" class="modal">
+                            <div class="modal-content">
+                                <div class="row">
+                                    <i class="material-icons right modal-close">close</i>
+                                </div>
+                                <div class="row">
+                                    <div class="col s12 l6">
+                                        <div class="row">
+                                            <img class="responsive-img materialboxed" src="/static/img/alipayimg.jpg" data-caption="支付宝扫码" alt="支付宝扫码" />
+                                        </div>
+                                        <div class="row center">
+                                            支付宝扫码
+                                        </div>
+                                    </div>
+                                    <div class="col s12 l6">
+                                        <div class="row">
+                                            <img class="responsive-img materialboxed" src="/static/img/wechatimg.jpg" data-caption="微信扫码" alt="微信扫码" />
+                                        </div>
+                                        <div class="row center">
+                                            微信扫码
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </article>
+            </div>
+
+            <div class="card-action">
+                <i class="material-icons left">label_outline</i> {% for tag in Post['tags'] %}
+                <a href="/tags/{{ tag[1] }}">
+                    <div class="chip {{ tag[4] }}">
+                        <img src="{{ tag[3] }}" onerror='$(this).attr("style","display:none")' onload='$(this).attr("style","")' /> {{ tag[0] }}
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+
+
+
+        </div>
+        <!-- 评论区 -->
+        <div class="card hoverable z-depth-2">
+            <div class="card-content ">
+                <form id="form" action="/admin/discuss/add/" method="post">
+                    <input type="hidden" name="url" value="post/{{ Post.url }}">
+                    <div class="row">
+                        <div class="col s12 l4 input-field">
+                            <input placeholder="example@example.com" id="email" type="text" name="email" class="validate" pattern="^[A-Za-z0-9\u4e00-\u9fa5]+@[A-Za-z0-9_-]+(\.[a-zA-Z0-9_-]+)+$">
+                            <label for="email">电子邮箱(不会显示完整地址)</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12 input-field">
+                            <textarea id="textarea1" name="raw" class="materialize-textarea"></textarea>
+                            <label for="textarea1">评论(支持markdown)</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <input type="checkbox" id="check" name="check" checked="checked" />
+                        <label for="check">有人回复我给我发邮件(最前面的字符使用
+                            <code>@5#</code>回复id为5的评论)</label>
+                        <a href="javascript:submitform();" class="right waves-effect waves-light btn indigo lighten-2">评论</a>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+
+        <div id="app">
+            <div class="">
+                <div class="center" v-if="loading">{% include "layout/loading.html" %}</div>
+                <div class="" v-if="!loading">
+                    <div class="card hoverable z-depth-2 discuss-card" v-for="d in discuss">
+                        <div class="card-content">
+                            <div class="card-title">
+
+                                <span v-text="d.username">
+                                </span>
+                                <i v-if="d.sendemail=='1'" class="material-icons right">email</i>
+                                </p>
+                            </div>
+                            <p v-html="d.html"></p>
+
+                        </div>
+                        <div class="card-action">
+                            <span v-text="d.time"></span>
+                            <span class="right">#
+                                <span v-text="d.id"></span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 评论区结束 -->
+    </div>
+
+
+    {% endblock %} {% block script %}
+    <script>
+        $('ul li#首页').toggleClass('active');
+
+        var options = [{
+            selector: '.discuss-card',
+            offset: 0,
+        },];
+        Materialize.scrollFire(options);
+
+
+
+        $(document).ready(function () {
+            $('#money_modal').modal();
+        });
+
+        function pay() {
+            $('#money_modal').modal('open');
+        }
+
+        var url = "post/{{ Post.url }}";
+        vue = new Vue({
+            el: '#app',
+            data: {
+                discuss: [],
+                loading: true,
+            },
+        })
+
+        $(document).ready(() => {
+            vue.loading = true;
+            fetchData("/api/discuss/" + url, data => {
+                vue.discuss = data
+                vue.loading = false;
+                Materialize.scrollFire(options);
+            });
+        });
+
+        function submitform() {
+            if (/^[A-Za-z0-9\u4e00-\u9fa5]+@[A-Za-z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.exec($('#email').val()))
+                $('#form').submit();
+            else
+                Materialize.toast('邮箱格式错误', 3000, 'rounded')
+
+        }
+    </script> {% endblock %}

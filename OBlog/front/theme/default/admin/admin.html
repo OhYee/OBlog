@@ -1,0 +1,73 @@
+{% extends "layout/admin.html" %} {% block admin_main %} {% if session["admin"] %}
+
+<!-- <div class="row top-bottom"> -->
+<!-- <div class="col s12 l2">
+        <div class="row bold center">
+            <div class="hide-on-med-and-down" style="min-height:50px"></div>
+            <div class="row">
+                <div class="col s6">
+                    <a class="black-text" href="/admin/posts/">文章管理</a>
+                </div>
+                <div class="col s6">
+                    <a class="black-text" href="/admin/tags/">标签管理</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s6">
+                    <a class="black-text" href="/admin/discuss/">评论管理</a>
+                </div>
+                <div class="col s6">
+                    <a class="black-text" href="/admin/pages/">页面管理</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s6">
+                    <a class="black-text" href="/admin/nav/">导航管理</a>
+                </div>
+                <div class="col s6">
+                    <a class="black-text" href="/admin/friends/">友链管理</a>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+<div class="row">
+    <div class="col s12 l8 offset-l2">
+        <form action="/admin/update/" method="post">
+            {% for col in Site["config"] %}
+            <div class="row">
+                <div class="col s4">
+                    {{ col }}
+                </div>
+                <div class="input-field col s8">
+                    <input type="text" id="{{ col }}" name="{{ col }}" value="{{ Site['config'][col] }}">
+                    <label for="#{{ col }}">{{ col }}</label>
+                </div>
+            </div>
+
+            {% endfor %}
+            <button class="waves-effect waves-light btn indigo darken-1" type="submit">提交</button>
+        </form>
+    </div>
+</div>
+    <!-- </div> -->
+
+
+
+
+
+
+    {% else %}
+
+    <form action="/admin/login/" method="post">
+        <div class="row">
+            <div class="input-field col s12 l6 offset-l3">
+                <input id="password" name="passwd" type="password">
+                <label for="password">密码</label>
+            </div>
+        </div>
+    </form>
+    {% endif %} {% endblock %} {% block script %}
+    <script>
+        $('ul li#管理后台').toggleClass('active');
+    </script> {% endblock %}
