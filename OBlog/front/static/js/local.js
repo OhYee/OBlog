@@ -4,6 +4,10 @@ $(document).ready(function () {
         hljs.highlightBlock(block);
     });
     autoHeight();
+
+    showMessage();
+
+
 });
 
 $(document).resize(autoHeight());
@@ -42,6 +46,15 @@ function fetchData(url, solve, idx) {
     ).catch(
         e => console.log("Oops, error:" + e)
     );
+}
+
+
+
+function showMessage() {
+    $("body").prepend("<div id='attitionMessage' class='center pink darken-3 white-text'>博客从Hexo迁移到<a class='blue-text text-lighten-2' href='https://github.com/OhYee/OBlog'>自己写的系统</a>，如果访问遇到问题，请反馈到<a class='blue-text text-lighten-2' href='mailto:oyohyee@oyohyee.com'>oyohyee@oyohyee.com</a>，或者在评论区与GitHub issue留言。<br>如果个别内容无法正常渲染，访问老站点<a class='blue-text text-lighten-2' href='http://blog.oyohyee.com/'>http://blog.oyohyee.com</a> <a class='white-text right' href='javascript:removeMessage();'><i class='material-icons left'>close</i></a></div>");
+}
+function removeMessage() {
+    $('#attitionMessage').remove();
 }
 
 // function getAttr() {
