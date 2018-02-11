@@ -1,4 +1,5 @@
-DATABASE = '/data/wwwroot/default/OBlog/sql.db'
+import os
+DATABASE = os.getenv('database')
 SECRET_KEY = '\xf2\x92Y\xdf\x8ejY\x04\x96\xc4V\x88\xfb\xfc\xb2\x18F\xa3\xee\xb9\xb9t\x01\xf0\x96'
 
 STATIC_FOLDER = r'front/static'
