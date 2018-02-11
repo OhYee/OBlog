@@ -57,6 +57,15 @@ function removeMessage() {
     $('#attitionMessage').remove();
 }
 
+
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?c3c4a93be88257973d97af02f735ed4e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+
 // function getAttr() {
 //     console.log("getAttr ", arguments);
 //     if (arguments.length == 2) {
