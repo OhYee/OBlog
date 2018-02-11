@@ -55,10 +55,24 @@ def pages(url):
     return page_not_found()
 
 
-@app.route('/clear')
-def clear():
-    session.clear()
-    return redirect(url_for(index))
+@app.route('/sitemap.xml')
+def sitemapxml():
+    xml = '<?xml version="1.0"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+    posts = getPosts.getAllPosts()
+    for post in posts:
+        xml += '<url><loc>%s</loc></url>' % (
+            'http://www.oyohyee.com/' + post['url'])
+    xml += '</urlset>'
+    return xml
+
+
+@app.route('/sitemap.txt')
+def sitemaptxt():
+    xml = ""
+    posts = getPosts.getAllPosts()
+    for post in posts:
+        xml += 'http://www.oyohyee.com/' + post['url'] + '\n'
+    return xml
 
 
 @app.errorhandler(404)
@@ -75,14 +89,14 @@ def init():
 def before_request():
     g.db = sqlite3.connect(app.config['DATABASE'])
     viewercount.viewpath(request.remote_addr, request.path)
-    print("database connected")
+    # print("database connected")
 
 
 @app.teardown_request
 def teardown_request(exception):
     if hasattr(g, 'db'):
         g.db.close()
-    print("database closed")
+    # print("database closed")
 
 
 @app.context_processor
