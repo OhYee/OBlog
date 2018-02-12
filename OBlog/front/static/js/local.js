@@ -4,10 +4,7 @@ $(document).ready(function () {
         hljs.highlightBlock(block);
     });
     autoHeight();
-
     showMessage();
-
-
 });
 
 $(document).resize(autoHeight());
@@ -15,7 +12,7 @@ hljs.configure({
     useBR: false
 });
 
-//确保 jauery 加载完成
+//确保 jquery 加载完成
 $(document).ready(function () {
     $(document).on('click', '.fold_hider', function () {
         $('>.fold', this.parentNode).slideToggle();
@@ -59,11 +56,11 @@ function removeMessage() {
 
 
 var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?c3c4a93be88257973d97af02f735ed4e";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
+(function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?c3c4a93be88257973d97af02f735ed4e";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
 })();
 
 // function getAttr() {
