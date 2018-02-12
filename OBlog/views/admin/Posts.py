@@ -35,7 +35,7 @@ def admin_posts_add():
         return redirect(url_for('admin'))
     if request.method == "POST":
         keys = ['title', 'url', 'time', 'updatetime', "abstruct",
-                'view', 'discuss', 'tags', 'raw', 'published']
+                'view', 'tags', 'raw', 'published']
 
         _map = dict((key, request.form[key]) for key in keys)
 
