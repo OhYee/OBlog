@@ -5,7 +5,8 @@ import jieba
 
 
 def initSite():
-    jieba.initialize()
+    print("OBlog start")
+    #jieba.initialize()
     # app.app_context().push()  
     # current_app.name  
     # g.test="test"
