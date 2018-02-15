@@ -10,4 +10,7 @@ app = Flask(__name__, template_folder='front/theme/default',
             static_folder=STATIC_FOLDER)
 app.config.from_object(__name__)
 from .views import *
+
+import jieba
+jieba.initialize()
 print("__init__ start")
