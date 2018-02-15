@@ -1,6 +1,6 @@
-$(document).ready(function () {
-    $(".button-collapse").sideNav();    // 移动端侧边栏
-    $('pre codeblock').each(function (i, block) {
+$(document).ready(function() {
+    $(".button-collapse").sideNav(); // 移动端侧边栏
+    $('pre codeblock').each(function(i, block) {
         hljs.highlightBlock(block);
     });
     autoHeight();
@@ -13,8 +13,8 @@ hljs.configure({
 });
 
 //确保 jquery 加载完成
-$(document).ready(function () {
-    $(document).on('click', '.fold_hider', function () {
+$(document).ready(function() {
+    $(document).on('click', '.fold_hider', function() {
         $('>.fold', this.parentNode).slideToggle();
         $('>:first', this).toggleClass('open');
     });
@@ -27,10 +27,10 @@ function autoHeight() {
     $("main").attr("style", "min-height:" + (document.documentElement.clientHeight - $("header").height() - $("footer").height() - 40) + "px;");
 }
 
-window.onload = function () {
+window.onload = function() {
     autoHeight();
 };
-window.onresize = function () {
+window.onresize = function() {
     autoHeight();
 };
 
@@ -48,15 +48,16 @@ function fetchData(url, solve, idx) {
 
 
 function showMessage() {
-    $("body").prepend("<div id='attitionMessage' class='center pink darken-3 white-text'>博客从Hexo迁移到<a class='blue-text text-lighten-2' href='https://github.com/OhYee/OBlog'>自己写的系统</a>，如果访问遇到问题，请反馈到<a class='blue-text text-lighten-2' href='mailto:oyohyee@oyohyee.com'>oyohyee@oyohyee.com</a>，或者在评论区与GitHub issue留言。<br>如果个别内容无法正常渲染，访问老站点<a class='blue-text text-lighten-2' href='http://blog.oyohyee.com/'>http://blog.oyohyee.com</a> <a class='white-text right' href='javascript:removeMessage();'><i class='material-icons left'>close</i></a></div>");
+    $("body").prepend("<div id='attitionMessage' class='center pink darken-3 white-text'><a class='white-text right' href='javascript:removeMessage();'><i class='material-icons left'>close</i></a>博客从Hexo迁移到<a class='blue-text text-lighten-2' href='https://github.com/OhYee/OBlog'>自己写的系统</a>，如果访问遇到问题，请反馈到<a class='blue-text text-lighten-2' href='mailto:oyohyee@oyohyee.com'>oyohyee@oyohyee.com</a>，或者在评论区与GitHub issue留言。<br>如果个别内容无法正常渲染，访问老站点<a class='blue-text text-lighten-2' href='http://blog.oyohyee.com/'>http://blog.oyohyee.com</a></div>");
 }
+
 function removeMessage() {
     $('#attitionMessage').remove();
 }
 
 
 var _hmt = _hmt || [];
-(function () {
+(function() {
     var hm = document.createElement("script");
     hm.src = "https://hm.baidu.com/hm.js?c3c4a93be88257973d97af02f735ed4e";
     var s = document.getElementsByTagName("script")[0];
