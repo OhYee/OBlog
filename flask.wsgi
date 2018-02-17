@@ -1,5 +1,15 @@
-import sys,os
-os.environ['database']='/data/wwwroot/default/OBlog/sql.db'
+import sys
 sys.path.insert(0,'/data/wwwroot/default/OBlog')
-print('wsgi start')
+
+
+
+def Log(text, *args):
+    logStr = (text + '\n') % args
+    with open(r'/data/wwwroot/default/OBlog/log/test.log', 'a') as f:
+        f.write(logStr)
+
+Log("run wsgi 1")
+
 from OBlog import app as application
+
+Log("run wsgi 2")

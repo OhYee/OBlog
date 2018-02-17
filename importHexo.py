@@ -1,7 +1,7 @@
 import os
 import re
 import json
-Hexo_source_post_dir = "D:\OneDrive\OneDrive - eclass inc\Workspace\Code\Blog\source\_posts"
+Hexo_source_post_dir = r"D:\OneDrive\OneDrive - eclass inc\Workspace\Code\Blog\source\_posts"
 
 
 def listFiles(root, relative=''):

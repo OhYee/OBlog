@@ -107,6 +107,7 @@ OBlog/front/static/img/*
 OBlog/front/static/img/posts/*
 !OBlog/front/static/img/tags
 OBlog/front/static/img/tags/*
+log/*
 
 tags.json
 posts.json

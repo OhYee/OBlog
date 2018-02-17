@@ -4,8 +4,19 @@ from .sendemail import thirdSMTP
 import jieba
 
 
+import sys
+import os
+
+def Log(text, *args):
+    logStr = (text + '\n') % args
+    with open(os.path.join(sys.path[0], r'log/test.log'), 'a+') as f:
+        f.write(logStr)
+
+
 def initSite():
     print("OBlog start")
+    Log("run initSite")
+    
     #jieba.initialize()
     # app.app_context().push()  
     # current_app.name  
