@@ -24,8 +24,8 @@ app = Flask(__name__, template_folder='front/theme/default',
 app.config.from_object(__name__)
 from .views import *
 
-import jieba
-jieba.initialize()
+# import jieba
+# jieba.initialize()
 print("__init__ start")
 
 
