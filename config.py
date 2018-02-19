@@ -8,7 +8,7 @@ bind = ['127.0.0.1:8000']
 accesslog = './log/access.log'
 errorlog = './log/error.log'
 
-loglevel = error
+loglevel = 'error'
 
 
 def on_starting(sever):
