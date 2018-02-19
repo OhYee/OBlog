@@ -10,7 +10,8 @@ Log("run wsgi 1")
 
 from OBlog import app
 from werkzeug.contrib.fixers import ProxyFix
-app.wsgi_app = ProxyFix(app.wsgi_app)
-app.run(threaded=True)
+if __name__=='__main__':
+    app.wsgi_app = ProxyFix(app.wsgi_app)
+    app.run(debug=False,threaded=True)
 
 Log("run wsgi 2")
