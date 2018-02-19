@@ -8,7 +8,7 @@ def Log(text, *args):
 
 Log("run wsgi 1")
 
-from OBlog import app as application
+from OBlog import app
 from werkzeug.contrib.fixers import ProxyFix
 app.wsgi_app = ProxyFix(app.wsgi_app)
 app.run(threaded=True)
