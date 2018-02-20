@@ -24,9 +24,6 @@ def when_ready(sever):
 def post_fork(sever, worker):
     pass
 
-def post_fork(sever, worker):
-    pass
-
 def post_worker_init(worker):
     pass
 
