@@ -12,7 +12,8 @@ loglevel = 'error'
 
 
 def on_starting(sever):
-    pass
+    import jieba 
+    jieba.initialize()
 
 def on_reload(server):
     pass
