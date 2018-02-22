@@ -1,6 +1,6 @@
-$(document).ready(function() {
+$(document).ready(function () {
     $(".button-collapse").sideNav(); // 移动端侧边栏
-    $('pre codeblock').each(function(i, block) {
+    $('pre codeblock').each(function (i, block) {
         hljs.highlightBlock(block);
     });
     autoHeight();
@@ -13,8 +13,8 @@ hljs.configure({
 });
 
 //确保 jquery 加载完成
-$(document).ready(function() {
-    $(document).on('click', '.fold_hider', function() {
+$(document).ready(function () {
+    $(document).on('click', '.fold_hider', function () {
         $('>.fold', this.parentNode).slideToggle();
         $('>:first', this).toggleClass('open');
     });
@@ -27,10 +27,10 @@ function autoHeight() {
     $("main").attr("style", "min-height:" + (document.documentElement.clientHeight - $("header").height() - $("footer").height() - 40) + "px;");
 }
 
-window.onload = function() {
+window.onload = function () {
     autoHeight();
 };
-window.onresize = function() {
+window.onresize = function () {
     autoHeight();
 };
 
@@ -55,10 +55,26 @@ function removeMessage() {
     $('#attitionMessage').remove();
 }
 
+// 初始化查看全部
+function initUnfold(e) {    
+    e.css('maxHeight', "");   
+    if (e.children('.content').height() > e.height()) {
+        var tips = $(e).attr('tips');
+        if (!tips) tips = '显示更多';
+        $(e).append('<div class="unfold-field"><div class="unflod-field_mask"></div><div class="unfold-field_text"><span>' + tips + '</span></div></div>')
+        e.children('.unfold-field').css("display", "block");
+    }
+    e.css('visibility', "visible");
+
+    e.children('.unfold-field').click(() => {
+        e.css('maxHeight', "100%");
+        e.children('.unfold-field').remove();
+    });
+}
 
 // 统计
 var _hmt = _hmt || [];
-(function() {
+(function () {
     var hm = document.createElement("script");
     hm.src = "https://hm.baidu.com/hm.js?c3c4a93be88257973d97af02f735ed4e";
     var s = document.getElementsByTagName("script")[0];
@@ -66,7 +82,7 @@ var _hmt = _hmt || [];
 })();
 
 // 自动推送
-(function() {
+(function () {
     var bp = document.createElement('script');
     var curProtocol = window.location.protocol.split(':')[0];
     if (curProtocol === 'https') {
@@ -77,6 +93,39 @@ var _hmt = _hmt || [];
     var s = document.getElementsByTagName("script")[0];
     s.parentNode.insertBefore(bp, s);
 })();
+
+
+/* 按照首字母排序，英语在前，汉语在后 */
+function sortTagsByPinYin(tags) {
+    if (!String.prototype.localeCompare)
+        return tags;
+
+    var letters = "*abcdefghjklmnopqrstwxyz".split('');
+    var zh = "阿八嚓哒妸发旮哈讥咔垃痳拏噢妑七呥扨它穵夕丫帀".split('');
+
+    var newTags = [];
+    $.each(letters, function (i) {
+        var curr1 = [], curr2 = [];
+        var thisChar = this;
+        $.each(tags, function () {
+            if (this.chinese && this.chinese.length > 0) {
+                if (this.chinese[0] == thisChar) {
+                    curr1.push(this);
+                } else if ((!zh[i - 1] || zh[i - 1].localeCompare(this.chinese, 'zh') <= 0) && this.chinese.localeCompare(zh[i], 'zh') == -1) {
+                    curr2.push(this);
+                }
+            }
+        });
+        curr1.sort();
+        curr2.sort((a, b) => a.chinese.localeCompare(b.chinese, 'zh'));
+        newTags = newTags.concat(curr1).concat(curr2);
+    });
+    return newTags;
+}
+
+/* 按照文章数排序 */
+var sortTagsByNumber = tags => tags.sort((a, b) => parseInt(b.cnt) - parseInt(a.cnt));
+
 
 // function getAttr() {
 //     console.log("getAttr ", arguments);

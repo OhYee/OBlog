@@ -120,7 +120,7 @@ table.highlight>tbody>tr:hover {
 
 .digit{
     color: #fff;
-    background-color: #727272;
+    background-color: #9c9c9c;
 
     border-radius: 3px;
     padding: 2px 5px;
@@ -352,4 +352,51 @@ code{
 .info h5,
 .info h6 {
   color: #5bc0de;
+}
+
+
+
+/* 半透明折叠 */
+.unfold-wrap {
+    max-height: 15rem;
+    /*设置默认高度*/
+    overflow: hidden;
+    position: relative;
+    visibility: hidden;
+}
+
+.unfold-field {
+    display: none;
+    position: absolute;
+    font-size: 0;
+    bottom: 0;
+    width: 100%;
+    height: 124px;
+    z-index: 3;
+}
+
+.unfold-field .unflod-field_mask {
+    height: 78px;
+    width: 100%;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, hsla(0, 0%, 100%, 0)), to(#f6f6f6));
+    background-image: linear-gradient(-180deg, hsla(0, 0%, 100%, 0), #f6f6f6);
+}
+
+.unfold-field_text {
+    cursor: pointer;
+    width: 100%;
+    color: #406599;
+    ;
+    height: 46px;
+    font-size: 0px;
+    line-height: 46px;
+    text-align: center;
+    background: #f6f6f6;
+}
+
+.unfold-field_text span {
+    display: inline-block;
+    font-size: 16px;
+    height: 46px;
+    line-height: 46px;
 }

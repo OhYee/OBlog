@@ -15,47 +15,58 @@
                 <label for="search">站内搜索</label>
             </div>
         </div>
+
         <div id="search-holder" style="display:none">
             <div v-if="loading" class="center">{% include "layout/loading.html" %}</div>
             <div v-if="!loading">
-                <div class="center">
-                    <div style="display:inline" v-for="(tag) in tags">
-                        <a v-bind:href="'/tag/'+tag.english">
-                            <div class="chip hoverable z-depth-1" v-bind:class="tag.class">
-                                <img v-bind:src="tag.img" onerror='$(this).attr("style","display:none")' onload='$(this).attr("style","")' />
-                                <span v-text='tag.chinese'></span>
+                <div class="unfold-wrap">
+                    <div class='content'>
+                        <div class="center">
+                            <div style="display:inline" v-for="(tag) in tags">
+                                <a v-bind:href="'/tag/'+tag.english">
+                                    <div class="chip hoverable z-depth-1" v-bind:class="tag.class">
+                                        <img v-bind:src="tag.img" onerror='$(this).attr("style","display:none")' onload='$(this).attr("style","")' />
+                                        <span v-text='tag.chinese'></span>
+                                    </div>
+                                </a>
                             </div>
-                        </a>
+                        </div>
+                        <div class="row">
+                            <ul v-for="(post) in posts" class="col s12 l6 offset-l3">
+                                <li>
+                                    <div class="card hoverable">
+                                        <div class="card-content">
+                                            <a v-bind:href="'/post/'+post.url">
+                                                <p class="card-title activator" v-text='post.title'>
+                                                </p>
+                                            </a>
+
+                                            <p v-html="post.abstruct"></p>
+                                        </div>
+                                        <div class="card-action">
+                                            <i class="material-icons left">label_outline</i>
+                                            <a v-for="(tag) in post.tags" v-bind:href='/tag/+tag[1]'>
+                                                <div class="chip" v-bind:class="tag[4]">
+                                                    <img v-bind:src="tag[3]" onerror='$(this).attr("style","display:none")' onload='$(this).attr("style","")' />
+                                                    <span v-text='tag[0]'></span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <ul v-for="(post) in posts" class="col s12 l6 offset-l3">
-                        <li>
-                            <div class="card hoverable">
-                                <div class="card-content">
-                                    <a v-bind:href="'/post/'+post.url">
-                                        <p class="card-title activator" v-text='post.title'>
-                                        </p>
-                                    </a>
-
-                                    <p v-html="post.abstruct"></p>
-                                </div>
-                                <div class="card-action">
-                                    <i class="material-icons left">label_outline</i>
-                                    <a v-for="(tag) in post.tags" v-bind:href='/tag/+tag[1]'>
-                                        <div class="chip" v-bind:class="tag[4]">
-                                            <img v-bind:src="tag[3]" onerror='$(this).attr("style","display:none")' onload='$(this).attr("style","")' />
-                                            <span v-text='tag[0]'></span>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
             </div>
+
         </div>
     </div>
+
+
+
+
+
 
 
     {% endblock %} {% block script %}
@@ -82,22 +93,34 @@
             vue.loading = true;
             if (searchwords == '') {
                 fetchData('/api/tags/', data => {
-                    vue.tags = data;
+                    vue.tags = sortTagsByPinYin(data);
                     vue.loading = false;
+                    vue.$nextTick(function () {
+                        initUnfold($('.unfold-wrap'));
+                    });
                 });
+                vue.posts = [];
             } else {
-                cnt = 0
+                var cnt = 0
                 fetchData('/api/search_tags/' + searchwords, data => {
-                    vue.tags = data;
+                    vue.tags = sortTagsByPinYin(data);
                     cnt += 1;
-                    if (cnt == 2)
+                    if (cnt == 2) {
                         vue.loading = false;
+                        vue.$nextTick(function () {
+                            initUnfold($('.unfold-wrap'));
+                        });
+                    }
                 });
                 fetchData('/api/search_posts/' + searchwords, data => {
                     vue.posts = data;
                     cnt += 1;
-                    if (cnt == 2)
+                    if (cnt == 2) {
                         vue.loading = false;
+                        vue.$nextTick(function () {
+                            initUnfold($('.unfold-wrap'));
+                        });
+                    }
                 });
             }
 
@@ -106,4 +129,6 @@
         $(document).ready($ => $("#search-holder").attr("style", ""));
         $(document).ready($ => search());
         vue.$watch('searchwords', $ => search());
+
+
     </script> {% endblock %}
