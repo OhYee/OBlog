@@ -1,0 +1,110 @@
+{% extends "layout/layout.html" %} {% block title %}评论区{% endblock %} {% block meta %} {% endblock %} {% block content %}
+
+
+<div class="row">
+    <div class="col l8 offset-l2 s12">
+        <!-- 评论区 -->
+        <div class="card hoverable z-depth-2">
+            <div class="card-content ">
+                <form id="form" action="/admin/discuss/add/" method="post">
+                    <input type="hidden" name="url" value="discuss">
+                    <div class="row">
+                        <div class="col s12 l4 input-field">
+                            <input placeholder="example@example.com" id="email" type="text" name="email" class="validate" pattern="^[A-Za-z0-9\u4e00-\u9fa5]+@[A-Za-z0-9_-]+(\.[a-zA-Z0-9_-]+)+$">
+                            <label for="email">电子邮箱(不会显示完整地址)</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12 input-field">
+                            <textarea id="textarea1" name="raw" class="materialize-textarea"></textarea>
+                            <label for="textarea1">评论(支持markdown)</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <input type="checkbox" id="check" name="check" checked="checked" />
+                        <label for="check">有人回复我给我发邮件(最前面的字符使用
+                            <code>@5#</code>回复id为5的评论)</label>
+                        <a href="javascript:submitform();" class="right waves-effect waves-light btn indigo lighten-2">评论</a>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+
+        <div id="app">
+            <div class="">
+                <div class="center" v-if="loading">{% include "layout/loading.html" %}</div>
+                <div class="" v-if="!loading">
+                    <div class="card hoverable z-depth-2 discuss-card" v-for="d in discuss">
+                        <div class="card-content">
+                            <div class="card-title">
+
+                                <span v-text="d.username">
+                                </span>
+                                <i v-if="d.sendemail=='1'" class="material-icons right">email</i>
+                                </p>
+                            </div>
+                            <p v-html="d.html"></p>
+
+                        </div>
+                        <div class="card-action">
+                            <span v-text="d.time"></span>
+                            <span class="right">#
+                                <span v-text="d.id"></span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 评论区结束 -->
+    </div>
+
+
+    {% endblock %} {% block script %}
+    <script>
+        $('ul li#讨论区').toggleClass('active');
+
+        var options = [{
+            selector: '.discuss-card',
+            offset: 0,
+        }, ];
+        Materialize.scrollFire(options);
+
+
+
+        $(document).ready(function() {
+            $('#money_modal').modal();
+        });
+
+        function pay() {
+            $('#money_modal').modal('open');
+        }
+
+        var url = "discuss";
+        vue = new Vue({
+            el: '#app',
+            data: {
+                discuss: [],
+                loading: true,
+            },
+        })
+
+        $(document).ready(() => {
+            vue.loading = true;
+            fetchData("/api/discuss/" + url, data => {
+                vue.discuss = data
+                vue.loading = false;
+                Materialize.scrollFire(options);
+            });
+        });
+
+        function submitform() {
+            if (/^[A-Za-z0-9\u4e00-\u9fa5]+@[A-Za-z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.exec($('#email').val()))
+                $('#form').submit();
+            else
+                Materialize.toast('邮箱格式错误', 3000, 'rounded')
+
+        }
+    </script> {% endblock %}
