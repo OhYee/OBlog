@@ -83,3 +83,5 @@ insert into SiteConfig(name,value) values("smtppassword","");
 insert into SiteConfig(name,value) values("smtpport","");
 insert into SiteConfig(name,value) values("author","");
 insert into SiteConfig(name,value) values("blogname","");
+insert into SiteConfig(name,value) values("email","");
+insert into SiteConfig(name,value) values("rooturl","");
