@@ -2,6 +2,7 @@ from flask import render_template, request, session, redirect, url_for, send_fro
 from OBlog import app
 from OBlog.back.setData import Discuss
 
+
 @app.route('/admin/discuss/')
 def admin_discuss():
     if 'admin' not in session:
@@ -15,7 +16,8 @@ def admin_discuss_add():
         keys = ['email', 'raw', 'url']
         _set = dict((key, request.form[key]) for key in keys)
         _set['sendemail'] = '1' if 'check' in request.values else '0'
-        _set['ip'] = request.remote_addr
+        _set['ip'] = request.headers.get(
+            'X-Forwarded-For', request.remote_addr)
         errorcode = Discuss.add(_set)
         if errorcode == 1:
             flash("发布失败：格式错误")
@@ -32,7 +34,7 @@ def admin_discuss_update():
 
         _set['sendemail'] = '1' if 'sendemail' in request.values else '0'
         _set['show'] = '1' if 'show' in request.values else '0'
-        
+
         _where = {'id': request.form['id']}
 
         errorcode = Discuss.update(_set, _where)
