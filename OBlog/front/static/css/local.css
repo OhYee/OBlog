@@ -7,31 +7,47 @@ body {
     background-color: #f6f6f6;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-weight: 400;
 }
-h1, .h1 {
+
+h1,
+.h1 {
     font-size: 44px;
     line-height: 48px;
 }
-h2, .h2 {
+
+h2,
+.h2 {
     font-size: 34px;
     line-height: 40px;
 }
 
-h3, .h3 {
+h3,
+.h3 {
     font-size: 24px;
     line-height: 32px;
 }
-h4, .h4 {
+
+h4,
+.h4 {
     font-size: 14px;
     line-height: 24px;
 }
-h5, .h5 {
+
+h5,
+.h5 {
     font-size: 14px;
     line-height: 16px;
 }
-h6, .h6 {
+
+h6,
+.h6 {
     font-size: 14px;
     line-height: 8px;
 }
@@ -47,14 +63,14 @@ strong,
     font-weight: bold;
 }
 
-#console{
-    width:100%;
-    overflow:auto;
-    background-color:#000;
-    color:#ccc;
-    padding:20px;
+#console {
+    width: 100%;
+    overflow: auto;
+    background-color: #000;
+    color: #ccc;
+    padding: 20px;
     font-family: Consolas;
-    overflow-y:scroll;
+    overflow-y: scroll;
 }
 
 pre codeblock {
@@ -71,6 +87,9 @@ code {
     color: #c7254e;
     background-color: #f9f2f4;
     margin: 0px 2px 0px 2px;
+    overflow-x: auto;
+    max-width: 100%;
+    display: inline-block;
 }
 
 
@@ -106,47 +125,49 @@ code {
     padding: 10px 0 10px 0;
 }
 
-.img-holder{
+.img-holder {
     display: inline-block;
     width: 100%;
     height: 100%;
     overflow: hidden;
 }
 
-
 table.highlight>tbody>tr:hover {
     background-color: #aaaaaa;
 }
 
-.digit{
+.digit {
     color: #fff;
     background-color: #9c9c9c;
-
     border-radius: 3px;
     padding: 2px 5px;
-
-    vertical-align:super;
+    vertical-align: super;
     font-size: 10px;
 }
+
+
 /* Bootstrap 部分 CSS 效果 */
+
 kbd {
     font-family: Consolas;
-	padding: 2px 4px;
-	font-size: 90%;
-	color: #fff;
-	background-color: #000;
-	border-radius: 3px;
-	-webkit-box-shadow: inset 0 -1px 0 rgba(0,0,0,.25);
-	box-shadow: inset 0 -1px 0 rgba(0,0,0,.25)
+    padding: 2px 4px;
+    font-size: 90%;
+    color: #fff;
+    background-color: #000;
+    border-radius: 3px;
+    -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .25);
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .25)
 }
 
-code{
+
+/* code{
     font-family: Consolas;
     color: #c7254e;
     background-color: #f9f2f4;
     margin: 0px 2px 0px 2px;
-}
-.label{
+} */
+
+.label {
     font-family: Consolas;
     display: inline;
     color: #fff;
@@ -154,24 +175,31 @@ code{
     margin: 0px 2px 0px 2px;
     border-radius: 2px;
 }
-.label-red{
+
+.label-red {
     background: #d9534f;
 }
-.label-green{
+
+.label-green {
     background: #5cb85c;
 }
-.label-blue{
+
+.label-blue {
     background: #428bca;
 }
-.label-sky{
+
+.label-sky {
     background: #5bc0de;
 }
-.label-orange{
+
+.label-orange {
     background: #f0ad4e;
 }
 
+
 /* OJ 题目部分 CSS 效果 */
-.oj{
+
+.oj {
     display: block;
     background: #f7f7f7;
     color: #666;
@@ -179,66 +207,81 @@ code{
     padding: 5px 20px 5px 20px;
     height: 100%;
 }
-.part:before{
+
+.part:before {
     content: attr(title);
     color: #444;
-    font-weight: bold; 
+    font-weight: bold;
     font-size: 20px;
 }
+
 .clear {
-        clear: both;
+    clear: both;
 }
-.samp{
+
+.samp {
     font-family: "Consolas";
     display: block;
 }
+
 .input,
-.output{
+.output {
     display: block;
     width: 45%;
     height: 100%;
 }
-.input{
+
+.input {
     float: left;
 }
-.output{
+
+.output {
     float: right;
 }
-.oj blockquote{
+
+.oj blockquote {
     /* 引用在 .oj 类中 显示颜色修改 */
     background: #888;
     color: #fff
 }
 
+
 /* 代码段部分隐藏 CSS 效果 */
-.hider_title{
+
+.hider_title {
     font-family: "Microsoft Yahei";
     cursor: pointer;
     font-weight: bold;
     /* background-color: #555; */
     width: auto;
 }
-.fold_parent{
+
+.fold_parent {
     padding: 5px;
     /* background-color: #555; */
     border-radius: 5px;
 }
-.fold_hider .close:after{
+
+.fold_hider .close:after {
     content: "▼";
 }
-.fold_hider .open:after{
+
+.fold_hider .open:after {
     content: "▲";
 }
 
+
 /* blockquote-center 标签 */
+
 .blockquote-center {
-  position: relative;
-  margin: 40px 0;
-  padding: 0;
-  border-left: none;
-  text-align: center;
+    position: relative;
+    margin: 40px 0;
+    padding: 0;
+    border-left: none;
+    text-align: center;
 }
-.blockquote-center::before, 
+
+.blockquote-center::before,
 .blockquote-center::after {
     position: absolute;
     content: ' ';
@@ -249,114 +292,133 @@ code{
     background-repeat: no-repeat;
     background-position: 0 -6px;
     background-size: 22px 22px;
-  }
+}
+
 .blockquote-center ::before {
     top: -20px;
     background-image: url($center-quote-left);
     border-top: 1px solid #666;
 }
+
 .blockquote-center::after {
     bottom: -20px;
     background-image: url($center-quote-right);
     border-bottom: 1px solid #666;
     background-position: 100% 8px;
-  }
+}
 
 .blockquote-center p,
-.blockquote-center div{ 
-    text-align: center; 
+.blockquote-center div {
+    text-align: center;
 }
 
 
 /* note 标签 */
+
 .note {
-  padding: 20px;
-  margin: 20px 0;
-  border: 1px solid #eee;
-  border-left-width: 5px;
-  border-radius: 3px;
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+    border-radius: 3px;
 }
+
 .note h2,
 .note h3,
 .note h4,
 .note h5,
 .note h6 {
-  margin-top: 0;
-  margin-bottom: 5px;
+    margin-top: 0;
+    margin-bottom: 5px;
 }
+
 .note p:last-child {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
+
 .note code {
-  border-radius: 3px;
+    border-radius: 3px;
 }
+
 .note .note {
-  margin-top: -5px;
+    margin-top: -5px;
 }
+
 .default {
-  border-left-color: #777;
+    border-left-color: #777;
 }
+
 .default h2,
 .default h3,
 .default h4,
 .default h5,
 .default h6 {
-  color: #777;
+    color: #777;
 }
+
 .primary {
-  border-left-color: #428bca;
+    border-left-color: #428bca;
 }
+
 .primary h2,
 .primary h3,
 .primary h4,
 .primary h5,
 .primary h6 {
-  color: #428bca;
+    color: #428bca;
 }
+
 .success {
-  border-left-color: #5cb85c;
+    border-left-color: #5cb85c;
 }
+
 .success h2,
 .success h3,
 .success h4,
 .success h5,
 .success h6 {
-  color: #5cb85c;
+    color: #5cb85c;
 }
+
 .danger {
-  border-left-color: #d9534f;
+    border-left-color: #d9534f;
 }
+
 .danger h2,
 .danger h3,
 .danger h4,
 .danger h5,
 .danger h6 {
-  color: #d9534f;
+    color: #d9534f;
 }
+
 .warning {
-  border-left-color: #f0ad4e;
+    border-left-color: #f0ad4e;
 }
+
 .warning h2,
 .warning h3,
 .warning h4,
 .warning h5,
 .warning h6 {
-  color: #f0ad4e;
+    color: #f0ad4e;
 }
+
 .info {
-  border-left-color: #5bc0de;
+    border-left-color: #5bc0de;
 }
+
 .info h2,
 .info h3,
 .info h4,
 .info h5,
 .info h6 {
-  color: #5bc0de;
+    color: #5bc0de;
 }
 
 
-
 /* 半透明折叠 */
+
 .unfold-wrap {
     max-height: 15rem;
     /*设置默认高度*/
