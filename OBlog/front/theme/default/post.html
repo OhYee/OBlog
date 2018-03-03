@@ -89,7 +89,7 @@
 
             <div class="card-action">
                 <i class="material-icons left">label_outline</i> {% for tag in Post['tags'] %}
-                <a href="/tags/{{ tag[1] }}">
+                <a href="/tag/{{ tag[1] }}">
                     <div class="chip {{ tag[4] }}">
                         <img src="{{ tag[3] }}" onerror='$(this).attr("style","display:none")' onload='$(this).attr("style","")' /> {{ tag[0] }}
                     </div>
