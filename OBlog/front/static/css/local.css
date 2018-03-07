@@ -86,10 +86,12 @@ code {
     font-family: Consolas;
     color: #c7254e;
     background-color: #f9f2f4;
-    margin: 0px 2px 0px 2px;
+    margin: 0px 2px -6px 2px;
     overflow-x: auto;
+    overflow-y: hidden;
     max-width: 100%;
     display: inline-block;
+    line-height: 1.5em;
 }
 
 
