@@ -3,7 +3,7 @@ import re
 import time
 from flask import g
 from .. import database as db
-from . import Nav, Friends, Posts
+from . import Nav, Friends
 
 
 def timedeFormat(t):
