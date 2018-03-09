@@ -47,8 +47,8 @@
 
     $(document).ready(function() {
         fetchData('/api/tags/', data => {
-            vue.tags = sortTagsByNumber(data);
+            vue.tags = sortTagsByPinYin(data);
             vue.loading = false;
-        });
+        }, 'tags');
     })
 </script> {% endblock %}
