@@ -12,7 +12,11 @@ from OBlog.back.getData.Pages import getPages
 
 @app.route('/')
 def index():
-    return render_template("index.html")
+    return render_template(
+        "index.html",
+        newPosts=getPosts.getNewestPosts(),
+        recommendPosts=getPosts.getRecommendPosts()
+    )
 
 
 @app.route('/post/<path:url>')

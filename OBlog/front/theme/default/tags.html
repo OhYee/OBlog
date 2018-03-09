@@ -1,0 +1,54 @@
+{% extends "layout/layout.html" %} {% block content %}
+
+<div class="container">
+    <div id="app" class="center">
+        <div v-if="loading" class="center">{% include "layout/loading.html" %}</div>
+        <div v-if="!loading">
+            <div class="row section" v-for="letter in tags" v-if="letter.tags.length!=0">
+                <div class="col l2 s12">
+                    <span class="blue-text" style="font-size:2em" v-text="letter.char"></span>
+                </div>
+                <div class="col l10 s12">
+                    <div style="display:inline" v-for="(tag) in letter.tags">
+                        <a v-bind:href=" '/tag/'+tag.english">
+                            <div class="chip hoverable z-depth-1" v-bind:class="tag.class">
+                                <img v-bind:src="tag.img" onerror='$(this).attr("style","display:none")' onload='$(this).attr("style","")' />
+                                <span v-text='tag.chinese'></span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+{% endblock %} {% block script %}
+<script>
+    $('ul li#标签').toggleClass('active');
+    $(document).ready(function() {
+        $('.parallax').parallax();
+    });
+
+    vue = new Vue({
+        el: '#app',
+        data: {
+            tags: [],
+            loading: true,
+        },
+        methods: {},
+        watch: {},
+    })
+
+    $(document).ready(function() {
+        fetchData('/api/tags/', data => {
+            vue.tags = sortTagsByNumber(data);
+            vue.loading = false;
+        });
+    })
+</script> {% endblock %}
