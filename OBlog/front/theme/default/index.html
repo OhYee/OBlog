@@ -1,24 +1,34 @@
 {% extends "layout/layout.html" %} {% block content %}
 
-
-
-
-
 <div class="container">
     <div class="center">
-        <img src="/static/img/logo.svg" height=100px />
+        <img id="logo" src="/static/img/logo.svg" height="200px" />
     </div>
     <div id="app">
         <div class="row">
             <div class="input-field col l6 offset-l3 s12">
-                <input placeholder="搜索你想要的..." id="search" type="text" v-model="searchwords">
+                <input placeholder="搜索你想要的..." id="search" type="text" v-model="searchwords" v-on:focus="searchFocus" v-on:blur="searchBlur">
                 <label for="search">站内搜索</label>
             </div>
         </div>
-
-        <div id="search-holder" style="display:none">
+        <div v-if="searchwords==''">
+            <div class="unfold-wrap">
+                <div class="content">
+                    <div class="row">
+                        <div class="col s12 m6">
+                            最新文章 {% for post in newPosts %}{% include "layout/post_card.html" %}{% endfor %}
+                        </div>
+                        <div class="col s12 m6">
+                            特别推荐 {% for post in recommendPosts %}{% include "layout/post_card.html" %}{% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="search-holder" v-if="searchwords!=''">
             <div v-if="loading" class="center">{% include "layout/loading.html" %}</div>
             <div v-if="!loading">
+                <div v-if="noResult">无结果</div>
                 <div class="unfold-wrap">
                     <div class='content'>
                         <div class="center">
@@ -62,73 +72,88 @@
 
         </div>
     </div>
+</div>
 
 
 
 
 
 
+{% endblock %} {% block script %}
+<script>
+    $('ul li#首页').toggleClass('active');
+    $(document).ready(function() {
+        $('.parallax').parallax();
+    });
 
-    {% endblock %} {% block script %}
-    <script>
-        $('ul li#首页').toggleClass('active');
-        $(document).ready(function () {
-            $('.parallax').parallax();
-        });
-
-        vue = new Vue({
-            el: '#app',
-            data: {
-                tags: [],
-                posts: [],
-                loading: true,
-                searchwords: ""
+    vue = new Vue({
+        el: '#app',
+        data: {
+            tags: [],
+            posts: [],
+            loading: true,
+            noResult: false,
+            searchwords: "",
+        },
+        methods: {
+            searchFocus: function() {
+                $("#logo").animate({
+                    height: "100px"
+                }, 200);
             },
-            methods: {}
-        })
-
-        function search() {
-            searchwords = vue.searchwords;
-
-            vue.loading = true;
-            if (searchwords == '') {
-                fetchData('/api/tags/', data => {
-                    vue.tags = sortTagsByPinYin(data);
-                    vue.loading = false;
-                    vue.$nextTick(function () {
-                        initUnfold($('.unfold-wrap'));
-                    });
-                });
-                vue.posts = [];
-            } else {
-                var cnt = 0
-                fetchData('/api/search_tags/' + searchwords, data => {
-                    vue.tags = sortTagsByPinYin(data);
-                    cnt += 1;
-                    if (cnt == 2) {
-                        vue.loading = false;
-                        vue.$nextTick(function () {
-                            initUnfold($('.unfold-wrap'));
-                        });
-                    }
-                });
-                fetchData('/api/search_posts/' + searchwords, data => {
-                    vue.posts = data;
-                    cnt += 1;
-                    if (cnt == 2) {
-                        vue.loading = false;
-                        vue.$nextTick(function () {
-                            initUnfold($('.unfold-wrap'));
-                        });
-                    }
-                });
+            searchBlur: function() {
+                $("#logo").animate({
+                    height: "200px"
+                }, 300);
             }
+        },
+        watch: {
+            searchwords: function() {
+                waitUntilLast('searchInput', () => {
+                    this.loading = true;
+                    if (this.searchwords == '') {
+                        this.tags = [];
+                        this.posts = [];
+                        this.noResult = true;
 
-        }
+                        this.$nextTick(function() {
+                            initUnfold($('.unfold-wrap'));
+                        });
+                    } else {
+                        var cnt = 0;
+                        var callbackFunction = () => {
+                            if (cnt == 2) {
+                                this.loading = false;
+                                if (this.tags.length + this.posts.length == 0)
+                                    this.noResult = true;
+                                else
+                                    this.noResult = false;
 
-        $(document).ready($ => $("#search-holder").attr("style", ""));
-        $(document).ready($ => search());
-        vue.$watch('searchwords', $ => search());
+                                this.$nextTick(function() {
+                                    initUnfold($('.unfold-wrap'));
+                                });
+                            }
+                        }
+                        fetchData('/api/search_tags/' + this.searchwords, data => {
+                            this.tags = data;
+                            cnt += 1;
+                            callbackFunction()
+                        }, 'tags');
+                        fetchData('/api/search_posts/' + this.searchwords, data => {
+                            this.posts = data;
+                            cnt += 1;
+                            callbackFunction()
+                        }, 'posts');
+                    }
+                }, 1000)
+                this.inputing = true;
+            }
+        },
+    })
 
 
-    </script> {% endblock %}
+
+    // $(document).ready($ => $("#search-holder").attr("style", ""));
+    // $(document).ready($ => search());
+    // vue.$watch('searchwords', $ => search());
+</script> {% endblock %}

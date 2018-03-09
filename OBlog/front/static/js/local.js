@@ -1,10 +1,12 @@
-$(document).ready(function () {
+$(document).ready(function() {
     $(".button-collapse").sideNav(); // 移动端侧边栏
-    $('pre codeblock').each(function (i, block) {
+    // 代码高亮
+    $('pre codeblock').each(function(i, block) {
         hljs.highlightBlock(block);
     });
     autoHeight();
     showMessage();
+    initUnfold($('.unfold-wrap'));
 });
 
 $(document).resize(autoHeight());
@@ -13,8 +15,8 @@ hljs.configure({
 });
 
 //确保 jquery 加载完成
-$(document).ready(function () {
-    $(document).on('click', '.fold_hider', function () {
+$(document).ready(function() {
+    $(document).on('click', '.fold_hider', function() {
         $('>.fold', this.parentNode).slideToggle();
         $('>:first', this).toggleClass('open');
     });
@@ -27,25 +29,86 @@ function autoHeight() {
     $("main").attr("style", "min-height:" + (document.documentElement.clientHeight - $("header").height() - $("footer").height() - 40) + "px;");
 }
 
-window.onload = function () {
+window.onload = function() {
     autoHeight();
 };
-window.onresize = function () {
+window.onresize = function() {
     autoHeight();
 };
 
+var _requestIndex = {};
 
-function fetchData(url, solve, idx) {
+function fetchData(url, solve, id) {
+    if (_requestIndex[id])
+        _requestIndex[id] = _requestIndex[id] + 1;
+    else
+        _requestIndex[id] = 0;
+
+    var responseIndex = _requestIndex[id];
+
     fetch(url).then(
         response => response.json()
     ).then(
-        data => solve(data, idx)
+        data => {
+            if (_requestIndex[id] == responseIndex) {
+                delete _requestIndex[id];
+                return solve(data);
+            } else
+                console.log("throw data");
+        }
     ).catch(
         e => console.log("Oops, error:" + e)
     );
 }
 
+var _timer = {}
 
+function waitUntilLast(id, fun, time) {
+    if (_timer[id]) {
+        clearTimeout(_timer[id]);
+        delete _timer[id];
+    }
+    return _timer[id] = setTimeout(() => {
+        fun();
+        delete _timer[id];
+    }, time)
+}
+
+
+/* 按照首字母排序，英语在前，汉语在后 */
+function sortTagsByPinYin(tags) {
+    if (!String.prototype.localeCompare)
+        return tags.sort();
+
+    var letters = "*abcdefghjklmnopqrstwxyz".split('');
+    var zh = "阿八嚓哒妸发旮哈讥咔垃痳拏噢妑七呥扨它穵夕丫帀".split('');
+
+    var newTags = [];
+    $.each(letters, function(i) {
+        var curr1 = [],
+            curr2 = [];
+        var thisChar = this;
+        $.each(tags, function() {
+            if (this.chinese && this.chinese.length > 0) {
+                var firstChar = this.chinese[0].toLowerCase()
+                if (firstChar >= 'a' && firstChar <= 'z') {
+                    if (firstChar == thisChar) {
+                        curr1.push(this);
+                    }
+                } else if ((!zh[i - 1] || zh[i - 1].localeCompare(this.chinese, 'zh') <= 0) && this.chinese.localeCompare(zh[i], 'zh') == -1) {
+                    curr2.push(this);
+                }
+            }
+        });
+        curr1.sort();
+        curr2.sort((a, b) => a.chinese.localeCompare(b.chinese, 'zh'));
+        newTags.push({
+            char: thisChar[0],
+            tags: curr1.concat(curr2)
+        });
+    });
+    return newTags;
+}
 
 function showMessage() {
     $("body").prepend("<div id='attitionMessage' class='center pink darken-3 white-text'><a class='white-text right' href='javascript:removeMessage();'><i class='material-icons left'>close</i></a>博客从Hexo迁移到<a class='blue-text text-lighten-2' href='https://github.com/OhYee/OBlog'>自己写的系统</a>，若有问题，请反馈到<a class='blue-text text-lighten-2' href='mailto:oyohyee@oyohyee.com'>oyohyee@oyohyee.com</a>，<a class='blue-text text-lighten-2' href='/discuss'>评论区</a>、<a  class='blue-text text-lighten-2' href='https://github.com/OhYee/OBlog/issues'>GitHub</a><br>如果无法正常渲染，访问老站<a class='blue-text text-lighten-2' href='http://blog.oyohyee.com/'>http://blog.oyohyee.com</a></div>");
@@ -56,8 +119,8 @@ function removeMessage() {
 }
 
 // 初始化查看全部
-function initUnfold(e) {    
-    e.css('maxHeight', "");   
+function initUnfold(e) {
+    e.css('maxHeight', "");
     if (e.children('.content').height() > e.height()) {
         var tips = $(e).attr('tips');
         if (!tips) tips = '显示更多';
@@ -74,7 +137,7 @@ function initUnfold(e) {
 
 // 统计
 var _hmt = _hmt || [];
-(function () {
+(function() {
     var hm = document.createElement("script");
     hm.src = "https://hm.baidu.com/hm.js?c3c4a93be88257973d97af02f735ed4e";
     var s = document.getElementsByTagName("script")[0];
@@ -82,7 +145,7 @@ var _hmt = _hmt || [];
 })();
 
 // 自动推送
-(function () {
+(function() {
     var bp = document.createElement('script');
     var curProtocol = window.location.protocol.split(':')[0];
     if (curProtocol === 'https') {
@@ -95,33 +158,6 @@ var _hmt = _hmt || [];
 })();
 
 
-/* 按照首字母排序，英语在前，汉语在后 */
-function sortTagsByPinYin(tags) {
-    if (!String.prototype.localeCompare)
-        return tags;
-
-    var letters = "*abcdefghjklmnopqrstwxyz".split('');
-    var zh = "阿八嚓哒妸发旮哈讥咔垃痳拏噢妑七呥扨它穵夕丫帀".split('');
-
-    var newTags = [];
-    $.each(letters, function (i) {
-        var curr1 = [], curr2 = [];
-        var thisChar = this;
-        $.each(tags, function () {
-            if (this.chinese && this.chinese.length > 0) {
-                if (this.chinese[0] == thisChar) {
-                    curr1.push(this);
-                } else if ((!zh[i - 1] || zh[i - 1].localeCompare(this.chinese, 'zh') <= 0) && this.chinese.localeCompare(zh[i], 'zh') == -1) {
-                    curr2.push(this);
-                }
-            }
-        });
-        curr1.sort();
-        curr2.sort((a, b) => a.chinese.localeCompare(b.chinese, 'zh'));
-        newTags = newTags.concat(curr1).concat(curr2);
-    });
-    return newTags;
-}
 
 /* 按照文章数排序 */
 var sortTagsByNumber = tags => tags.sort((a, b) => parseInt(b.cnt) - parseInt(a.cnt));

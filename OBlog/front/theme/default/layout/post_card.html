@@ -1,0 +1,20 @@
+<div class="card hoverable">
+    <div class="card-content">
+        <a href="/post/{{ post['url'] }}">
+            <p class="card-title activator">
+                {{ post['title'] }}
+            </p>
+        </a>
+        <p>{{ post['abstruct'] }}</p>
+    </div>
+    <div class="card-action">
+        <i class="material-icons left">label_outline</i> {% for tag in post['tags'] %}
+        <a href='/tag/{{ tag[1] }}'>
+            <div class="chip {{ tag[4] }}">
+                <img src="{{ tag[3] }}" onerror='$(this).attr("style","display:none")' onload='$(this).attr("style","")' />
+                <span>{{ tag[0] }}</span>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>

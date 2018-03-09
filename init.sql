@@ -15,6 +15,10 @@ create table posts(
     primary key(url)
 );
 
+create view posts_card as 
+select url,title,abstruct,tags,time,updatetime,view,published
+from posts;
+
 create table discuss(
     id          text    not null,   -- 序号
     username    text    not null,   -- 显示的用户名
@@ -85,3 +89,4 @@ insert into SiteConfig(name,value) values("author","");
 insert into SiteConfig(name,value) values("blogname","");
 insert into SiteConfig(name,value) values("email","");
 insert into SiteConfig(name,value) values("rooturl","");
+insert into SiteConfig(name,value) values("recommend","");

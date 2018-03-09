@@ -422,7 +422,7 @@ kbd {
 /* 半透明折叠 */
 
 .unfold-wrap {
-    max-height: 15rem;
+    max-height: 25rem;
     /*设置默认高度*/
     overflow: hidden;
     position: relative;
