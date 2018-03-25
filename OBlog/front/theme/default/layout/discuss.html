@@ -5,14 +5,14 @@
             <input type="hidden" name="url" value="discuss">
             <div class="row">
                 <div class="col s12 l4 input-field">
-                    <input placeholder="example@example.com" id="email" type="text" name="email" class="validate" pattern="^[A-Za-z0-9\u4e00-\u9fa5]+@[A-Za-z0-9_-]+(\.[a-zA-Z0-9_-]+)+$">
+                    <input placeholder="example@example.com" id="email" type="text" name="email" class="validate" pattern="^[A-Za-z0-9\u4e00-\u9fa5]+@[A-Za-z0-9_-]+(\.[a-zA-Z0-9_-]+)+$" required="必须填写您的邮箱，以方便联系">
                     <label for="email">电子邮箱(不会显示完整地址)</label>
                 </div>
             </div>
             <div class="row">
                 <div class="col s12 input-field">
                     <textarea id="textarea1" name="raw" class="materialize-textarea"></textarea>
-                    <label for="textarea1">评论(支持markdown)</label>
+                    <label for="textarea1">评论(支持markdown。请使用中文以及不要发布广告内容)</label>
                 </div>
             </div>
             <div class="row">
@@ -57,13 +57,21 @@
                         <span click="" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="@他，他将收到邮件提醒">email</span>
                     </i>
                 </div>
-                <p v-html="d.html"></p>
+                <div class="fold_parent" v-if="d.ad=='1'">
+                    <div class="fold_hider">
+                        <div class="close hider_title">点击查看/关闭被识别为广告的评论</div>
+                    </div>
+                    <div class="fold">
+                        <p v-html="d.html"></p>
+                    </div>
+                </div>
+                <p v-if="d.ad!='1'" v-html="d.html"></p>
 
             </div>
             <div class="card-action">
                 <span v-text="d.time"></span>
                 <span class="right">#
-                    <span v-text="d.id"></span>
+                <span v-text="d.id"></span>
             </div>
 
         </div>
@@ -82,13 +90,13 @@
             sortType: '逆序排序',
         },
         methods: {
-            makeSortType: function (_sortType) {
+            makeSortType: function(_sortType) {
                 console.log(_sortType)
 
                 this.sortType = _sortType;
                 this.makeSort();
             },
-            makeSort: function () {
+            makeSort: function() {
                 this.discuss = this.discuss.sort((a, b) => {
                     var ret;
                     if (this.sortType == "顺序排序") {
@@ -125,6 +133,10 @@
         fetchData("/api/discuss/" + url, data => {
             vue.discuss = data;
             vue.makeSort();
+            vue.$nextTick(function() {
+                $("div.fold").css("display", "none");
+            })
+
         });
     });
 

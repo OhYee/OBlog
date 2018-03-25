@@ -21,6 +21,8 @@ def admin_discuss_add():
         errorcode = Discuss.add(_set)
         if errorcode == 1:
             flash("发布失败：格式错误")
+        elif errorcode == 2:
+            flash("发布失败：请使用中文发布")
     return redirect(_set['url'])
 
 
@@ -34,6 +36,7 @@ def admin_discuss_update():
 
         _set['sendemail'] = '1' if 'sendemail' in request.values else '0'
         _set['show'] = '1' if 'show' in request.values else '0'
+        _set['ad'] = '1' if 'ad' in request.values else '0'
 
         _where = {'id': request.form['id']}
 

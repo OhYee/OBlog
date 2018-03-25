@@ -34,8 +34,11 @@
                     <div class="col s2">
                         IP
                     </div>
-                    <div class="col s2">
+                    <div class="col s1">
                         显示
+                    </div>
+                    <div class="col s1">
+                        广告
                     </div>
                     <div class="col s4">
                         评论内容
@@ -74,9 +77,13 @@
                             <div class="col s2">
                                 <span v-text="d.ip"></span>
                             </div>
-                            <div class="col s2">
+                            <div class="col s1">
                                 <input name="show" type="checkbox" v-bind:id="'show'+idx" v-bind:checked="d.show==1" />
                                 <label v-bind:for="'show'+idx"></label>
+                            </div>
+                            <div class="col s1">
+                                <input name="ad" type="checkbox" v-bind:id="'ad'+idx" v-bind:checked="d.ad==1" />
+                                <label v-bind:for="'ad'+idx"></label>
                             </div>
                             <div class="col s4">
                                 <span class="truncate" v-text="d.raw"></span>

@@ -10,15 +10,21 @@ import re
 from ..sendemail import Email
 
 
+def contain_zh(word):
+    return re.match(u'[\u4e00-\u9fa5]+',word)!=None
+
 def add(_set):
     if not re.match(r'^[A-Za-z0-9\u4e00-\u9fa5]+@[A-Za-z0-9_-]+(\.[a-zA-Z0-9_-]+)+$', _set['email']):
         return 1
+    if not contain_zh(_set['raw']):
+        return 2
 
     _set['id'] = str(getLastID() + 1)
     _set['html'] = renderMarkdown(_set['raw'], allowHtml=False)
     _set['time'] = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     _set['username'] = _set['email'][0:2] + '******' + _set['email'][-2:]
     _set['show'] = '1'
+    _set['ad'] = '0'
 
     # print(_set)
     db.insert_db("discuss", _set)
