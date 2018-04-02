@@ -2,7 +2,7 @@
 <div class="card hoverable z-depth-2">
     <div class="card-content ">
         <form id="form" action="/admin/discuss/add/" method="post">
-            <input type="hidden" name="url" value="discuss">
+            <input type="hidden" name="url" value="{{ discuss_url }}">
             <div class="row">
                 <div class="col s12 l4 input-field">
                     <input placeholder="example@example.com" id="email" type="text" name="email" class="validate" pattern="^[A-Za-z0-9\u4e00-\u9fa5]+@[A-Za-z0-9_-]+(\.[a-zA-Z0-9_-]+)+$" required="必须填写您的邮箱，以方便联系">
