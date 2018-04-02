@@ -19,7 +19,7 @@ def index():
     )
 
 
-@app.route('/post/<path:url>')
+@app.route('/post/<path:url>/')
 def post(url):
     post = getPosts.getPost(url)
     if post == None:
@@ -37,7 +37,7 @@ def img_redirect(url):
     return redirect('/static/img/posts/' + url)
 
 
-@app.route('/tag/<url>')
+@app.route('/tag/<url>/')
 def tag(url):
     tag = getTags.getChinese(url)
     if not tag:
@@ -46,7 +46,7 @@ def tag(url):
     return render_template("tag.html", posts=posts, tag=tag)
 
 
-@app.route('/<path:url>')
+@app.route('/<path:url>/')
 def pages(url):
     Pages = getPages()
     template = None
