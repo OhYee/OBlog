@@ -11,7 +11,7 @@ from ..sendemail import Email
 
 
 def contain_zh(word):
-    return re.match(u'[\u4e00-\u9fa5]+',word)!=None
+    return len(re.findall(u'[\u4e00-\u9fa5]+',word))!=0
 
 def add(_set):
     if not re.match(r'^[A-Za-z0-9\u4e00-\u9fa5]+@[A-Za-z0-9_-]+(\.[a-zA-Z0-9_-]+)+$', _set['email']):
