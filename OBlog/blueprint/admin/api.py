@@ -9,12 +9,12 @@ def login():
     status = checkPassword(request.form.to_dict())
     if status == 0:
         session['admin'] = True
-    return json.dumps({'status': str(status)})
+    return json.dumps({'status', str(status)})
 
 
 @adminApiBP.route('/update/', methods=['POST'])
 def update():
-    if session.get('admin',False)!=True:
+    if session.get('admin',False)==True:
         abort(401)
     from .main import setSite
     status = setSite(request.form.to_dict())

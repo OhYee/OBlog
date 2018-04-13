@@ -1,9 +1,0 @@
-{% macro input(id, value, groupClass="", type='text', hint="", helpBlock="") -%}
-<div class="form-group" {% if groupClass!="" %} v-bind:class="{{ groupClass }}" {% endif %}>
-    <label class="sr-only" for="{{ id }}">{{ hint }}</label>
-    <input type="{{ type }}" class="form-control" id="{{ id }}" placeholder="{{ hint }}" v-model="{{ value }}"> {% if helpBlock != "" %}
-    <span id="helpBlock" class="help-block" v-html={{ helpBlock }}></span> {% endif %}
-</div>
-{%- endmacro %} {% macro textarea(name,value="",rows='30') -%}
-<textarea class="form-control" rows="{{ rows }}" v-model="{{ value }}"></textarea>{%- endmacro %} {% macro button(submit,text="提交") -%}
-<button @click="{{ submit }}" class="btn btn-default">{{ text }}</button>{%- endmacro %}

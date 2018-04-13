@@ -1,0 +1,5 @@
+{% macro script(path) -%}
+<script>
+    {% include path %}
+</script>
+{%- endmacro %}

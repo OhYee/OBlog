@@ -1,0 +1,8 @@
+{% macro input(id, hint, type="text",label=true) -%}
+<div class="form-group has-feedback" :class="{{ id }}.class">
+    <label {% if not label %}class="sr-only"{% endif %} for="{{ id }}">{{ hint }}</label>
+    <input type="{{ type }}" class="form-control" id="{{ id }}" placeholder="{{ hint }}" v-model="{{ id }}.value" aria-describedby="{{ id }}Hint">
+    <span class="glyphicon form-control-feedback" aria-hidden="true" :class="{{ id }}.icon"></span>
+    <span id="{{ id }}Hint" class="help-block" v-html="{{ id }}.hint"></span>
+</div>
+{%- endmacro %}

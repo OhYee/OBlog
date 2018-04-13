@@ -2,20 +2,16 @@ from OBlog import database as db
 from flask import g, current_app
 
 
+def existPost(url):
+    return db.exist_db('posts', {'url': url}) != None
+
+
 def getPosts():
     if not hasattr(g, "getPosts"):
         res = db.query_db("select * from posts;")
-        res.sort(key=lambda x: int(x["idx"]))
+        # res.sort(key=lambda x: int(x["idx"]))
         g.getPosts = res
     return g.getPosts
-
-
-def getPostsDict():
-    if not hasattr(g, "getPostsDict"):
-        posts = getPosts()
-        res = dict((post['url'], post) for post in posts)
-        g.getPostsDict = res
-    return g.getPostsDict
 
 
 def addPosts(postRequest):

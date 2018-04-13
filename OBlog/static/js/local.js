@@ -1,7 +1,7 @@
 /* 加载完成后自动执行 */
 $(document).ready(function() {
     // 移动端侧边栏
-    $(".button-collapse").sideNav();
+    // $(".button-collapse").sideNav();
 
     // 代码高亮
     $('pre codeblock').each(function(i, block) {

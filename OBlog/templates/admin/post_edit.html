@@ -1,0 +1,40 @@
+{% extends "admin/layout.html" %} {% block title %}页面模板-管理员界面{% endblock %}{% block admin_content %} {# 引入宏 #}{% from 'macro/form.macro' import input %}
+
+<div v-if="loading">{% include 'layout/loading.html' %}</div>
+<div v-if="!loading" class="form-horizontal">
+    <div class="row">
+        <div class="col-sm-6">
+            {{ input("url","文章链接") }}
+        </div>
+        <div class="col-sm-6">
+            {{ input("title","文章标题") }}
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-5">
+            {{ input("time","发布时间") }}
+        </div>
+        <div class="col-sm-5">
+            {{ input("updatetime","更新时间") }}
+        </div>
+        <div class="col-sm-2">
+            {{ input("view","访问量","number") }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            {{ input("tags","标签") }}
+        </div>
+    </div>
+
+    <span id="content" class="help-block">
+        支持markdown，mathjax
+    </span>
+    <textarea class="form-control" aria-describedby="content" rows="30" v-model="content"></textarea>
+</div>
+
+
+
+
+{% endblock %} {% block script %} {% from 'macro/script.macro' import script %}{{ script('admin/js/post_edit.js') }} {% endblock %}

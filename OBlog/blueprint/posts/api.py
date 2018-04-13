@@ -27,6 +27,14 @@ def delete():
     return json.dumps({'status': str(status)})
 
 
+@postsApiBP.route('/edit/exist/', methods=['POST'])
+def exist():
+    postRequest = request.form.to_dict()
+    from .main import existPost
+    status = existPost(postRequest.get('url', ''))
+    return json.dumps({'status': '0' if status else '1'})
+
+
 @postsApiBP.route('/edit/getlist/')
 def getList():
     from .main import getPostTemplateList
