@@ -1,0 +1,69 @@
+{% extends 'layout/layout.html' %} {% block title %} 登陆 {% endblock %} {% block content %} {% import 'macro/form.html' as
+form %}
+
+<div class="container">
+
+    <div id="app" class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">登陆</h3>
+        </div>
+        <div class="panel-body">
+
+            <div class="row">
+                <div class="col-sm-10 col-sm-offset-1">
+                    <div class="form-group" v-bind:class="message.groupClass">
+                        <label class="sr-only" for="passwd">密码</label>
+                        <input type="password" class="form-control" id="passwd" placeholder="密码" v-model="password" @keyup.keyup.enter="submit" aria-describedby="helpBlock">
+                        <span id="helpBlock" class="help-block" v-html='message.helpBlock'></span>
+                    </div>
+                    <div class="pull-right">
+                        <button @click="submit" class="btn btn-default">登陆</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %} {% block script %}
+<script>
+    var vue = new Vue({
+        el: '#app',
+        data: {
+            password: "",
+            message: {
+                helpBlock: "",
+                groupClass: ""
+            },
+            loading: true,
+        },
+        methods: {
+            submit: function () {
+                queryStr = "password=" + this.password;
+                console.log(queryStr)
+                postData('/api/admin/login/', encodeURI(queryStr), (data) => {
+                    if (data['status'] == '0') {
+                        location.reload();
+                    } else if (data['status'] == '1') {
+                        this.message = {
+                            groupClass: 'has-error',
+                            helpBlock: '登陆失败'
+                        }
+                    } else {
+                        console.log("服务器返回未知信息", data);
+                    }
+                }, "login")
+            }
+        },
+        watch: {
+            password: function () {
+                console.log(123);
+                this.message = {
+                    helpBlock: "",
+                    groupClass: ""
+                };
+            }
+        }
+    });
+</script> {% endblock %}

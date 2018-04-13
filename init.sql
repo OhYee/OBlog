@@ -19,7 +19,7 @@ create view posts_card as
 select url,title,abstruct,tags,time,updatetime,view,published
 from posts;
 
-create table discuss(
+create table comments(
     id          text    not null,   -- 序号
     username    text    not null,   -- 显示的用户名
     email       text,               -- 邮箱
@@ -33,13 +33,6 @@ create table discuss(
     primary key(id)
 );
 
-create table nav(
-    idx     text    not null,   -- 序号
-    name    text    not null,   -- 名称
-    url     text    not null,   -- 链接
-    icon    text,               -- 图标
-    primary key(name)
-);
 
 create table friends(
     idx     text    not null,   -- 序号
@@ -48,23 +41,12 @@ create table friends(
     primary key(name)
 );
 
-create table SiteConfig(
-    name    text    not null,
-    value   text    not null,
-    primary key(name)
-);
-
-create table GlobalVariable(
-    name    text    not null,
-    value   text    not null,
-    primary key(name)
-);
-
-
 create table pages(
-    urlpath     text    not null,
-    filepath    text    not null,
-    primary key(urlpath)
+    url         text not null,
+    title       text not null,
+    idx         text not null,
+    show        text not null,
+    primary key(url)
 );
 
 create table tags(
@@ -76,17 +58,24 @@ create table tags(
     primary key(chinese)
 );
 
-insert into SiteConfig(name,value) values("Password","21232f297a57a5a743894a0e4a801fc3");
-insert into SiteConfig(name,value) values("Record","");
-insert into SiteConfig(name,value) values("view","0");
-insert into SiteConfig(name,value) values("smtp","0");
-insert into SiteConfig(name,value) values("smtpemail","");
-insert into SiteConfig(name,value) values("smtpservice","");
-insert into SiteConfig(name,value) values("smtpuser","");
-insert into SiteConfig(name,value) values("smtppassword","");
-insert into SiteConfig(name,value) values("smtpport","");
-insert into SiteConfig(name,value) values("author","");
-insert into SiteConfig(name,value) values("blogname","");
-insert into SiteConfig(name,value) values("email","");
-insert into SiteConfig(name,value) values("rooturl","");
-insert into SiteConfig(name,value) values("recommend","");
+create table siteConfig(
+    sid text not null,
+    name text,
+    value text,
+    primary key(sid)
+);
+
+insert into siteConfig(sid,name,value) values("password",'密码',"21232f297a57a5a743894a0e4a801fc3");
+insert into siteConfig(sid,name,value) values("beian","备案信息","");
+insert into siteConfig(sid,name,value) values("view","全站访问量","0");
+insert into siteConfig(sid,name,value) values("smtp",'是否启用smtp',"0");
+insert into siteConfig(sid,name,value) values("smtpemail","smtp账户","");
+insert into siteConfig(sid,name,value) values("smtpservice","smtp服务器","");
+insert into siteConfig(sid,name,value) values("smtpuser","smtp用户名","");
+insert into siteConfig(sid,name,value) values("smtppassword","smtp密码","");
+insert into siteConfig(sid,name,value) values("smtpport","smtp端口号","");
+insert into siteConfig(sid,name,value) values("author","站点作者","");
+insert into siteConfig(sid,name,value) values("sitename","站点名称","");
+insert into siteConfig(sid,name,value) values("email","邮箱","");
+insert into siteConfig(sid,name,value) values("rooturl","根目录","");
+insert into siteConfig(sid,name,value) values("recommend","推荐","");

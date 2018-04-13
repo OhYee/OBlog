@@ -1,0 +1,28 @@
+<header>
+
+    <nav class="navbar navbar-default navbar-static-top">
+
+        <div class="container">
+            <ul class="nav navbar-nav">
+                <!-- <li id="index">
+                    <a href="/">首页</a>
+                </li> -->
+                {% for page in Site['pages'] %}{% if Site['pages'][page]['show']=='true' %}
+                <li id="{{ Site['pages'][page]['url'] }}">
+                    <a href="/pages/{{ Site['pages'][page]['url'] }}/">{{ Site['pages'][page]['title'] }}
+                    </a>
+                {% endif %}
+                </li> {% endfor %} {% if session['admin'] %}
+                <li id='admin'>
+                    <a href="/admin/">管理后台</a>
+                </li>
+                <li>
+                    <a href="/admin/logout/">退出登陆</a>
+                </li>{% endif %}
+            </ul>
+        </div>
+    </nav>
+
+
+
+</header>

@@ -1,0 +1,74 @@
+{% extends 'admin/layout.html' %} {% block title %}管理首页{% endblock %} {% block admin_content %}
+<div class="form-horizontal">
+    <div class="form-group" v-for="(value,idx) in siteConfig" :class="value.class">
+        <div class="input-group">
+            <span class="input-group-addon" :id="value.sid" v-text="value.name"></span>
+            <input type="text" class="form-control" :aria-describedby="value.sid" v-model="value.value" :name="value.sid" @keyup.enter="submit(idx)" @input="clear(idx)">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button" @click="submit(idx)">修改</button>
+            </span>
+        </div>
+        <span :id="value.sid" class="help-block" v-html="value.hint"></span>
+    </div>
+</div>
+{% endblock %} {% block script %}
+<script>
+    $(document).ready(() => {
+        vue.loading = true;
+        var temp = JSON.parse('{{ Site|tojson }}');
+        var data = [];
+        for (var key in temp) {
+            var item = temp[key];
+            if (key == 'pages' || key == 'friends')
+                continue;
+            data.class = "";
+            data.hint = "";
+            data.needClear = false;
+            data.push(item);
+        }
+        vue.siteConfig = data;
+        vue.loading = false;
+    });
+
+    var vue = new Vue({
+        el: '#app',
+        data: {
+            siteConfig: [],
+            loading: true,
+        },
+        methods: {
+            submit: function(idx) {
+                queryStr = "";
+                keyList = ['sid', 'value']
+                keyList.forEach(key => {
+                    queryStr += key + '=' + this.siteConfig[idx][key] + '&';
+                });
+
+                console.log(queryStr)
+                postData('/api/admin/update/', encodeURI(queryStr), (data) => {
+                    if (data['status'] == '0') {
+                        this.siteConfig[idx].class = 'has-success';
+                        this.siteConfig[idx].hint = '修改成功';
+                    } else if (data['status'] == '1') {
+                        this.siteConfig[idx].class = 'has-waring';
+                        this.siteConfig[idx].hint = '修改失败';
+                    } else {
+                        this.siteConfig[idx].class = 'has-error';
+                        this.siteConfig[idx].hint = '服务器返回未知信息';
+                    }
+                    this.siteConfig[idx].needClear = true;
+                    this.$set(this.siteConfig, idx, this.siteConfig[idx]);
+                    console.log('ok');
+                }, "update" + idx.toString())
+            },
+            clear: function(idx) {
+                if (this.siteConfig[idx].needClear == true) {
+                    this.siteConfig[idx].class = '';
+                    this.siteConfig[idx].hint = '';
+                    this.siteConfig[idx].needClear = false;
+                    this.$set(this.siteConfig, idx, this.siteConfig[idx]);
+                }
+            }
+        }
+    });
+</script> {% endblock %};

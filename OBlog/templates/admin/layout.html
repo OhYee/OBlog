@@ -1,0 +1,36 @@
+{% extends "layout/layout.html" %} {% block title %}管理员界面{% endblock %}{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-2 col-sm-12">
+            <ul class="nav nav-pills nav-stacked">
+                <li id="admin-sidebar-1" role="presentation">
+                    <a href="/admin/">管理首页</a>
+                </li>
+                <li id="admin-sidebar-2" role="presentation">
+                    <a href="/admin/pages/">页面管理</a>
+                </li>
+                <li id="admin-sidebar-3" role="presentation">
+                    <a href="/admin/posts/">文章管理</a>
+                </li>
+                <li id="admin-sidebar-4" role="presentation">
+                    <a href="/admin/posts/">商品管理</a>
+                </li>
+                <li id="admin-sidebar-5" role="presentation">
+                    <a href="/admin/friends/">友情链接管理</a>
+                </li>
+                <li id="admin-sidebar-6" role="presentation">
+                    <a href="/admin/images/">图片管理</a>
+                </li>
+                <li id="admin-sidebar-7" role="presentation">
+                    <a href="/admin/commits/">评论区管理</a>
+                </li>
+            </ul>
+        </div>
+        <div id="app" class="col-lg-10 col-sm-12">
+            <div id="message-box"></div>
+            {% block admin_content %} {% endblock %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

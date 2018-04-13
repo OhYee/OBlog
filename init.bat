@@ -1,2 +1,2 @@
-del sql.db
-sqlite3 sql.db<init.sql
+del database.db
+sqlite3 database.db<init.sql
