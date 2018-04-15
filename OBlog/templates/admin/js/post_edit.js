@@ -1,15 +1,31 @@
+var type = "add";
+
 $(document).ready(function () {
-    $("ul li#admin-sidebar-2").toggleClass('active');
+    $("ul li#admin-sidebar-3").toggleClass('active');
     var nowTime = (new Date).Format();
     vue.time.value = vue.updatetime.value = nowTime;
     vue.view.value = '0';
-});
 
+
+
+    if (jsonData) {
+        type = "update";
+        console.log(jsonData)
+        var attribList = ['url', 'title', 'time', 'updatetime', 'view', 'tags'];
+        attribList.forEach(item => {
+            vue[item].value = jsonData[item];
+        });
+        vue.raw = jsonData['raw'];
+        vue.abstruct = jsonData['abstruct'];
+        vue.published = jsonData['published'] == 'true' ? true : false;
+        vue.oldurl = vue.url.value;
+    }
+});
 
 var vue = new Vue({
     el: '#app',
     data: {
-        oldrl: "",
+        oldurl: "",
         url: {
             value: "",
             class: "",
@@ -49,10 +65,15 @@ var vue = new Vue({
         abstruct: "",
         raw: "",
         published: true,
-        loading: false
+        loading: false,
+        alert: {
+            class: "",
+            title: "",
+            content: "",
+        }
     },
     methods: {
-        submit: function (type) {
+        submit: function () {
             queryStr = '';
             queryList = ['url', 'title', 'time', 'updatetime', 'view', 'tags'];
             queryList.forEach(item => queryStr += item + '=' + encodeURIComponent(this[item].value) + '&');
@@ -60,20 +81,58 @@ var vue = new Vue({
             queryStr += 'raw=' + encodeURIComponent(this.raw) + '&';
             queryStr += 'published=' + encodeURIComponent(this.published) + '&';
 
+            if (type == 'update')
+                queryStr += 'oldurl=' + encodeURIComponent(this.oldurl) + '&';
 
             console.log(queryStr);
 
-            postData('/api/posts/edit/add/', queryStr, (data) => {
+            postData('/api/posts/' + type + '/', queryStr, (data) => {
                 console.log(data);
                 if (data['status'] == 0) {
-
+                    if (type == 'add') {
+                        this.alert = {
+                            class: "alert-success",
+                            title: "恭喜！",
+                            content: "发布成功",
+                        }
+                        type = 'update';
+                        this.oldurl = this.url.value;
+                    } else {
+                        this.alert = {
+                            class: "alert-success",
+                            title: "恭喜！",
+                            content: "修改成功",
+                        }
+                    }
                 } else if (data['status'] == 1) {
-
+                    this.alert = {
+                        class: "alert-warning",
+                        title: "注意！",
+                        content: "格式存在问题",
+                    }
+                } else if (data['status'] == 2) {
+                    this.alert = {
+                        class: "alert-warning",
+                        title: "注意！",
+                        content: "已存在同样链接的文章",
+                    }
                 } else {
-
+                    this.alert = {
+                        class: "alert-danger",
+                        title: "警告！",
+                        content: "服务器返回未知信息",
+                    }
                 }
+                window.location.href = "#alert";
             });
         },
+        close: function () {
+            this.alert = {
+                class: "",
+                title: "",
+                content: ""
+            };
+        }
     },
     watch: {
         'url.value': function () {
@@ -88,7 +147,7 @@ var vue = new Vue({
                         this.url.class = "has-warning";
                         this.url.hint = "链接合法，正在查询是否可用";
                         this.url.icon = "glyphicon-refresh";
-                        postData('/api/posts/edit/exist/', encodeURI('url=' + this.url.value), data => {
+                        postData('/api/posts/exist/', encodeURI('url=' + this.url.value), data => {
                             if (data['status'] == '0') {
                                 this.url.class = "has-success";
                                 this.url.hint = '连接可用';
@@ -154,6 +213,7 @@ var vue = new Vue({
         },
         'tags.value': function () {
             waitUntilLast('tags', () => {
+                this.tags.value = this.tags.value.replace('，', ',')
                 this.tags.class = "has-success";
                 this.tags.icon = "glyphicon-ok";
                 var tagsList = Array.from(new Set(this.tags.value.split(',')));

@@ -10,20 +10,48 @@ import re
 
 
 def existPost(url):
-    return db.exist_db('posts', {'url': url}) != None
+    return db.exist_db('posts', {'url': url})
 
 
-def getPosts():
-    if not hasattr(g, "getPosts"):
-        res = db.query_db("select * from posts;")
+def getPostsForList():
+    if not hasattr(g, "getPostsForList"):
+        res = db.query_db("select * from posts_list;")
         # res.sort(key=lambda x: int(x["idx"]))
-        g.getPosts = res
-    return g.getPosts
+        g.getPostsForList = res
+    return g.getPostsForList
+
+
+def getPostForEdit(url):
+    '''
+    description:    get the post for edit
+    input:          text - url of the post
+    output:         dict - post
+    '''
+    if not hasattr(g, "getPostForEdit"):
+        res = db.query_db(
+            "select * from posts_edit where url='%s';" % url, one=True)
+        # res.sort(key=lambda x: int(x["idx"]))
+        g.getPostForEdit = res
+    return g.getPostForEdit
+
+
+def getPostForShow(url):
+    '''
+    description:    get the post for show(post pages)
+    input:          text - url of the post
+    output:         dict - post
+    '''
+    if not hasattr(g, "getPostForShow"):
+        res = db.query_db(
+            "select * from posts_show where url='%s';" % url, one=True)
+        # res.sort(key=lambda x: int(x["idx"]))
+        g.getPostForShow = res
+    return g.getPostForShow
 
 
 def getPost(url):
     post = db.query_db("select * from posts where url='%s'" % url, one=True)
-    tags = Tags.getTags()
+    tags = getTags()
     formatTags(post)
     return post
 
@@ -75,7 +103,7 @@ def addPost(postRequest):
 
     # 删除前端传入的其他参数
     keyList = ['url', 'title', 'time', 'updatetime',
-               'view', 'tags', 'abstruct', 'raw', 'html', 'searchdict1', 'searchdict2', 'published']
+               'view', 'tags', 'abstruct', 'raw', 'html', 'keywords', 'searchdict1', 'searchdict2', 'published']
     postRequest = dict((key, postRequest[key])for key in keyList)
 
     db.insert_db("posts", postRequest)
@@ -117,7 +145,7 @@ def updatePost(postRequest):
 
     # 更新标签
     oldtags = getTagsOfPost(oldurl)
-    newtags = tagsSplit(postRequest['tags'])
+    newtags = tagSplit(postRequest['tags'])
     alltags = set(oldtags + newtags)
     for tag in alltags:
         if tag in oldtags and tag not in newtags:
@@ -130,7 +158,7 @@ def updatePost(postRequest):
 
     # 删除前端传入的其他参数
     keyList = ['url', 'title', 'time', 'updatetime',
-               'view', 'tags', 'abstruct', 'raw', 'html', 'searchdict1', 'searchdict2', 'published']
+               'view', 'tags', 'abstruct', 'raw', 'html', 'keywords', 'searchdict1', 'searchdict2', 'published']
     postRequest = dict((key, postRequest[key])for key in keyList)
 
     db.update_db("posts", postRequest, {'url': oldurl})
@@ -140,14 +168,14 @@ def updatePost(postRequest):
 def deletePost(postRequest):
     current_app.logger.debug(postRequest)
 
-    url = postRequest['ur']
+    url = postRequest['url']
 
     # 老的标签计数减1
     tags = getTagsOfPost(url)
     for tag in tags:
         subtractTag(tag)
 
-    db.delete_db("posts", {'url', url})
+    db.delete_db("posts", {'url': url})
     return 0
 
 
@@ -164,7 +192,7 @@ def getTagsOfPost(url):
     input:          post url
     output:         List - tags list
     '''
-    post = getPost()
+    post = getPostForEdit(url)
     return tagSplit(post['tags'])
 
 
@@ -247,7 +275,7 @@ def subtractTag(chinese):
         cnt = str(int(cnt) - 1)
         db.update_db("tags", {'cnt': cnt}, {'chinese': chinese})
         if int(cnt) <= 0:
-            delete(chinese)
+            deleteTag(chinese)
 
 
 def updateTag(_set, _where):

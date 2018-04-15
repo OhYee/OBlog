@@ -166,7 +166,7 @@ class Markdown:
         res = re.match(r'^[ ]*```[ ]*(.+?)(?: .*)*$', lines[0])
 
         language = ' class="%s"' % res.group(1) if res else ''
-        html = r'<pre><codeblock' + language + '>' +\
+        html = r'<pre class="codeblock"><codeblock' + language + '>' +\
             self.__parseRawBlock(
                 self.__escapeHtml(
                     self.__deleteSpace(lines[1:-1])

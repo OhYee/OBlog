@@ -1,16 +1,16 @@
 <!doctype html>
 <html lang="zh">
+    <head>
+        <title>{% block title %}{{ Site['sitename'].value }}{% endblock %}</title>
+        {% block meta %}{% endblock %} {% include 'layout/head.html' %}
+    </head>
 
-<head>
-    {% include 'layout/head.html' %}
-</head>
-
-<body>
-    {% include 'layout/header.html' %}
-    <main>
-        {% block content %} {% endblock %}
-    </main>
-    {# {% include 'layout/footer.html' %} #} {% block script %}{% endblock %}
-</body>
+    <body>
+        {% include 'layout/header.html' %}
+        <main>
+            {% block content %} {% endblock %}
+        </main>
+        {# {% include 'layout/footer.html' %} #} {% block script %}{% endblock %}
+    </body>
 
 </html>

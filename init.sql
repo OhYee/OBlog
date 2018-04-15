@@ -19,6 +19,18 @@ create view posts_card as
 select url,title,abstruct,tags,time,updatetime,view,published
 from posts;
 
+create view posts_show as 
+select url,title,abstruct,tags,time,updatetime,view,published,html,keywords
+from posts;
+
+create view posts_list as 
+select url,title,abstruct,time,published
+from posts;
+
+create view posts_edit as 
+select url,title,abstruct,tags,time,updatetime,view,published,raw
+from posts;
+
 create table comments(
     id          text    not null,   -- 序号
     username    text    not null,   -- 显示的用户名

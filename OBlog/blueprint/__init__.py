@@ -27,6 +27,6 @@ app.register_blueprint(pagesBP, url_prefix='/pages')
 app.register_blueprint(pagesAdminBP, url_prefix='/admin/pages')
 app.register_blueprint(pagesApiBP, url_prefix='/api/pages')
 
-app.register_blueprint(postsBP, url_prefix='/posts')
+app.register_blueprint(postsBP, url_prefix='/post')
 app.register_blueprint(postsAdminBP, url_prefix='/admin/posts')
 app.register_blueprint(postsApiBP, url_prefix='/api/posts')

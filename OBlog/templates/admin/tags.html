@@ -19,9 +19,7 @@
             <div v-if="!loading">
                 <tr v-for="(post,idx) in posts" v-if="post.exist">
                     <td v-text="post.url"></td>
-                    <td>
-                        <a :href="'/post/'+post.url+'/'" v-text="post.title"></a>
-                    </td>
+                    <td v-text="post.title"></td>
                     <td v-text="post.abstruct"></td>
                     <td v-text="post.published"></td>
                     <td>
@@ -35,5 +33,6 @@
 
 
 
-{% endblock %} {% block script %} {% from 'macro/json.macro' import json with context %}{{ json(posts) }} {% from 'macro/script.macro' import script with context %}{{ script('admin/js/posts.js') }}
+{% endblock %} {% block script %}
+{% from 'macro/script.macro' import script with context %}{{ script('admin/js/posts.js') }}
 {% endblock %}
