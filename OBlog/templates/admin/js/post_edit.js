@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     $("ul li#admin-sidebar-2").toggleClass('active');
     var nowTime = (new Date).Format();
     vue.time.value = vue.updatetime.value = nowTime;
@@ -46,45 +46,37 @@ var vue = new Vue({
             hint: "",
             icon: "",
         },
-        content: "",
+        abstruct: "",
+        raw: "",
+        published: true,
         loading: false
     },
     methods: {
-        submit: function(type) {
+        submit: function (type) {
             queryStr = '';
+            queryList = ['url', 'title', 'time', 'updatetime', 'view', 'tags'];
+            queryList.forEach(item => queryStr += item + '=' + encodeURIComponent(this[item].value) + '&');
+            queryStr += 'abstruct=' + encodeURIComponent(this.abstruct) + '&';
+            queryStr += 'raw=' + encodeURIComponent(this.raw) + '&';
+            queryStr += 'published=' + encodeURIComponent(this.published) + '&';
 
-            queryStr += 'path' + '=' + this.path + '.html&';
-            if (type == 'update')
-                queryStr += 'content' + '=' + this.content + '&';
 
-            postData('/api/pages/edit/' + type + '/', encodeURI(queryStr), (data) => {
+            console.log(queryStr);
+
+            postData('/api/posts/edit/add/', queryStr, (data) => {
+                console.log(data);
                 if (data['status'] == 0) {
-                    this.pathClass = "has-success";
-                    this.hint = "编辑成功";
-                    this.refresh();
+
                 } else if (data['status'] == 1) {
-                    this.pathClass = "has-error";
-                    this.hint = "编辑失败";
+
                 } else {
-                    this.pathClass = "has-error";
-                    this.hint = "服务器错误";
+
                 }
             });
         },
-        refresh: function() {
-            getData('/api/pages/edit/getlist/', data => {
-                this.pageList = data;
-            }, 'getList');
-        },
-        setfilename: function(path) {
-            path = path.split('.')
-            if (path.length > 1)
-                path.splice(path.length - 1, 1);
-            this.path = path.join('.');
-        }
     },
     watch: {
-        'url.value': function() {
+        'url.value': function () {
             waitUntilLast('url', () => {
                 pattern = /^[\w\-\.,@?^=%&:~\+#]+(?:\/[\w\-\.,@?^=%&:~\+#]+)*$/;
                 if (pattern.exec(this.url.value)) {
@@ -119,7 +111,7 @@ var vue = new Vue({
                 }
             }, 1000);
         },
-        'time.value': function() {
+        'time.value': function () {
             pattern = /^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/
             if (pattern.exec(this.time.value)) {
                 this.time.class = "has-success";
@@ -127,11 +119,11 @@ var vue = new Vue({
                 this.time.icon = "glyphicon-ok";
             } else {
                 this.time.class = "has-error";
-                this.time.hint = "时间格式错误"
+                this.time.hint = "时间格式错误（xxxx-xx-xx xx:xx:xx）"
                 this.time.icon = "glyphicon-remove";
             }
         },
-        'updatetime.value': function() {
+        'updatetime.value': function () {
             pattern = /^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/
             if (pattern.exec(this.updatetime.value)) {
                 this.updatetime.class = "has-success";
@@ -139,11 +131,11 @@ var vue = new Vue({
                 this.updatetime.icon = "glyphicon-ok";
             } else {
                 this.updatetime.class = "has-error";
-                this.updatetime.hint = "时间格式错误"
+                this.updatetime.hint = "时间格式错误（xxxx-xx-xx xx:xx:xx）"
                 this.updatetime.icon = "glyphicon-remove";
             }
         },
-        'view.value': function() {
+        'view.value': function () {
             //^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/,
             //^[0-9]+$/,
             //^[\w\-\.,@?^=%&:~\+#]+(?:\/[\w\-\.,@?^=%&:~\+#]+)*$/
@@ -158,6 +150,16 @@ var vue = new Vue({
                     this.view.hint = "请输入非负整数";
                     this.view.icon = "glyphicon-remove";
                 }
+            }, 1000);
+        },
+        'tags.value': function () {
+            waitUntilLast('tags', () => {
+                this.tags.class = "has-success";
+                this.tags.icon = "glyphicon-ok";
+                var tagsList = Array.from(new Set(this.tags.value.split(',')));
+                console.log(tagsList);
+                this.tags.value = tagsList.join(',');
+                this.tags.hint = '<span class="badge">' + tagsList.join('</span>&nbsp;<span class="badge">') + "</span>";
             }, 1000);
         }
     }

@@ -1,7 +1,8 @@
-{% extends "admin/layout.html" %} {% block title %}页面模板-管理员界面{% endblock %}{% block admin_content %} {# 引入宏 #}{% from 'macro/form.macro' import input %}
+{% extends "admin/layout.html" %} {% block title %}页面模板-管理员界面{% endblock %}{% block admin_content %} {# 引入宏 #}{% from 'macro/form.macro'
+import input %}
 
 <div v-if="loading">{% include 'layout/loading.html' %}</div>
-<div v-if="!loading" class="form-horizontal">
+<div v-if="!loading" class="form-group">
     <div class="row">
         <div class="col-sm-6">
             {{ input("url","文章链接") }}
@@ -28,13 +29,27 @@
         </div>
     </div>
 
-    <span id="content" class="help-block">
-        支持markdown，mathjax
-    </span>
-    <textarea class="form-control" aria-describedby="content" rows="30" v-model="content"></textarea>
+    <div class="row form-group">
+        <label class="sr-only" for="abstruct">摘要</label>
+        <textarea class="form-control" id="abstruct" aria-describedby="abstructHint" rows="5" v-model="abstruct" placeholder="文章摘要"></textarea>
+    </div>
+
+
+    <div class="row form-group">
+        <label class="sr-only" for="abstruct">正文</label>
+        <textarea id="raw" class="form-control" aria-describedby="rawHint" rows="20" v-model="raw" placeholder="文章正文(支持markdown，mathjax)"></textarea>
+    </div>
+
 </div>
 
 
 
+<div class="row form-group">
+    <label class="pull-left checkbox">
+        <input type="checkbox" id="published" v-model="published">正式发布
+    </label>
+    <button class="pull-right btn btn-primary" type="button" @click="submit">提交</button>
+</div>
 
-{% endblock %} {% block script %} {% from 'macro/script.macro' import script %}{{ script('admin/js/post_edit.js') }} {% endblock %}
+{% endblock %} {% block script %} {% from 'macro/script.macro' import script %}{{ script('admin/js/post_edit.js') }} {% endblock
+%}

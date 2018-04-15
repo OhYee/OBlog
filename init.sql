@@ -3,9 +3,9 @@ create table posts(
     title       text    not null,   -- 标题
     abstruct    text    not null,   -- 摘要
     raw         text    not null,   -- 源内容
-    html        text,               -- 渲染后内容
-    tags        text,               -- 标签
-    keywords    text,               -- 关键字
+    html        text    not null,   -- 渲染后内容
+    tags        text    not null,   -- 标签
+    keywords    text    not null,   -- 关键字
     time        text    not null,   -- 发布时间
     updatetime  text    not null,   -- 更新时间
     view        text    not null,   -- 阅读量

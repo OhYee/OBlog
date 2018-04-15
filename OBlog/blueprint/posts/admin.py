@@ -3,7 +3,8 @@ from flask import render_template,abort
 
 @postsAdminBP.route('/')
 def index():
-    return render_template("admin/posts.html")
+    from .main import getPosts
+    return render_template("admin/posts.html",posts = getPosts())
 
 @postsAdminBP.route('/edit/')
 def edit():

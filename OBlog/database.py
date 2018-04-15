@@ -1,4 +1,4 @@
-from flask import g,current_app
+from flask import g, current_app
 
 
 def where2str(_where):
@@ -29,7 +29,7 @@ def set2str(_set):
 
 
 def raw_query_db(sqlstr, one=False):
-    current_app.logger.debug('raw_query_db %s'% sqlstr)
+    current_app.logger.debug('raw_query_db %s' % sqlstr)
     cur = g.db.execute(sqlstr)
     res = cur.fetchall()
     # print(res)
@@ -38,20 +38,20 @@ def raw_query_db(sqlstr, one=False):
 
 
 def query_db(sqlstr, one=False):
-    current_app.logger.debug('query_db %s'% sqlstr)
+    current_app.logger.debug('query_db %s' % sqlstr)
     cur = g.db.execute(sqlstr)
+    t = cur.fetchall()
+    print(t)
     rv = [dict((cur.description[idx][0], value.replace(r"$double-quote;", r'"'))
-               for idx, value in enumerate(row)) for row in cur.fetchall()]
+               for idx, value in enumerate(row)) for row in t]
 
     res = (rv[0] if rv else None) if one else rv
-    # print(res)
+    print(res)
     return res
 
 
-
-
 def commit_db(sqlstr):
-    current_app.logger.debug('commit_db %s'% sqlstr)
+    current_app.logger.debug('commit_db %s' % sqlstr)
     g.db.execute(sqlstr)
     g.db.commit()
 

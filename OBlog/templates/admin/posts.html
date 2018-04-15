@@ -38,7 +38,7 @@
     $(document).ready(function() {
         $("ul li#admin-sidebar-2").toggleClass('active');
         vue.loading = true;
-        var temp = JSON.parse('{{ Site.pages|tojson }}');
+        var temp = JSON.parse('{{ posts|tojson }}');
         var data = [];
         for (var key in temp) {
             var item = temp[key];
@@ -50,21 +50,14 @@
             item.needClear = false;
             data.push(item);
         }
-        vue.pages = data;
+        vue.posts = data;
         vue.loading = false;
     });
 
     var vue = new Vue({
         el: '#app',
         data: {
-            add: {
-                url: "",
-                title: "",
-                idx: "",
-                class: "",
-                hint: "",
-            },
-            pages: {},
+            posts: [],
             loading: true,
         },
         methods: {
