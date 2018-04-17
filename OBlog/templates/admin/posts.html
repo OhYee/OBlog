@@ -10,7 +10,7 @@
                 <td>摘要</td>
                 <td>发布</td>
                 <td>
-                    <a class="btn btn-default" href="/admin/posts/edit/" role="button">新建新闻</a>
+                    <a class="btn btn-primary" href="/admin/posts/edit/" role="button">新建新闻</a>
                 </td>
             </tr>
         </thead>
@@ -26,7 +26,7 @@
                     <td v-text="post.published"></td>
                     <td>
                         <a class="btn btn-default" v-bind:href="'/admin/posts/edit/'+post.url+'/'" role="button">编辑</a>
-                        <button type="submit" class="btn btn-default" @click="submit(idx)">删除</button>
+                        <button type="submit" class="btn btn-danger" @click="submit(idx)">删除</button>
                     </td>
             </div>
         </tbody>
@@ -35,5 +35,4 @@
 
 
 
-{% endblock %} {% block script %} {% from 'macro/json.macro' import json with context %}{{ json(posts) }} {% from 'macro/script.macro' import script with context %}{{ script('admin/js/posts.js') }}
-{% endblock %}
+{% endblock %} {% block script %} {% from 'macro/json.macro' import json with context %}{{ json(posts) }} {% from 'macro/script.macro' import script with context %}{{ script('admin/js/posts.js') }} {% endblock %}

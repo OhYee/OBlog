@@ -1,18 +1,16 @@
 $(document).ready(function() {
-    $("ul li#admin-sidebar-2").toggleClass('active');
+    $("ul li#admin-sidebar-6").toggleClass('active');
     vue.loading = true;
     var data = [];
-    for (var key in jsonData) {
-        var item = jsonData[key];
-        item.oldurl = item.url;
-        item.show = item.show == 'true' ? true : false;
+    jsonData.forEach(item => {
+        item.oldname = item.name;
         item.exist = true;
         item.class = "";
         item.hint = "";
         item.needClear = false;
         data.push(item);
-    }
-    vue.pages = data;
+    });
+    vue.friends = jsonData;
     vue.loading = false;
 });
 
@@ -26,7 +24,7 @@ var vue = new Vue({
             class: "",
             hint: "",
         },
-        pages: {},
+        friends: {},
         loading: true,
     },
     methods: {
@@ -34,22 +32,22 @@ var vue = new Vue({
             console.log(type, idx)
             queryStr = '';
             if (type == 'add') {
-                keyList = ['url', 'title', 'idx']
+                keyList = ['url', 'name', 'idx']
                 keyList.forEach(key => {
                     queryStr += key + '=' + encodeURIComponent(this.add[key]) + '&';
                 });
             } else if (type == "update") {
-                keyList = ['oldurl', 'url', 'title', 'idx', 'show']
+                keyList = ['oldname', 'url', 'name', 'idx', 'show']
                 keyList.forEach(key => {
-                    queryStr += key + '=' + encodeURIComponent(this.pages[idx][key]) + '&';
+                    queryStr += key + '=' + encodeURIComponent(this.friends[idx][key]) + '&';
                 });
             } else if (type == "delete") {
-                queryStr = 'url=' + encodeURIComponent(this.pages[idx].oldurl);
+                queryStr = 'name=' + encodeURIComponent(this.friends[idx].oldname);
             } else {
                 return;
             }
             console.log(queryStr);
-            postData('/api/pages/' + type + '/', queryStr, (data) => {
+            postData('/api/friends/' + type + '/', queryStr, (data) => {
                 console.log(data);
                 if (data['status'] == 0) {
                     if (type == 'add') {
@@ -63,17 +61,17 @@ var vue = new Vue({
                         }
                         temp.exist = true;
                         temp.oldurl = temp.url;
-                        this.pages.push(temp);
-                        this.pages.sort((a, b) => parseInt(a.idx) - parseInt(b.idx));
+                        this.friends.push(temp);
+                        this.friends.sort((a, b) => parseInt(a.idx) - parseInt(b.idx));
                     } else if (type == "update") {
-                        this.pages[idx].class = "has-success";
-                        this.pages[idx].hint = "页面修改成功";
-                        this.pages[idx].needClear = true;
-                        this.$set(this.pages, idx, this.pages[idx]);
+                        this.friends[idx].class = "has-success";
+                        this.friends[idx].hint = "页面修改成功";
+                        this.friends[idx].needClear = true;
+                        this.$set(this.friends, idx, this.friends[idx]);
 
-                        this.pages.sort((a, b) => parseInt(a.idx) - parseInt(b.idx));
+                        this.friends.sort((a, b) => parseInt(a.idx) - parseInt(b.idx));
                     } else if (type == "delete") {
-                        this.pages[idx].exist = false;
+                        this.friends[idx].exist = false;
                     }
                 } else if (data['status'] == 1) {
                     if (type == 'add') {
@@ -81,28 +79,28 @@ var vue = new Vue({
                         this.add.class = "has-warning";
                         this.add.hint = "页面修改失败";
                     } else {
-                        this.pages[idx].class = "has-warning";
-                        this.pages[idx].needClear = true;
+                        this.friends[idx].class = "has-warning";
+                        this.friends[idx].needClear = true;
                         if (type == "update") {
-                            this.pages[idx].hint = "页面修改失败";
+                            this.friends[idx].hint = "页面修改失败";
                         } else if (type == "delete") {
-                            this.pages[idx].hint = "页面删除失败";
+                            this.friends[idx].hint = "页面删除失败";
                         }
-                        this.$set(this.pages, idx, this.pages[idx]);
+                        this.$set(this.friends, idx, this.friends[idx]);
                     }
                 } else {
                     if (type == 'add') {
                         this.add.class = "has-danger";
                         this.add.hint = "服务器错误";
                     } else {
-                        this.pages[idx].class = "has-danger";
-                        this.pages[idx].needClear = true;
+                        this.friends[idx].class = "has-danger";
+                        this.friends[idx].needClear = true;
                         if (type == "update") {
-                            this.pages[idx].hint = "服务器错误";
+                            this.friends[idx].hint = "服务器错误";
                         } else if (type == "delete") {
-                            this.pages[idx].hint = "服务器错误";
+                            this.friends[idx].hint = "服务器错误";
                         }
-                        this.pages[idx].hint = "";
+                        this.friends[idx].hint = "";
                     }
                 }
             }, 'submit' + type + idx);
@@ -113,11 +111,11 @@ var vue = new Vue({
                 this.add.hint = "";
                 this.add.class = "";
             } else {
-                if (this.pages[idx].needClear == true) {
-                    this.pages[idx].hint = "";
-                    this.pages[idx].class = "";
-                    this.pages[idx].needClear = false;
-                    this.$set(this.pages, idx, this.pages[idx]);
+                if (this.friends[idx].needClear == true) {
+                    this.friends[idx].hint = "";
+                    this.friends[idx].class = "";
+                    this.friends[idx].needClear = false;
+                    this.$set(this.friends, idx, this.friends[idx]);
                 }
             }
         }

@@ -6,3 +6,9 @@
     <span id="{{ id }}Hint" class="help-block" v-html="{{ id }}.hint"></span>
 </div>
 {%- endmacro %}
+{% macro simple_input(id, hint, type="text", click="") -%}
+<div class="form-group">
+    <label class="sr-only" for="{{ id }}">{{ hint }}</label>
+    <input type="{{ type }}" class="form-control" id="{{ id }}" placeholder="{{ hint }}" v-model="{{ id }}" aria-describedby="{{ id }}Hint"{% if click %} @click="{{ click }}"{% endif %}>
+</div>
+{%- endmacro %}

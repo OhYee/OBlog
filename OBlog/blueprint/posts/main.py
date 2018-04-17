@@ -49,11 +49,11 @@ def getPostForShow(url):
     return g.getPostForShow
 
 
-def getPost(url):
-    post = db.query_db("select * from posts where url='%s'" % url, one=True)
-    tags = getTags()
-    formatTags(post)
-    return post
+# def getPost(url):
+#     post = db.query_db("select * from posts where url='%s'" % url, one=True)
+#     tags = getTags()
+#     #formatTags(post)
+#     return post
 
 
 '''
@@ -81,7 +81,6 @@ def addPost(postRequest):
         postRequest['tags'] = '无标签'
 
     from OBlog.markdown import renderMarkdown
-    import jieba
     import json
     from ..search.main import getCntDict, getKeywords
 
@@ -94,6 +93,7 @@ def addPost(postRequest):
         getCntDict(postRequest['abstruct'] + " " + postRequest["raw"]))
 
     # 新的标签计数加1
+    from ..tags.main import tagSplit, addTag
     tags = tagSplit(postRequest['tags'])
     for tag in tags:
         addTag(tag)
@@ -131,7 +131,6 @@ def updatePost(postRequest):
         postRequest['tags'] = '无标签'
 
     from OBlog.markdown import renderMarkdown
-    import jieba
     import json
     from ..search.main import getCntDict, getKeywords
 
@@ -144,6 +143,8 @@ def updatePost(postRequest):
         getCntDict(postRequest['abstruct'] + " " + postRequest["raw"]))
 
     # 更新标签
+    from ..tags.main import getTagsOfPost, tagSplit, addTag, subtractTag
+
     oldtags = getTagsOfPost(oldurl)
     newtags = tagSplit(postRequest['tags'])
     alltags = set(oldtags + newtags)
@@ -171,136 +172,10 @@ def deletePost(postRequest):
     url = postRequest['url']
 
     # 老的标签计数减1
+    from ..tags.main import getTagsOfPost, subtractTag
     tags = getTagsOfPost(url)
     for tag in tags:
         subtractTag(tag)
 
     db.delete_db("posts", {'url': url})
-    return 0
-
-
-'''
-####################################################
-                    get tags
-####################################################
-'''
-
-
-def getTagsOfPost(url):
-    '''
-    description:    get the tags of the post
-    input:          post url
-    output:         List - tags list
-    '''
-    post = getPostForEdit(url)
-    return tagSplit(post['tags'])
-
-
-def tagSplit(tag):
-    '''
-    description:    from tags string to tags list
-    input:          string - tags string
-    output:         List - tags list
-    '''
-    return re.split(r',', tag)
-
-
-def getRawTags():
-    if not hasattr(g, "tags_getRawTags"):
-        g.tags_getRawTags = db.query_db("select * from tags")
-    return g.tags_getRawTags
-
-
-def getChinese(_tag):
-    if not hasattr(g, "tags_getChinese"):
-        g.tags_getChinese = db.query_db(
-            "select * from tags where english='%s'" % _tag, one=True)
-    return g.tags_getChinese
-
-
-def getTags():
-    if not hasattr(g, "tags_getTags"):
-        _Tags = getRawTags()
-        Tags = {}
-        for Tag in _Tags:
-            Tags[Tag['chinese']] = [Tag['english'],
-                                    Tag['cnt'], Tag['img'], Tag['class']]
-        g.tags_getTags = Tags
-    return g.tags_getTags
-
-
-'''
-####################################################
-                    set tags
-####################################################
-'''
-
-
-def encode(t):
-    '''
-    description:    encode sha512
-    input:          text
-    output:         text
-    '''
-    import hashlib
-    return hashlib.sha512(t.encode()).hexdigest()
-
-
-def addTag(chinese):
-    '''
-    description:    tag num plus 1
-    input:          tag id(chinese)
-    output:         0
-    '''
-    if db.exist_db("tags", {"chinese": chinese}) == True:
-        cnt = db.query_db(
-            "select cnt from tags where chinese='%s'" % chinese, one=True)['cnt']
-        cnt = str(int(cnt) + 1)
-        db.update_db("tags", {'cnt': cnt}, {'chinese': chinese})
-    else:
-        db.insert_db("tags", {"chinese": chinese,
-                              "english": encode(chinese), "cnt": "1", "img": "", "class": ""})
-    return 0
-
-
-def subtractTag(chinese):
-    '''
-    description:    tag num subtract 1
-    input:          tag id(chinese)
-    output:         0
-    '''
-    if db.exist_db("tags", {"chinese": chinese}) == True:
-        cnt = db.query_db(
-            "select cnt from tags where chinese='%s'" % chinese, one=True)['cnt']
-        cnt = str(int(cnt) - 1)
-        db.update_db("tags", {'cnt': cnt}, {'chinese': chinese})
-        if int(cnt) <= 0:
-            deleteTag(chinese)
-
-
-def updateTag(_set, _where):
-    '''
-    description:    set tag attribution
-    input:          tag id(chinese)
-    output:         0
-    '''
-    # 后端验证
-    pattern = r'^\w+$'
-    if not re.match(pattern, _set["english"]):
-        return 1
-
-    if 'english' in _where and _where['english'] != _set['english'] and db.exist_db("tags", {'english': _set["english"]}) == True:
-        return 2
-
-    db.update_db("tags", _set, _where)
-    return 0
-
-
-def deleteTag(chinese):
-    '''
-    description:    delete the tag from database
-    input:          tag id(chinese)
-    output:         0
-    '''
-    db.delete_db("tags", {"chinese": chinese})
     return 0

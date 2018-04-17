@@ -1,0 +1,17 @@
+{% macro vue_tag(tag) -%}
+<a :href="'/tag/'+tag.english+'/'">
+    <div class="tag" :style="tag.class">
+        <img :src="tag.img" onerror="$(this).attr('style','display:none')" onload="$(this).attr('style','')"> 
+        <span v-text="tag.chinese"></span>
+    </div>
+</a>
+{%- endmacro %}
+
+{% macro jinjia_tag(tag) -%}
+<a href="/tag/{{ tag.english }}/">
+    <div class="tag" style="{{ tag.class }}">
+        <img src="{{ tag.img }}" onerror="$(this).attr('style','display:none')" onload="$(this).attr('style','')"> 
+        <span>{{ tag.chinese }}</span>
+    </div>
+</a>
+{%- endmacro %}

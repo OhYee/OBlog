@@ -7,7 +7,8 @@ def getSite():
         res = getSiteConfigDict()
         from .blueprint.pages.main import getPagesDict
         res['pages'] = getPagesDict()
-        # res['friends'] = get
+        from .blueprint.friends.main import getFriends
+        res['friends'] = getFriends()
         g.getSite = res
     return g.getSite
 

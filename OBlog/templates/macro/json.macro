@@ -1,5 +1,5 @@
 {% macro json(jsonstr) -%}
 <script>
-var jsonData = {% if jsonstr %}{{ jsonstr|tojson|safe }}{% else %}''{% endif %};
+var jsonData = {% if jsonstr %}{{ jsonstr|tojson|safe }}{% else %}[]{% endif %};
 </script>
 {%- endmacro %}

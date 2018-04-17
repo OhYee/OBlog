@@ -1,32 +1,19 @@
-<footer class="page-footer blue darken-1">
-    <div class="container center">
-        <p>友情链接</p>
-        <p>
-
-            {% for friend in Site["Friends"] %}
-            <span>
-                <a class="white-text" href="{{ friend['url'] }}">{{ friend['name'] }}</a>
-            </span> {% endfor %}
-        </p>
-    </div>
-    <div class="footer-copyright blue darken-2">
-        <div class="container center">
-            <p>全站访客 {{ Site['config']['view'] }}</p>
-            <p>
-                Blog designed by
-                <a class="white-text" href="https://www.oyohyee.com/">OhYee</a>
-            </p>
-            <p>
-                <a class="white-text" href="http://www.miitbeian.gov.cn/">{{ Site['config']['Record'] }}</a>
-            </p>
-            <p>
-                <a class="white-text" href="/sitemap.xml">
-                    <span>sitemap.xml</span>
-                </a>
-                <a class="white-text" href="/sitemap.txt">
-                    <span>sitemap.txt</span>
-                </a>
-            </p>
-        </div>
-    </div>
+<footer class="container text-center">
+    <p>全站访客 {{ Site['view'].value }}</p>
+    <p>友情链接: {% for friend in Site["friends"] %}
+        <span><a class="white-text" href="{{ friend['url'] }}">{{ friend['name'] }}</a></span> {% endfor %}
+    </p>
+    <p>
+        <span>
+            <a class="white-text" href="http://www.miitbeian.gov.cn/">{{ Site['beian'].value }}</a>
+        </span>
+        <span>
+            Blog designed by
+            <a class="white-text" href="https://www.oyohyee.com/">OhYee</a>
+        </span>
+    </p>
+    <p>
+        <span><a class="white-text" href="/sitemap.xml">sitemap.xml</a></span>
+        <span><a class="white-text" href="/sitemap.txt">sitemap.txt</a></span>
+    </p>
 </footer>

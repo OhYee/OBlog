@@ -33,3 +33,4 @@ def delete():
     from .main import deletePost
     status = deletePost(postRequest)
     return json.dumps({'status': str(status)})
+

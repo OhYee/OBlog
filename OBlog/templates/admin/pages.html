@@ -8,16 +8,19 @@
 
 </div>
 
+{% from 'macro/form.macro' import simple_input %} {% from 'macro/tag.macro' import vue_tag %}
+
 <div class="row">
     <div class="form-group" :class="add.class">
         <div class="col-sm-3">
-            <input type="text" class="form-control" id="url" placeholder="链接" v-model="add.url" @input="clear(-1)">
+            {{ simple_input('add.url',"链接",click="clear(-1)") }}
         </div>
         <div class="col-sm-3">
-            <input type="text" class="form-control" id="title" placeholder="标题" v-model="add.title" @input="clear(-1)">
+            {{ simple_input('add.title',"标题",click="clear(-1)") }}
+
         </div>
         <div class="col-sm-3">
-            <input type="text" class="form-control" id="idx" placeholder="索引顺序" v-model="add.idx" @input="clear(-1)">
+            {{ simple_input('add.idx',"索引顺序",click="clear(-1)") }}
         </div>
         <div class="col-sm-3">
             <button type="submit" class="btn btn-primary" @click="submit('add')">新建</button>
@@ -34,13 +37,15 @@
     <div class="form-group" v-for="(page,idx) in pages" v-if="page.exist" :class="page.class">
         <div class="row">
             <div class="col-sm-2">
-                <input type="text" class="form-control" id="url" placeholder="链接" v-model="page.url" @input="clear(idx)" :aria-describedby="page.url">
+                {{ simple_input('page.url',"链接",click="clear(idx)") }}
             </div>
             <div class="col-sm-3">
-                <input type="text" class="form-control" id="title" placeholder="标题" v-model="page.title" @input="clear(idx)">
+                {{ simple_input('page.title',"标题",click="clear(idx)") }}
+
             </div>
             <div class="col-sm-1">
-                <input type="text" class="form-control" id="idx" placeholder="索引顺序" v-model="page.idx" @input="clear(idx)">
+                {{ simple_input('page.idx',"索引顺序",click="clear(idx)") }}
+
             </div>
             <div class="col-sm-2">
                 <label class="checkbox">
@@ -60,5 +65,4 @@
 
 
 
-{% endblock %} {% block script %}{% from 'macro/json.macro' import json with context %}{{ json(Site.pages) }} {% from 'macro/script.macro' import script with context %}{{ script('admin/js/pages.js') }}
-{% endblock %}
+{% endblock %} {% block script %}{% from 'macro/json.macro' import json with context %}{{ json(Site.pages) }} {% from 'macro/script.macro' import script with context %}{{ script('admin/js/pages.js') }} {% endblock %}

@@ -1,0 +1,28 @@
+{% extends "admin/layout.html" %} {% block title %}图片管理-管理员界面{% endblock %}{% block admin_content %}
+
+
+<ol class="breadcrumb">
+    <li v-for="item in pathList">
+        <a @click="setPath(item.path)" v-text="item.dirname"></a>
+    </li>
+</ol>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-6 col-md-3" v-for="(value,key) in nowList['dir']">
+            <a @click="setPath(path+key+'/')" class="thumbnail" v-text="key">
+                
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-6 col-md-3" v-for="image in nowList['file']">
+            <a href="#" class="thumbnail">
+                <img :src="'/static/img'+path+image" alt="image">
+            </a>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %} {% block script %}{% from 'macro/json.macro' import json with context %}{{ json(images) }} {% from 'macro/script.macro'
+import script with context %}{{ script('admin/js/images.js') }} {% endblock %}
