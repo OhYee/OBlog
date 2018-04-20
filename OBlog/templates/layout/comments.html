@@ -1,0 +1,53 @@
+<!-- 评论区 -->
+<div id="comments" class="panel panel-default">
+    <div class="panel-heading">发布评论</div>
+    <div class="panel-body">
+        <alert id="alert" :alert="alert" @close="close"></alert>
+        <div class="form-group">
+            <label for="email">电子邮箱(不会显示完整地址)</label>
+            <input class="form-control" placeholder="example@example.com" type="text" v-model="email">
+        </div>
+        <div class="form-group">
+            <label for="raw">评论内容</label>
+            <textarea id="raw" class="form-control" rows="5" v-model="raw" placeholder="评论(支持markdown。请使用中文以及不要发布广告内容)"></textarea>
+        </div>
+        <div class="form-group">
+            <label class="checkbox-inline">
+                <input type="checkbox" v-model="sendemail"> 有人回复我给我发邮件(最前面的字符使用
+                <code>@5#</code>回复id为5的评论)
+            </label>
+            <button class="pull-right btn btn-primary" type="button" @click="submit">提交</button>
+        </div>
+
+    </div>
+    <div class="panel-footer">
+        <div class="form-inline">评论查看顺序
+            <select class="form-control" v-model="sortType">
+                <option>逆序排序</option>
+                <option>顺序排序</option>
+            </select>
+        </div>
+    </div>
+    <div v-if="loading">{% include 'layout/loading.html' %}</div>
+    <ul class="list-group" v-if="!loading">
+        <li class="list-group-item" v-for="comment in comments">
+            <p>
+                <span v-text="'#'+comment.id+' '+comment.username"></span>
+                <span v-if="comment.sendemail" class="glyphicon glyphicon-envelope" :title="'在评论里使用 @'+comment.id+'# ,他将收到邮件提醒'"></span>
+            </p>
+
+            <div class="fold_parent" v-if="comment.ad">
+                <div class="fold_hider">
+                    <div class="fold_close hider_title">点击查看/关闭被识别为广告的评论</div>
+                </div>
+                <div class="fold">
+                    <p v-html="comment.html"></p>
+                </div>
+            </div>
+            <p v-if="!comment.ad" v-html="comment.html"></p>
+
+
+            <p class="row" v-text="comment.time"></p>
+        </li>
+    </ul>
+</div>

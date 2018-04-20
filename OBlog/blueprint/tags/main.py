@@ -49,6 +49,15 @@ def getChinese(_tag):
             "select * from tags where english='%s'" % _tag, one=True)
 
 
+def getTag(chinese):
+    '''
+    description:    get the tag by english
+    input:          text - tag english
+    output:         dict - tag
+    '''
+    return db.query_db(
+            "select * from tags where chinese='%s'" % chinese, one=True)
+
 def getTags():
     '''
     description:    get all tags

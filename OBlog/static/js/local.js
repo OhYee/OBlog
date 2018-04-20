@@ -69,7 +69,8 @@ function getData(url, solve, id) {
 /* Post访问 */
 var _postRequestIndex = {};
 
-function postData(url, data, solve, id) {
+function postData(url, data, solve, id,
+    headers = { "Content-type": "application/x-www-form-urlencoded; charset=UTF-8" }) {
     if (_postRequestIndex[id])
         _postRequestIndex[id] = _postRequestIndex[id] + 1;
     else
@@ -79,9 +80,7 @@ function postData(url, data, solve, id) {
     fetch(url, {
         method: 'post',
         credentials: 'include',
-        headers: {
-            "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-        },
+        headers: headers,
         body: data
     }).then(
         response => response.json()
@@ -185,7 +184,7 @@ function initUnfold(e) {
 function initFold() {
     $(document).on('click', '.fold_hider', function() {
         $('>.fold', this.parentNode).slideToggle();
-        $('>:first', this).toggleClass('open');
+        $('>:first', this).toggleClass('fold_open');
     });
     //默认情况下折叠
     $("div.fold").css("display", "none");

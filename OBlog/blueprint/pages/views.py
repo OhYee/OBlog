@@ -12,6 +12,6 @@ def pages(url):
     from .main import getPagesDict
     pages = getPagesDict()
     if url in pages:
-        render_template("pages/%s.html" % url, thisPage=url)
+        return render_template("pages/%s.html" % url, thisPage=url)
     else:
         abort(404)

@@ -7,6 +7,6 @@ def posts(url):
     from .main import getPostForShow
     post = getPostForShow(url)
     if post:
-        return render_template("pages/post.html", post=post)
+        return render_template("pages/post.html", post=post, thisPage='post')
     else:
         abort(404)

@@ -45,6 +45,9 @@ def getPostForShow(url):
         res = db.query_db(
             "select * from posts_show where url='%s';" % url, one=True)
         # res.sort(key=lambda x: int(x["idx"]))
+        tagsList = res['tags'].split(',')
+        from ..tags.main import getTag
+        res['tags'] = [getTag(tag) for tag in tagsList]
         g.getPostForShow = res
     return g.getPostForShow
 

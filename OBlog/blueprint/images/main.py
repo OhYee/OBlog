@@ -1,7 +1,7 @@
 import os
 import time
-from flask import Flask, request, redirect, url_for
-from werkzeug import secure_filename
+from flask import current_app
+# from werkzeug import secure_filename
 
 import os
 from OBlog import app
@@ -10,40 +10,48 @@ from OBlog import app
 ALLOWED_EXTENSIONS = set(['jpg', 'png', 'gif', 'jpeg', 'bmp'])
 
 
+def getImageFolder():
+    res = os.path.join(app.config['ROOTPATH'], 'OBlog', 'static', 'img')
+    return res
+
+
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
+def secure_filename(filename):
+    filename = filename.replace('/','_').replace('\\','_')
+    return filename
 
-def upload_file(file, dirname):
+def uploadFile(file, dirname):
+    print(file, dirname)
     filename = secure_filename(file.filename)
-    path = os.path.join(
-        './OBlog', app.config['STATIC_FOLDER'], dirname, filename).replace('\\', '/')
-
+    path = getImageFolder() + dirname + filename
+    print(path)
     if file and allowed_file(file.filename) and not os.path.exists(path):
         print("upload: ", path)
-        file.save(os.path.join(path))
-        return [0, path]
+        file.save(path)
+        return [0, filename, path]
     else:
         return [1]
 
 
-def getRandomString():
-    return (str)(time.time())
+def renameFile(oldfilename, filename):
+    # 这里由于前端传入的参数，使用 os.path.join() 会被认为是根目录
+    oldfilename = oldfilename.replace('/', '\\')
+    filename = filename.replace('/', '\\')
 
-
-def rename(oldfilename, filename, dirname):
-    oldfilename = os.path.join(
-        './OBlog', app.config['STATIC_FOLDER'], dirname, oldfilename)
-    filename = os.path.join(
-        './OBlog', app.config['STATIC_FOLDER'], dirname, filename)
+    oldfilename = getImageFolder() + oldfilename
+    filename = getImageFolder() + filename
     os.rename(oldfilename, filename)
+    return 0
 
 
-def delete(filename, dirname):
-    filename = os.path.join(
-        './OBlog', app.config['STATIC_FOLDER'], dirname, filename)
+def deleteFile(filename):
+    filename = filename.replace('/', '\\')
+    filename = getImageFolder() + filename
     os.remove(filename)
+    return 0
 
 
 def tree(root='./', relativePath='.', nowDirname='.'):
@@ -57,7 +65,7 @@ def tree(root='./', relativePath='.', nowDirname='.'):
             dirList.append(file)
 
     res = {
-        'path': relativePath,
+        #'path': relativePath,
         'file': fileList,
         'dir': dict((dirname, tree(root, os.path.join(relativePath, dirname), dirname))for dirname in dirList)
     }
@@ -65,6 +73,4 @@ def tree(root='./', relativePath='.', nowDirname='.'):
 
 
 def getImageList():
-    image_folder = os.path.join(
-        app.config['ROOTPATH'], 'OBlog','static','img')
-    return tree(root=image_folder)
+    return tree(root=getImageFolder())

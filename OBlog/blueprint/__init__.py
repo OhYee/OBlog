@@ -5,6 +5,7 @@ from .posts import postsBP, postsAdminBP, postsApiBP
 from .tags import tagsBP, tagsAdminBP, tagsApiBP
 from .friends import friendsAdminBP, friendsApiBP
 from .images import imagesAdminBP, imagesApiBP
+from .comments import commentsAdminBP, commentsApiBP
 
 from flask import session, current_app, request, abort
 
@@ -26,6 +27,8 @@ from flask import session, current_app, request, abort
 
 @imagesAdminBP.before_request
 @imagesApiBP.before_request
+
+@commentsAdminBP.before_request
 def before_request():
     print(session)
     current_app.logger.debug('auth path %s.' % request.path)
@@ -54,3 +57,6 @@ app.register_blueprint(friendsAdminBP, url_prefix='/admin/friends')
 
 app.register_blueprint(imagesApiBP, url_prefix='/api/images')
 app.register_blueprint(imagesAdminBP, url_prefix='/admin/images')
+
+app.register_blueprint(commentsAdminBP,url_prefix='/admin/comments')
+app.register_blueprint(commentsApiBP,url_prefix='/api/comments')

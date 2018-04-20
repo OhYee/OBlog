@@ -10,21 +10,105 @@
 <meta name="author" content="{{ Site['author'].value }}" /> {% endblock %}{% block content %}
 
 <div class="row">
-    <div class="col-sm-12 col-lg-8  col-lg-offset-2">
-        <div class="thumbnail">
-            <div class="caption">
-                <h3>{{ post.title }}</h3>{% if post['published']=='false' %} {% if session["admin"] %}
-                <a href="/admin/posts/edit/{{ post['url'] }}/" target="_blank" class="bold">
-                    <span class="label label-danger">草稿</span>
-                </a>{% else %}
-                <span class="label label-danger">草稿</span>{% endif %} {% endif %}
-                <p>{{ post.time }}</p>
-                <p>
-                    {{ post.html|safe }}
-                </p>
+    <div class="col-sm-12 col-lg-8 col-lg-offset-2">
+
+        <div class="panel panel-default">
+            <article>
+                <div class="panel-heading">
+                    <h3>{{ post.title }}</h3>{% if post['published']=='false' %} {% if session["admin"] %}
+                    <a href="/admin/posts/edit/{{ post['url'] }}/" target="_blank" class="bold">
+                        <span class="label label-danger">草稿</span>
+                    </a>{% else %}
+                    <span class="label label-danger">草稿</span>{% endif %} {% endif %}
+                    <time>
+                        <p>{{ post.time }}</p>
+                    </time>
+                    <p>{{ post.view }}</p>
+
+                    <blockquote>
+                        {{ post.abstruct }}
+                    </blockquote>
+
+                </div>
+
+
+
+                <div class="panel-body">
+                    <section>
+                        {{ post.html|safe }}
+                    </section>
+
+                    <div class="row">
+                        <button type="button" class="center-block btn btn-danger" data-toggle="modal" data-target="#myModal">
+                            打赏
+                        </button>
+                    </div>
+
+                    <div class="row">
+                        <a href="/" class="pull-right">
+                            <div class="tag">
+                                <img src="/static/img/logo.svg" onerror="$(this).attr('style','display:none')" onload="$(this).attr('style','')">
+                                <span>{{ Site['author'].value }}</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="panel-footer" style="background:transparent;">
+                    <ul class="list-inline">
+                        <li>
+                            <span class="glyphicon glyphicon-tags"></span>
+                        </li>
+                        {% from 'macro/tag.macro' import jinjia_tag %} {% for tag in post['tags'] %}
+                        <li> {{ jinjia_tag(tag) }} </li>{% endfor %}
+                    </ul>
+                </div>
+            </article>
+        </div>
+        {% include 'layout/comments.html' %}
+    </div>
+</div>
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">打赏</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-s12 col-lg-6">
+                        <div class="row">
+                            <a href="/static/img/alipayimg.jpg" alt="支付宝扫码" data-lightbox="支付宝扫码" data-title="支付宝扫码">
+                                <img class="img-responsive" src="/static/img/alipayimg.jpg" data-caption="支付宝扫码" alt="支付宝扫码" />
+                            </a>
+                        </div>
+                        <div class="row text-center">
+                            支付宝扫码
+                        </div>
+                    </div>
+                    <div class="col-sm-s12 col-lg-6">
+                        <div class="row">
+                            <a href="/static/img/wechatimg.jpg" alt="微信扫码" data-lightbox="微信扫码" data-title="微信扫码">
+                                <img class="img-responsive " src="/static/img/wechatimg.jpg " data-caption="微信扫码" alt="微信扫码 " />
+                            </a>
+                        </div>
+                        <div class="row text-center ">
+                            微信扫码
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-{% endblock %} {% block script %} {% endblock %};
+{% endblock %} {% block script %} {% with comments_url = 'post/'+post.url %} {% from 'macro/script.macro' import script with
+context %}{{ script('layout/comments.js') }} {% endwith %}{% endblock %};

@@ -42,6 +42,7 @@ create table comments(
     time        text    not null,   -- 发布时间
     show        text    not null,   -- 是否显示
     ip          text    not null,   -- ip
+    ad          text    not null,
     primary key(id)
 );
 

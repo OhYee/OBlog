@@ -11,9 +11,11 @@ def getSiteConfig():
 
 def getSiteConfigDict():
     if not hasattr(g, 'getSiteConfigDict'):
-        res = dict((item['sid'], item) for item in getSiteConfig())
-        g.getSiteConfig = res
-    return g.getSiteConfig
+        siteConfig = getSiteConfig()
+        print(siteConfig)
+        res = dict((item['sid'], item) for item in siteConfig)
+        g.getSiteConfigDict = res
+    return g.getSiteConfigDict
 
 
 def checkPassword(postRequest):

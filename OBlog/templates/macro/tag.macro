@@ -8,7 +8,7 @@
 {%- endmacro %}
 
 {% macro jinjia_tag(tag) -%}
-<a href="/tag/{{ tag.english }}/">
+<a style="text-decoration:none" href="/tag/{{ tag.english }}/">
     <div class="tag" style="{{ tag.class }}">
         <img src="{{ tag.img }}" onerror="$(this).attr('style','display:none')" onload="$(this).attr('style','')"> 
         <span>{{ tag.chinese }}</span>

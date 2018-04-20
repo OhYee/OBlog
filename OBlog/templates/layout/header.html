@@ -1,9 +1,19 @@
 <header>
 
-    <nav class="navbar navbar-default navbar-static-top">
-
+    <nav class="navbar navbar-static-top navbar-inverse">
         <div class="container">
-            <ul class="nav navbar-nav">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">
+                    <i class="icon-OhYee"> {{ Site['sitename'].value }}</i>
+                </a>
+
+                <a type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="glyphicon glyphicon-menu-hamburger"></span>
+                    <span class="sr-only">切换导航</span>
+                </a>
+            </div>
+
+            <ul class="nav navbar-nav collapse navbar-collapse" id="navbar-collapse">
                 <!-- <li id="index">
                     <a href="/">首页</a>
                 </li> -->
@@ -11,7 +21,7 @@
                 <li id="{{ Site['pages'][page]['url'] }}">
                     <a href="/pages/{{ Site['pages'][page]['url'] }}/">{{ Site['pages'][page]['title'] }}
                     </a>
-                {% endif %}
+                    {% endif %}
                 </li> {% endfor %} {% if session['admin'] %}
                 <li id='admin'>
                     <a href="/admin/">管理后台</a>

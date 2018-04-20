@@ -18,8 +18,10 @@ def page_not_found(e=None):
 def before_request():
     current_app.logger.debug('before_request at path=%s' % request.path)
     g.db = sqlite3.connect(app.config['DATABASE'])
-
-    # viewercount.viewpath(request.remote_addr, request.path)
+    from .main import viewpath
+    viewpath(
+        request.headers.get('X-Forwarded-For', request.remote_addr),
+        request.path)
     # print("database connected")
 
 

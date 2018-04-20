@@ -1,28 +1,41 @@
-{% extends "admin/layout.html" %} {% block title %}图片管理-管理员界面{% endblock %}{% block admin_content %}
+{% extends "admin/layout.html" %} {% block title %}图片管理-管理员界面{% endblock %}{% block admin_content %} {% from 'macro/form.macro' import simple_input %}
 
+<alert id="alert" :alert="alert" @close="close"></alert>
 
-<ol class="breadcrumb">
+<ol class="breadcrumb" style="background:white">
     <li v-for="item in pathList">
-        <a @click="setPath(item.path)" v-text="item.dirname"></a>
+        <a href="#" @click="setPath(item.path)" v-text="item.dirname"></a>
     </li>
 </ol>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-xs-6 col-md-3" v-for="(value,key) in nowList['dir']">
-            <a @click="setPath(path+key+'/')" class="thumbnail" v-text="key">
-                
-            </a>
-        </div>
+
+<div class="row">
+    <div class="form-group">
+        <label for="exampleInputFile">上传文件到<code v-text="path"></code></label>
+        <input type="file" id="updateFile">
+        <p class="help-block">请上传图片格式文件.</p>
+        <button type="submit" class="btn btn-warning pull-left" @click="submit('upload')">确认上传 <span class="glyphicon glyphicon-upload" aria-hidden="true"></span></button>
     </div>
-    <div class="row">
-        <div class="col-xs-6 col-md-3" v-for="image in nowList['file']">
-            <a href="#" class="thumbnail">
-                <img :src="'/static/img'+path+image" alt="image">
+</div>
+<hr>
+<div class="row">
+    <div class="col-sm-3" v-for="(value,key) in nowList['dir']">
+        <a href="#" @click="setPath(path+key+'/')" class="thumbnail" v-text="key">
+        </a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-4" v-for="(image,idx) in nowList['file']" v-if="image.exist">
+        <div class="thumbnail" style="height:300px">
+            <a :href="image.src" :alt="image.name" :data-lightbox="'image-'+name" :data-title="image">
+                <img :src="image.src" :alt="image.name" style="height:150px">
             </a>
+            {{ simple_input('image.absolutePath','图片路径',other='readonly') }} {{ simple_input('image.name','文件名') }}
+            <button type="submit" class="btn btn-danger pull-left" @click="submit('delete', idx)">删除 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+            <button type="submit" class="btn btn-primary pull-right" @click="submit('rename', idx)">重命名 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
         </div>
     </div>
 </div>
 
 
-{% endblock %} {% block script %}{% from 'macro/json.macro' import json with context %}{{ json(images) }} {% from 'macro/script.macro'
-import script with context %}{{ script('admin/js/images.js') }} {% endblock %}
+
+{% endblock %} {% block script %}{% from 'macro/json.macro' import json with context %}{{ json(images) }} {% from 'macro/script.macro' import script with context %}{{ script('admin/js/images.js') }} {% endblock %}

@@ -1,0 +1,61 @@
+{% extends "admin/layout.html" %} {% block title %}评论管理-管理员界面{% endblock %}{% block admin_content %}
+
+<div class="table-responsive">
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <td>id</td>
+                <td>邮箱</td>
+                <td>发信</td>
+                <td>链接</td>
+                <td>日期</td>
+                <td>IP</td>
+                <td>显示</td>
+                <td>广告</td>
+                <td>内容</td>
+                <td>操作</td>
+            </tr>
+        </thead>
+        <tbody>
+            <div v-if="!loading">
+                <tr v-for="(comment,idx) in comments" :class="comment.class">
+                    <td v-text="comment.id"></td>
+                    <td v-text="comment.email"></td>
+                    <td>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" aria-label="发信" v-model="comment.sendemail">
+                            </label>
+                        </div>
+                    </td>
+                    <td><a :href="'/'+comment.url" v-text="comment.url"></td>
+                    <td v-text="comment.time"></td>
+                    <td v-text="comment.ip"></td>
+                    <td>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" aria-label="显示" v-model="comment.show">
+                            </label>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" aria-label="广告" v-model="comment.ad">
+                            </label>
+                        </div>
+                    </td>
+                    <td v-text="comment.raw"></td>
+                    <td>
+                        <button @click="submit(idx)" class="btn btn-default" :class="'btn-'+comment.class" v-text="comment.hint" :disabled="comment.hint=='loading...'">修改</button>
+                    </td>
+            </div>
+        </tbody>
+    </table>
+    <div v-if="loading">{% include 'layout/loading.html' %}</div>
+</div>
+
+
+
+{% endblock %} {% block script %} {% from 'macro/json.macro' import json with context %}{{ json(comments) }} {% from 'macro/script.macro'
+import script with context %}{{ script('admin/js/comments.js') }} {% endblock %}

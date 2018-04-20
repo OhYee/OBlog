@@ -1,3 +1,55 @@
+/* bootstrap主题本地化修改 */
+
+footer {
+    background-color: #333;
+    font-size: 12px;
+    color: white;
+    padding: 25px 0;
+}
+
+footer .links a {
+    color: white;
+}
+
+footer .links a:hover {
+    color: #428bca;
+    text-decoration: none;
+}
+
+.navbar-inverse {
+    background: #1565c0;
+    border: none;
+    margin-bottom: 0;
+}
+
+.navbar-inverse .navbar-brand {
+    color: white;
+}
+
+.navbar-inverse .navbar-toggle {
+    border: 0px;
+    color: white;
+}
+
+.navbar-inverse .navbar-toggle:hover {
+    background: #064d9e;
+}
+
+.navbar-inverse .navbar-nav>li>a {
+    color: #e6e6e6;
+}
+.navbar-inverse .navbar-nav>.active>a,
+.navbar-inverse .navbar-nav>.active>a:focus, 
+.navbar-inverse .navbar-nav>.active>a:hover {
+    color: #fff;
+    background-color: #064d9e;
+}
+
+.navbar-inverse .navbar-nav>li>a:hover {
+    color: white;
+    text-decoration: none;
+}
+
 .row {
     margin: 5px 0px;
 }
@@ -24,15 +76,31 @@
     border-radius: 50%;
 }
 
-footer p span:not(:first-child)::before {
-    content: "|";
+#masonry-container {
+    padding: 20px;
+}
+
+.masonry-item {
+    width: 100px;
+    /* 控制每个图片宽度 */
+    margin-bottom: 10px;
+    float: left;
+}
+
+footer p span::before {
+    content: "";
     padding: 0px 0.5em;
 }
 
-body {
-    background-color: #f6f6f6;
+footer p span:not(:first-child)::before {
+    content: "|";
 }
 
+
+
+body {
+    background-color: #fcfcfc;
+}
 
 /* 
 h1,
@@ -80,21 +148,19 @@ h6,
     line-height: 8px;
 } */
 
-
 /* main{
     padding: 10px 0 10px 0;
     margin: 10px 0 10px 0;
 } */
 
-strong,
-.bold {
+strong, .bold {
     font-weight: bold;
 }
 
 #console {
     width: 100%;
     overflow: auto;
-    background-color: #000;
+    background-color: #282C34;
     color: #ccc;
     padding: 20px;
     font-family: Consolas;
@@ -119,7 +185,7 @@ pre.codeblock codeblock {
     font-family: Consolas;
 }
 
-code {
+/* code {
     border-radius: 5px;
     border: 1px #ffaaaa dotted;
     padding: 0 5px;
@@ -132,8 +198,7 @@ code {
     max-width: 100%;
     display: inline-block;
     line-height: 1.5em;
-}
-
+} */
 
 /* nav{
     background-image: url(/static/img/bg.gif);
@@ -146,11 +211,9 @@ code {
     /* z-index: -2; */
 }
 
-
 /* .particles-wrapper{
     z-index: 0; 
 } */
-
 
 /* #particles *{
     z-index: 2;
@@ -187,7 +250,6 @@ table.highlight>tbody>tr:hover {
     font-size: 10px;
 }
 
-
 /* Bootstrap 部分 CSS 效果 */
 
 kbd {
@@ -200,7 +262,6 @@ kbd {
     -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .25);
     box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .25)
 }
-
 
 /* code{
     font-family: Consolas;
@@ -238,7 +299,6 @@ kbd {
     background: #f0ad4e;
 }
 
-
 /* OJ 题目部分 CSS 效果 */
 
 .oj {
@@ -266,8 +326,7 @@ kbd {
     display: block;
 }
 
-.input,
-.output {
+.input, .output {
     display: block;
     width: 45%;
     height: 100%;
@@ -287,7 +346,6 @@ kbd {
     color: #fff
 }
 
-
 /* 代码段部分隐藏 CSS 效果 */
 
 .hider_title {
@@ -304,14 +362,13 @@ kbd {
     border-radius: 5px;
 }
 
-.fold_hider .close:after {
+.fold_hider .fold_close:after {
     content: "▼";
 }
 
-.fold_hider .open:after {
+.fold_hider .fold_open:after {
     content: "▲";
 }
-
 
 /* blockquote-center 标签 */
 
@@ -323,8 +380,7 @@ kbd {
     text-align: center;
 }
 
-.blockquote-center::before,
-.blockquote-center::after {
+.blockquote-center::before, .blockquote-center::after {
     position: absolute;
     content: ' ';
     display: block;
@@ -349,11 +405,9 @@ kbd {
     background-position: 100% 8px;
 }
 
-.blockquote-center p,
-.blockquote-center div {
+.blockquote-center p, .blockquote-center div {
     text-align: center;
 }
-
 
 /* note 标签 */
 
@@ -365,11 +419,7 @@ kbd {
     border-radius: 3px;
 }
 
-.note h2,
-.note h3,
-.note h4,
-.note h5,
-.note h6 {
+.note h2, .note h3, .note h4, .note h5, .note h6 {
     margin-top: 0;
     margin-bottom: 5px;
 }
@@ -390,11 +440,7 @@ kbd {
     border-left-color: #777;
 }
 
-.default h2,
-.default h3,
-.default h4,
-.default h5,
-.default h6 {
+.default h2, .default h3, .default h4, .default h5, .default h6 {
     color: #777;
 }
 
@@ -402,11 +448,7 @@ kbd {
     border-left-color: #428bca;
 }
 
-.primary h2,
-.primary h3,
-.primary h4,
-.primary h5,
-.primary h6 {
+.primary h2, .primary h3, .primary h4, .primary h5, .primary h6 {
     color: #428bca;
 }
 
@@ -414,11 +456,7 @@ kbd {
     border-left-color: #5cb85c;
 }
 
-.success h2,
-.success h3,
-.success h4,
-.success h5,
-.success h6 {
+.success h2, .success h3, .success h4, .success h5, .success h6 {
     color: #5cb85c;
 }
 
@@ -426,11 +464,7 @@ kbd {
     border-left-color: #d9534f;
 }
 
-.danger h2,
-.danger h3,
-.danger h4,
-.danger h5,
-.danger h6 {
+.danger h2, .danger h3, .danger h4, .danger h5, .danger h6 {
     color: #d9534f;
 }
 
@@ -438,11 +472,7 @@ kbd {
     border-left-color: #f0ad4e;
 }
 
-.warning h2,
-.warning h3,
-.warning h4,
-.warning h5,
-.warning h6 {
+.warning h2, .warning h3, .warning h4, .warning h5, .warning h6 {
     color: #f0ad4e;
 }
 
@@ -450,14 +480,9 @@ kbd {
     border-left-color: #5bc0de;
 }
 
-.info h2,
-.info h3,
-.info h4,
-.info h5,
-.info h6 {
+.info h2, .info h3, .info h4, .info h5, .info h6 {
     color: #5bc0de;
 }
-
 
 /* 半透明折叠 */
 
@@ -504,7 +529,6 @@ kbd {
     height: 46px;
     line-height: 46px;
 }
-
 
 /* loading */
 

@@ -42,7 +42,7 @@ def query_db(sqlstr, one=False):
     cur = g.db.execute(sqlstr)
     t = cur.fetchall()
     print(t)
-    rv = [dict((cur.description[idx][0], value.replace(r"$double-quote;", r'"'))
+    rv = [dict((cur.description[idx][0], value.replace(r"$double-quote;", r'"') if value else "")
                for idx, value in enumerate(row)) for row in t]
 
     res = (rv[0] if rv else None) if one else rv
