@@ -1,0 +1,26 @@
+{% macro page_navigation(nowPage,round,totalPage,prefix,suffix) -%}
+<nav class="text-center" aria-label="Page navigation">
+    <ul class="pagination">
+        <li>
+            <a href="{{ prefix }}1{{ suffix }}" aria-label="First">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        {% for i in range(nowPage-round,nowPage+round+1) %}
+        {% if i>=1 and i<=totalPage %}
+        <li{% if i==nowPage %} class="active"{% endif %}>
+            <a href="{{ prefix }}{{ i }}{{ suffix }}">
+                <span aria-hidden="true">{{ i }} </span>
+            </a>
+        </li>
+        {% endif %}
+        {% endfor %}
+        <li>
+            <a href="{{ prefix }}{{ totalPage }}{{ suffix }}" aria-label="Last">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+
+    </ul>
+</nav>
+{%- endmacro %}

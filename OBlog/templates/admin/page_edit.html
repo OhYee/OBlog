@@ -19,17 +19,15 @@
     </li>
 </ul>
 
-
-<div v-if="loading">{% include 'layout/loading.html' %}</div>
 <div v-if="!loading" class="form-horizontal">
     <span id="content" class="help-block">
         建议在技术人员指导下修改该部分内容
     </span>
     <textarea class="form-control" aria-describedby="content" rows="30" v-model="content"></textarea>
 </div>
+<div v-if="loading">{% include 'layout/loading.html' %}</div>
 
 
 
-
-{% endblock %} {% block script %} {% from 'macro/script.macro' import script with context %}{{ script('admin/js/page_edit.js') }}
+{% endblock %} {% block script %} {% from 'macro/script.macro' import script with context %}{{ script('admin/js/page_edit.js') }}{{ super() }}
 {% endblock %}

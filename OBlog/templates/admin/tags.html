@@ -11,7 +11,7 @@
 </div>
 {% from 'macro/form.macro' import simple_input %} {% from 'macro/tag.macro' import vue_tag %}
 
-<div v-if="loading">{% include 'layout/loading.html' %}</div>
+
 <div v-if="!loading">
     <div class="form-group" v-for="(tag,idx) in tags" :class="tag.blockClass">
         <div class="row">
@@ -38,7 +38,8 @@
         </div>
     </div>
 </div>
+<div v-if="loading">{% include 'layout/loading.html' %}</div>
 
 
-
-{% endblock %} {% block script %}{% from 'macro/json.macro' import json with context %}{{ json(tags) }} {% from 'macro/script.macro' import script with context %}{{ script('admin/js/tags.js') }} {% endblock %}
+{% endblock %} {% block script %}{% from 'macro/json.macro' import json with context %}{{ json(tags) }} {% from 'macro/script.macro'
+import script with context %}{{ script('admin/js/tags.js') }} {{ super() }}{% endblock %}

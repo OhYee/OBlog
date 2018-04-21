@@ -1,0 +1,16 @@
+{% extends "layout/layout.html" %} {% block content %} {% from 'macro/tag.macro' import vue_tag %} {% from 'macro/post.macro'
+import jinjia_post %} {% from 'macro/page_navigation.macro' import page_navigation %}
+<div class="container">
+    <div class="row waterfall">
+        {% for post in posts %}
+        <div class="col-lg-6 col-sm-12">
+            {{ jinjia_post(post) }}
+        </div>
+        {% endfor %}
+    </div>
+
+    {{ page_navigation(nowPage,5,totalPage,'/archives/','/') }}
+</div>
+
+{% endblock %} {% block script %}
+<script>$(document).ready(waterfall('.waterfall'));</script>{{ super() }}{% endblock %}

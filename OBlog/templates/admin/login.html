@@ -24,5 +24,5 @@
     </div>
 </div>
 
-{% endblock %} {% block script %} {% from 'macro/script.macro' import script with context %}{{ script('admin/js/login.js') }}
+{% endblock %} {% block script %} {% from 'macro/script.macro' import script with context %}{{ script('admin/js/login.js') }}{{ super() }}
 {% endblock %}

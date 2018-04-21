@@ -7,6 +7,16 @@ def index():
     return redirect(url_for('index'))
 
 
+@pagesBP.route('/tags/')
+def tags():
+    return redirect(url_for('tags'))
+
+
+@pagesBP.route('/archives/')
+def archives():
+    return redirect(url_for('archives'))
+
+
 @pagesBP.route('/<path:url>/')
 def pages(url):
     from .main import getPagesDict

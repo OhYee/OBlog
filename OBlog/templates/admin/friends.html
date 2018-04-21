@@ -33,7 +33,7 @@
 
 <hr>
 
-<div v-if="loading">{% include 'layout/loading.html' %}</div>
+
 <div v-if="!loading">
     <div class="form-group" v-for="(friend,idx) in friends" :class="friend.class" v-if="friend.exist">
         <div class="row">
@@ -57,6 +57,6 @@
     </div>
 </div>
 
+<div v-if="loading">{% include 'layout/loading.html' %}</div>
 
-
-{% endblock %} {% block script %}{% from 'macro/json.macro' import json with context %}{{ json(Site['friends']) }} {% from 'macro/script.macro' import script with context %}{{ script('admin/js/friends.js') }} {% endblock %}
+{% endblock %} {% block script %}{% from 'macro/json.macro' import json with context %}{{ json(Site['friends']) }} {% from 'macro/script.macro' import script with context %}{{ script('admin/js/friends.js') }}{{ super() }} {% endblock %}

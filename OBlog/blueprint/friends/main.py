@@ -15,7 +15,7 @@ def addFriends(postRequest):
         return 2
 
     keyList = ['url', 'name', 'idx']
-    postRequest = dict((key, postRequest[key])for key in keyList)
+    postRequest = dict((key, postRequest[key] if key in postRequest else "")for key in keyList)
 
     db.insert_db("friends", postRequest)
     return 0
@@ -30,7 +30,7 @@ def updateFriends(postRequest):
         return 2
 
     keyList = ['url', 'name', 'idx']
-    postRequest = dict((key, postRequest[key])for key in keyList)
+    postRequest = dict((key, postRequest[key] if key in postRequest else "")for key in keyList)
 
     db.update_db("friends", postRequest, {'name': oldname})
     return 0
@@ -38,7 +38,7 @@ def updateFriends(postRequest):
 
 def deleteFriends(postRequest):
     keyList = ['name']
-    postRequest = dict((key, postRequest[key])for key in keyList)
+    postRequest = dict((key, postRequest[key] if key in postRequest else "")for key in keyList)
     db.delete_db("friends", postRequest)
 
     return 0

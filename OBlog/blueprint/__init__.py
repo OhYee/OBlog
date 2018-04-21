@@ -6,29 +6,27 @@ from .tags import tagsBP, tagsAdminBP, tagsApiBP
 from .friends import friendsAdminBP, friendsApiBP
 from .images import imagesAdminBP, imagesApiBP
 from .comments import commentsAdminBP, commentsApiBP
+from .search import searchApiBP
+from .backup import backupAdminBP, backupApiBP
 
 from flask import session, current_app, request, abort
 
 
 @adminBP.before_request
-
 @pagesBP.before_request
 @pagesAdminBP.before_request
 @pagesApiBP.before_request
-
 @postsAdminBP.before_request
 @postsApiBP.before_request
-
 @tagsAdminBP.before_request
 @tagsApiBP.before_request
-
 @friendsAdminBP.before_request
 @friendsApiBP.before_request
-
 @imagesAdminBP.before_request
 @imagesApiBP.before_request
-
 @commentsAdminBP.before_request
+@backupAdminBP.before_request
+@backupApiBP.before_request
 def before_request():
     print(session)
     current_app.logger.debug('auth path %s.' % request.path)
@@ -58,5 +56,10 @@ app.register_blueprint(friendsAdminBP, url_prefix='/admin/friends')
 app.register_blueprint(imagesApiBP, url_prefix='/api/images')
 app.register_blueprint(imagesAdminBP, url_prefix='/admin/images')
 
-app.register_blueprint(commentsAdminBP,url_prefix='/admin/comments')
-app.register_blueprint(commentsApiBP,url_prefix='/api/comments')
+app.register_blueprint(commentsAdminBP, url_prefix='/admin/comments')
+app.register_blueprint(commentsApiBP, url_prefix='/api/comments')
+
+app.register_blueprint(searchApiBP, url_prefix='/api/search')
+
+app.register_blueprint(backupAdminBP, url_prefix='/admin/backup')
+app.register_blueprint(backupApiBP, url_prefix='/api/backup')

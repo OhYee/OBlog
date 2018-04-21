@@ -4,7 +4,8 @@ from OBlog import database as db
 
 def getSiteConfig():
     if not hasattr(g, 'getSiteConfig'):
-        res = db.query_db("select * from siteConfig;")
+        res = db.query_db(
+            "select * from siteConfig")
         g.getSiteConfig = res
     return g.getSiteConfig
 
@@ -23,7 +24,7 @@ def checkPassword(postRequest):
     passwd = postRequest.get("password", "")
     status = 0
 
-    print("\n123\n",password,passwd,"\n\n")
+    print("\n123\n", password, passwd, "\n\n")
 
     import hashlib
     if hashlib.md5(passwd.encode()).hexdigest() == password:

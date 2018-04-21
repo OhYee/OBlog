@@ -1,10 +1,10 @@
 /* 加载完成后自动执行 */
-$(document).ready(function() {
+$(document).ready(function () {
     // 移动端侧边栏
     // $(".button-collapse").sideNav();
 
     // 代码高亮
-    $('pre codeblock').each(function(i, block) {
+    $('pre codeblock').each(function (i, block) {
         hljs.highlightBlock(block);
     });
 
@@ -13,6 +13,7 @@ $(document).ready(function() {
 
     initUnfold($('.unfold-wrap'));
     initFold();
+
 });
 
 $(document).resize(autoHeight());
@@ -28,10 +29,10 @@ function autoHeight() {
     $("main").attr("style", "min-height:" + (document.documentElement.clientHeight - $("header").height() - $("footer").height() - 40) + "px;");
 }
 
-window.onload = function() {
+window.onload = function () {
     autoHeight();
 };
-window.onresize = function() {
+window.onresize = function () {
     autoHeight();
 };
 
@@ -120,11 +121,11 @@ function sortTagsByPinYin(tags) {
     var zh = "阿八嚓哒妸发旮哈讥咔垃痳拏噢妑七呥扨它穵夕丫帀".split('');
 
     var newTags = [];
-    $.each(letters, function(i) {
+    $.each(letters, function (i) {
         var curr1 = [],
             curr2 = [];
         var thisChar = this;
-        $.each(tags, function() {
+        $.each(tags, function () {
             if (this.chinese && this.chinese.length > 0) {
                 var firstChar = this.chinese[0].toLowerCase()
                 if (firstChar >= 'a' && firstChar <= 'z') {
@@ -166,7 +167,7 @@ function removeMessage() {
 // 初始化查看全部
 function initUnfold(e) {
     e.css('maxHeight', "");
-    if (e.children('.content').height() > e.height()) {
+    if (e.children('.unfold-content').height() > e.height()) {
         var tips = $(e).attr('tips');
         if (!tips) tips = '显示更多';
         $(e).append('<div class="unfold-field"><div class="unflod-field_mask"></div><div class="unfold-field_text"><span>' + tips + '</span></div></div>')
@@ -182,7 +183,7 @@ function initUnfold(e) {
 
 // 初始化折叠
 function initFold() {
-    $(document).on('click', '.fold_hider', function() {
+    $(document).on('click', '.fold_hider', function () {
         $('>.fold', this.parentNode).slideToggle();
         $('>:first', this).toggleClass('fold_open');
     });
@@ -192,7 +193,7 @@ function initFold() {
 
 // 统计
 var _hmt = _hmt || [];
-(function() {
+(function () {
     var hm = document.createElement("script");
     hm.src = "https://hm.baidu.com/hm.js?c3c4a93be88257973d97af02f735ed4e";
     var s = document.getElementsByTagName("script")[0];
@@ -200,7 +201,7 @@ var _hmt = _hmt || [];
 })();
 
 // 自动推送
-(function() {
+(function () {
     var bp = document.createElement('script');
     var curProtocol = window.location.protocol.split(':')[0];
     if (curProtocol === 'https') {
@@ -218,7 +219,7 @@ var _hmt = _hmt || [];
 var sortTagsByNumber = tags => tags.sort((a, b) => parseInt(b.cnt) - parseInt(a.cnt));
 
 /* 格式化输出时间 */
-Date.prototype.Format = function(fmt = "yyyy-MM-dd HH:mm:ss") {
+Date.prototype.Format = function (fmt = "yyyy-MM-dd HH:mm:ss") {
     var o = {
         "M+": this.getMonth() + 1,
         "d+": this.getDate(),
@@ -243,8 +244,8 @@ Vue.component('alert', {
     template: '<div class="alert alert-dismissible" role="alert" v-if="alert.class" :class="alert.class"><button type="button" class="close" aria-label="Close" @click="close"><span aria-hidden="true">&times;</span></button><strong v-text="alert.title"></strong>&nbsp;<span v-text="alert.content"></span></div>',
     props: ['alert'],
     methods: {
-        close: function() {
+        close: function () {
             this.$emit('close')
         }
     }
-})
+});

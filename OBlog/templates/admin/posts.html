@@ -15,14 +15,14 @@
             </tr>
         </thead>
         <tbody>
-            <div v-if="loading">{% include 'layout/loading.html' %}</div>
+            
             <div v-if="!loading">
                 <tr v-for="(post,idx) in posts" v-if="post.exist">
-                    <td v-text="post.url"></td>
-                    <td>
+                    <td v-text="post.url" class="cut" style="max-width:100px"></td>
+                    <td class="cut" style="max-width:150px">
                         <a :href="'/post/'+post.url+'/'" v-text="post.title"></a>
                     </td>
-                    <td v-text="post.abstruct"></td>
+                    <td v-text="post.abstruct" class="cut" style="max-width:200px"></td>
                     <td v-text="post.published"></td>
                     <td>
                         <a class="btn btn-default" v-bind:href="'/admin/posts/edit/'+post.url+'/'" role="button">编辑</a>
@@ -32,7 +32,7 @@
         </tbody>
     </table>
 </div>
+<div v-if="loading">{% include 'layout/loading.html' %}</div>
 
 
-
-{% endblock %} {% block script %} {% from 'macro/json.macro' import json with context %}{{ json(posts) }} {% from 'macro/script.macro' import script with context %}{{ script('admin/js/posts.js') }} {% endblock %}
+{% endblock %} {% block script %} {% from 'macro/json.macro' import json with context %}{{ json(posts) }} {% from 'macro/script.macro' import script with context %}{{ script('admin/js/posts.js') }}{{ super() }}{% endblock %}

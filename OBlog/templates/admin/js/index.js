@@ -10,6 +10,7 @@ $(document).ready(() => {
         data.needClear = false;
         data.push(item);
     }
+    data.sort((a, b) => parseInt(a.idx) - parseInt(b.idx))
     vue.siteConfig = data;
     vue.loading = false;
 });
@@ -25,11 +26,11 @@ var vue = new Vue({
             queryStr = "";
             keyList = ['sid', 'value']
             keyList.forEach(key => {
-                queryStr += key + '=' + this.siteConfig[idx][key] + '&';
+                queryStr += key + '=' + encodeURIComponent( this.siteConfig[idx][key]) + '&';
             });
 
             console.log(queryStr)
-            postData('/api/admin/update/', encodeURI(queryStr), (data) => {
+            postData('/api/admin/update/', queryStr, (data) => {
                 if (data['status'] == '0') {
                     this.siteConfig[idx].class = 'has-success';
                     this.siteConfig[idx].hint = '修改成功';

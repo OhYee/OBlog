@@ -1,4 +1,123 @@
-{% extends "layout/layout.html" %} {% block meta %} {% endblock %} {% block script %}
-<script>
+{% extends "layout/layout.html" %} {% block content %} {% from 'macro/tag.macro' import vue_tag %} {% from 'macro/post.macro'
+import vue_post,jinjia_post %}
 
-</script> {% endblock %}
+<div id="app" class="container ">
+    <div class="row text-center">
+        <img id="logo" src="/static/img/logo.svg" height="200px" />
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-lg-offset-3 col-sm-12">
+            <div class="form-group">
+                <label for="search">站内搜索</label>
+                <input class="form-control" placeholder="搜索你想要的..." type="text" v-model="searchwords" v-on:focus="searchFocus" v-on:blur="searchBlur">
+            </div>
+        </div>
+    </div>
+
+    <div v-if="loading" class="center">{% include "layout/loading.html" %}</div>
+
+    <div v-if="!loading">
+        <div class="unfold-wrap">
+            <div class="unfold-content clearfix">
+                <div v-if="searchwords==''">
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-6">
+                            <h4>最新文章</h4>
+                            {% for post in newPosts %} {{ jinjia_post(post) }} {% endfor %}
+                        </div>
+                        <div class="col-sm-12 col-lg-6">
+                            <h4>推荐文章</h4>
+                            {% for post in recommentPosts %} {{ jinjia_post(post) }} {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-lg-offset-3 col-sm-12" v-if="searchwords!=''">
+                    <div v-if="noResult">无结果</div>
+
+                    <ul class="list-inline">
+                        <li v-for="(tag) in tags">
+                            {{ vue_tag(tag) }}
+                        </li>
+                    </ul>
+                    <div class="row">
+                        <ul class="list-unstyled">
+                            <li v-for="(post) in posts">
+                                {{ vue_post('post') }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %} {% block script %}
+<script>
+    $(document).ready(function () {
+        vue.refresh();
+    });
+
+
+
+    vue = new Vue({
+        el: '#app',
+        data: {
+            tags: [],
+            posts: [],
+            loading: false,
+            noResult: false,
+            searchwords: "",
+        },
+        methods: {
+            searchFocus: function () {
+                $("#logo").animate({
+                    height: "100px"
+                }, 200);
+            },
+            searchBlur: function () {
+                $("#logo").animate({
+                    height: "200px"
+                }, 300);
+            },
+            refresh: function () {
+                this.$nextTick(() => {
+                    initUnfold($('.unfold-wrap'));
+                });
+            }
+        },
+        watch: {
+            searchwords: function () {
+                waitUntilLast('searchInput', () => {
+                    this.loading = true;
+                    if (this.searchwords == '') {
+                        this.tags = [];
+                        this.posts = [];
+                        this.noResult = true;
+
+                        this.loading = false;
+                        this.refresh();
+                    } else {
+                        var queryStr = "searchwords=" + encodeURIComponent(this.searchwords);
+
+                        postData('/api/search/get/', queryStr, data => {
+                            console.log(data)
+                            this.tags = data['tags'];
+                            this.posts = data['posts'];
+
+                            if (this.tags.length + this.posts.length == 0)
+                                this.noResult = true;
+                            else
+                                this.noResult = false;
+
+                            this.loading = false;
+                            this.refresh();
+                        }, 'search');
+                    }
+                }, 1000)
+            }
+        },
+    })
+</script> {{ super() }}{% endblock %}

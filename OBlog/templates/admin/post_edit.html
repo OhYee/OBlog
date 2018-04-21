@@ -2,15 +2,17 @@
 import input %}
 <alert id="alert" :alert="alert" @close="close"></alert>
 
-<div v-if="loading">{% include 'layout/loading.html' %}</div>
+
 <div v-if="!loading" class="form-group">
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-4">
+            {{ input("title","文章标题") }}
+        </div>
+        <div class="col-sm-4">
             {{ input("url","文章链接") }}
         </div>
-        <div class="col-sm-6">
-            {{ input("title","文章标题") }}
-
+        <div class="col-sm-4">
+            {{ input("img","题图") }}
         </div>
     </div>
     <div class="row">
@@ -42,7 +44,7 @@ import input %}
     </div>
 
 </div>
-
+<div v-if="loading">{% include 'layout/loading.html' %}</div>
 
 
 <div class="row form-group">
@@ -53,4 +55,4 @@ import input %}
 </div>
 
 {% endblock %} {% block script %} {% from 'macro/json.macro' import json with context %}{{ json(post) }} {% from 'macro/script.macro'
-import script with context %}{{ script('admin/js/post_edit.js') }} {% endblock %}
+import script with context %}{{ script('admin/js/post_edit.js') }} {{ super() }}{% endblock %}

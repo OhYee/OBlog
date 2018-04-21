@@ -1,0 +1,55 @@
+{% macro vue_post(post) -%}
+{% from 'macro/tag.macro' import vue_tag %}
+<div class="thumbnail">
+    <img :src="post.img" :alt="post.title" class="img-responsive" style="max-height: 100px" v-if="post.img!=''">
+    <div class="caption">
+        <time class="small">
+            <span class="glyphicon glyphicon-calendar"></span>
+            <span v-text="post.updatetime"></span>
+        </time>
+        <a :href="'/post/'+post.url+'/'">
+            <h3 v-text="post.title"></h3>
+        </a>
+        <p v-text="post.abstruct"></p>
+        <hr>
+        <ul class="list-inline">
+            <li>
+                <span class="glyphicon glyphicon-tags"></span>
+            </li>
+            <li v-for="(tag) in post.tags">
+                {{ vue_tag(tag) }}
+            </li>
+        </ul>
+    </div>
+</div>
+{%- endmacro %}
+
+{% macro jinjia_post(post) -%}
+{% from 'macro/tag.macro' import jinjia_tag %}
+<div class="thumbnail">
+    {% if post.img!='' %}
+    <img src="{{ post.img }}" alt="{{ post.title }}" class="img-responsive" style="max-height: 100px">
+    {% endif %}
+    <div class="caption">
+        <time class="small">
+            <span class="glyphicon glyphicon-calendar"></span>
+            <span>{{ post.updatetime }}</span>
+        </time>
+        <a href="/post/{{ post.url }}/">
+            <h3>{{ post.title }}</h3>
+        </a>
+        <p>{{ post.abstruct }}</p>
+        <hr>
+        <ul class="list-inline">
+            <li>
+                <span class="glyphicon glyphicon-tags"></span>
+            </li>
+            {% for tag in post.tags %}
+            <li>
+                {{ jinjia_tag(tag) }}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{%- endmacro %}

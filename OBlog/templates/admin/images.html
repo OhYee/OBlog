@@ -23,7 +23,8 @@
         </a>
     </div>
 </div>
-<div class="row">
+
+<div class="row" v-if="!loading">
     <div class="col-sm-4" v-for="(image,idx) in nowList['file']" v-if="image.exist">
         <div class="thumbnail" style="height:300px">
             <a :href="image.src" :alt="image.name" :data-lightbox="'image-'+name" :data-title="image">
@@ -35,7 +36,8 @@
         </div>
     </div>
 </div>
+<div v-if="loading">{% include 'layout/loading.html' %}</div>
 
 
 
-{% endblock %} {% block script %}{% from 'macro/json.macro' import json with context %}{{ json(images) }} {% from 'macro/script.macro' import script with context %}{{ script('admin/js/images.js') }} {% endblock %}
+{% endblock %} {% block script %}{% from 'macro/json.macro' import json with context %}{{ json(images) }} {% from 'macro/script.macro' import script with context %}{{ script('admin/js/images.js') }}{{ super() }}{% endblock %}

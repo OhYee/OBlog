@@ -39,24 +39,25 @@ def getRawTags():
     return g.tags_getRawTags
 
 
-def getChinese(_tag):
+def getTagByEnglish(english):
     '''
     description:    get the tag by english
     input:          text - tag english
     output:         dict - tag
     '''
     return db.query_db(
-            "select * from tags where english='%s'" % _tag, one=True)
+        "select * from tags where english='%s'" % english, one=True)
 
 
 def getTag(chinese):
     '''
-    description:    get the tag by english
-    input:          text - tag english
+    description:    get the tag by chinese
+    input:          text - tag chinese
     output:         dict - tag
     '''
     return db.query_db(
-            "select * from tags where chinese='%s'" % chinese, one=True)
+        "select * from tags where chinese='%s'" % chinese, one=True)
+
 
 def getTags():
     '''
@@ -69,8 +70,7 @@ def getTags():
         _Tags = getRawTags()
         Tags = {}
         for Tag in _Tags:
-            Tags[Tag['chinese']] = [Tag['english'],
-                                    Tag['cnt'], Tag['img'], Tag['class']]
+            Tags[Tag['chinese']] = Tag
         g.tags_getTags = Tags
     return g.tags_getTags
 
@@ -139,15 +139,14 @@ def updateTag(postRequest):
     if postRequest['english'] != postRequest['newenglish'] and db.exist_db("tags", {'english': postRequest["newenglish"]}) == True:
         return 2
 
-    oldEnglish = postRequest['english']
+    chinese = postRequest['chinese']
     postRequest['english'] = postRequest['newenglish']
 
-       # 删除前端传入的其他参数
+    # 删除前端传入的其他参数
     keyList = ['english', 'img', 'class']
-    postRequest = dict((key, postRequest[key])for key in keyList)
+    postRequest = dict((key, postRequest[key] if key in postRequest else "")for key in keyList)
 
-
-    db.update_db("tags", postRequest, {'english':oldEnglish})
+    db.update_db("tags", postRequest, {'chinese': chinese})
     return 0
 
 

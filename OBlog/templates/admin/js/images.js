@@ -139,10 +139,11 @@ var vue = new Vue({
                     };
                 }
                 this.$set(this.nowList, idx, this.nowList[idx]);
-                window.location.href = "#alert";
+                this.$nextTick(window.location.href = "#alert");
             }, type + idx, headers);
         },
         setPath: function(path) {
+            this.loading = true;
             this.path = path;
             this.pathList = this.path.substr(1).split("/")
             this.pathList.pop()
@@ -162,6 +163,9 @@ var vue = new Vue({
             this.pathList.splice(0, 0, {
                 'dirname': 'root',
                 'path': '/',
+            });
+            this.$nextTick(function () {
+                this.loading = false;
             });
         },
         close: function() {

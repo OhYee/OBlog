@@ -10,9 +10,9 @@ var vue = new Vue({
     },
     methods: {
         submit: function () {
-            queryStr = "password=" + this.password;
+            queryStr = "password=" + encodeURIComponent(this.password);
             console.log(queryStr)
-            postData('/api/admin/login/', encodeURI(queryStr), (data) => {
+            postData('/api/admin/login/', queryStr, (data) => {
                 if (data['status'] == '0') {
                     location.reload();
                 } else if (data['status'] == '1') {

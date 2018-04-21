@@ -1,22 +1,19 @@
-import os
+import json
+import sqlite3
 
 
-def tree(root='./', relativePath='.', nowDirname='.'):
-    nowPath = os.path.join(root, relativePath)
-    dirList = []
-    fileList = []
-    for file in os.listdir(nowPath):
-        if os.path.isfile(os.path.join(nowPath, file)):
-            fileList.append(file)
-        else:
-            dirList.append(file)
+def query_db(sqlstr, one=False):
+    conn = sqlite3.connect('sql.db')
+    cur = conn.execute(sqlstr)
+    t = cur.fetchall()
+    print(t)
+    rv = [dict((cur.description[idx][0], value.replace(r"$double-quote;", r'"') if value else "")
+               for idx, value in enumerate(row)) for row in t]
 
-    res = {
-        'path': relativePath,
-        'file': fileList,
-        'dir': dict((dirname, tree(root, os.path.join(relativePath, dirname), dirname))for dirname in dirList)
-    }
+    res = (rv[0] if rv else None) if one else rv
+    print(res)
     return res
 
-
-print(listDir('./OBlog/static/img'))
+f = open('./posts.json', 'w')
+f.write(json.dumps(query_db("select * from posts;")))
+f.close()

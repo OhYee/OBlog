@@ -13,7 +13,7 @@
                     <a href="/admin/posts/">文章管理</a>
                 </li>
                 <li id="admin-sidebar-4" role="presentation">
-                    <a href="javascript:alert('待填坑');">商品管理</a>
+                    <a href="/admin/shop/">商品管理</a>
                 </li>
                 <li id="admin-sidebar-5" role="presentation">
                     <a href="/admin/tags/">标签管理</a>
@@ -27,6 +27,9 @@
                 <li id="admin-sidebar-8" role="presentation">
                     <a href="/admin/comments/">评论区管理</a>
                 </li>
+                <li id="admin-sidebar-9" role="presentation">
+                    <a href="/admin/backup/">备份与还原</a>
+                </li>
             </ul>
         </div>
         <div id="app" class="col-lg-10 col-sm-12">
@@ -35,4 +38,8 @@
     </div>
 </div>
 
+{% endblock %}
+{% block script %}
+<script>$("ul li#admin").toggleClass('active');</script>
+{{ super() }}
 {% endblock %}

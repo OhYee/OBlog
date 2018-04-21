@@ -6,12 +6,10 @@ $(document).ready(function () {
     vue.time.value = vue.updatetime.value = nowTime;
     vue.view.value = '0';
 
-
-
-    if (jsonData) {
+    if (jsonData.length != 0) {
         type = "update";
         console.log(jsonData)
-        var attribList = ['url', 'title', 'time', 'updatetime', 'view', 'tags'];
+        var attribList = ['url', 'title', 'time', 'updatetime', 'view', 'tags', 'img'];
         attribList.forEach(item => {
             vue[item].value = jsonData[item];
         });
@@ -62,6 +60,12 @@ var vue = new Vue({
             hint: "",
             icon: "",
         },
+        img: {
+            value: "",
+            class: "",
+            hint: "",
+            icon: "",
+        },
         abstruct: "",
         raw: "",
         published: true,
@@ -75,7 +79,7 @@ var vue = new Vue({
     methods: {
         submit: function () {
             queryStr = '';
-            queryList = ['url', 'title', 'time', 'updatetime', 'view', 'tags'];
+            queryList = ['url', 'title', 'time', 'updatetime', 'view', 'tags', 'img'];
             queryList.forEach(item => queryStr += item + '=' + encodeURIComponent(this[item].value) + '&');
             queryStr += 'abstruct=' + encodeURIComponent(this.abstruct) + '&';
             queryStr += 'raw=' + encodeURIComponent(this.raw) + '&';
@@ -123,7 +127,7 @@ var vue = new Vue({
                         content: "服务器返回未知信息",
                     }
                 }
-                window.location.href = "#alert";
+                this.$nextTick(window.location.href = "#alert");
             });
         },
         close: function () {
@@ -213,7 +217,7 @@ var vue = new Vue({
         },
         'tags.value': function () {
             waitUntilLast('tags', () => {
-                this.tags.value = this.tags.value.replace('，', ',')
+                this.tags.value = this.tags.value.replace('，', ',');
                 this.tags.class = "has-success";
                 this.tags.icon = "glyphicon-ok";
                 var tagsList = Array.from(new Set(this.tags.value.split(',')));

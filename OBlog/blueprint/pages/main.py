@@ -25,8 +25,8 @@ def addPages(postRequest):
         return 1
 
     keyList = ['url', 'title', 'idx']
-    postRequest = dict((key, postRequest[key])for key in keyList)
-    postRequest['show'] = '1'
+    postRequest = dict((key, postRequest[key] if key in postRequest else "")for key in keyList)
+    postRequest['show'] = 'true'
 
     db.insert_db('pages', postRequest)
     return 0
@@ -43,7 +43,7 @@ def updatePage(postRequest):
         return 1
 
     keyList = ['url', 'title', 'idx', 'show']
-    postRequest = dict((key, postRequest[key])for key in keyList)
+    postRequest = dict((key, postRequest[key] if key in postRequest else "")for key in keyList)
 
     db.update_db("pages", postRequest, {'url': oldurl})
     return 0

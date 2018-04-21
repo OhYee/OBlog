@@ -1,17 +1,49 @@
 from . import app
-from flask import g, current_app, request, render_template
+from flask import g, current_app, request, render_template, abort
 import sqlite3
 
 
 @app.route('/')
 def index():
-    return render_template("pages/index.html", thisPage='index')
+    from .blueprint.admin.main import getSiteConfigDict
+    from .blueprint.posts.main import getPostForShow, getPostsByTime
+    Site = getSiteConfigDict()
+    recommentStr = Site['recommend']['value']
+    recommentPosts = [getPostForShow(url)
+                      for url in recommentStr.split(',') if url != '']
+    return render_template("pages/index.html", thisPage='index', newPosts=getPostsByTime(5), recommentPosts=recommentPosts)
+
+
+@app.route('/archives/')
+@app.route('/archives/<int:page>/')
+def archives(page=1):
+    prePagePostsNumber = 20
+    from .blueprint.posts.main import getPostsByTime, getPostsNumber
+    import math
+    totalPage = math.ceil(getPostsNumber() / prePagePostsNumber)
+    posts = getPostsByTime(prePagePostsNumber, (page - 1) * prePagePostsNumber)
+    if len(posts) == 0:
+        abort(418)
+    return render_template("pages/archives.html", thisPage='archives', posts=posts, totalPage=totalPage, nowPage=page)
+
+
+@app.route('/tags/')
+@app.route('/tags/<int:page>/')
+def tags(page=1):
+    from .blueprint.tags.main import getTags
+    return render_template("pages/tags.html", thisPage='tags', tags=getTags())
 
 
 @app.errorhandler(404)
 def page_not_found(e=None):
     current_app.logger.warning('404 path=%s' % request.path)
     return render_template("pages/404.html", e=e), 404
+
+
+@app.errorhandler(418)
+def i_am_a_tea_pot(e=None):
+    current_app.logger.warning('418 path=%s' % request.path)
+    return render_template("pages/418.html", e=e), 418
 
 
 @app.before_request

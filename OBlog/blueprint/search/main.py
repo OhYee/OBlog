@@ -1,70 +1,6 @@
-import math
 import jieba
-import json
+from OBlog import database as db
 from jieba.analyse import textrank
-
-
-def dictSort(dic, reverse=False):
-    lst = [item for item in dic]
-    lst.sort(key=lambda x: dic[x], reverse=reverse)
-    res = dict((item, dic[item])for item in lst)
-    return res
-
-
-def getCntDict(text):
-    lt = jieba.lcut_for_search(text)
-    dic = {}
-    for i in lt:
-        if i in dic:
-            dic[i] += 1
-        else:
-            dic[i] = 1
-    return dictSort(dic, reverse=False)
-
-
-def cross(searchArray, targetDict):
-    score = 0.0
-    for word in searchArray:
-        if word in targetDict:
-            score += targetDict[word]
-    score = math.log10(1 + score)
-    return score
-
-
-def calc_posts(searchArray, post):
-    # print(post)
-    res = 2 * cross(searchArray, json.loads(post['searchdict1']))
-    res += cross(searchArray, json.loads(post['searchdict2']))
-    return res
-
-
-def calc_tags(searchArray, tag):
-    # print(tag)
-    Str = tag["chinese"]
-    if len(tag["english"]) < 10:
-        Str += " " + tag["english"]
-    res = cross(searchArray, getCntDict(Str))
-    return res
-
-
-def deleteUnmatched(dic):
-    keys = [key for key in dic if dic[key] == 0]
-    for key in keys:
-        dic.pop(key)
-    return dic
-
-
-def search(searchtext, items, calc):
-    searchtext = searchtext.replace(' ', '')
-    searchArray = jieba.lcut_for_search(searchtext)
-    print("searchArray:", searchArray)
-    res = dict((idx, calc(searchArray, item))
-               for (idx, item) in enumerate(items))
-    res = dictSort(res, reverse=True)
-    # print('res', res)
-    res = deleteUnmatched(res)
-    reslist = [items[idx] for idx in res]
-    return reslist
 
 
 def getKeywords(text):
@@ -72,17 +8,40 @@ def getKeywords(text):
     return ',' + ','.join(lst)
 
 
-# def search_Tags(searchtext):
-#     return search(searchtext, Tags.getRawTags(), calc_tags)
+def searchTags(searchWord):
+    searchWordList = jieba.cut_for_search(searchWord)
+    res = []
+    for word in searchWordList:
+        res += db.query_db(
+            "select chinese from tags where chinese like '%%%s%%';" % word)
+        res += db.query_db(
+            "select chinese from tags where english like '%%%s%%';" % word)
+
+    res = [item['chinese'] for item in res]
+    res = list(set(res))
+    from ..tags.main import getTag
+    res = [getTag(chinese) for chinese in res]
+    return res
 
 
-# def search_PublishedPosts(searchtext):
-#     posts = search(searchtext, Posts.getPublishedPostsForSearch(), calc_posts)
-#     urls = [post['url'] for post in posts]
-#     return Posts.getPostsDetailByUrlForSearch(urls)
+def searchPosts(searchWord):
+    searchWordList = jieba.cut_for_search(searchWord)
 
+    queryStr = [
+        "title like '%{0}%' or abstruct like '%{0}%' or raw like '%{0}%' or tags like '%{0}%'".format(
+            word)
+        for word in searchWordList
+    ]
+    queryStr = ' or '.join(queryStr)
 
-# def search_AllPosts(searchtext):
-#     posts = search(searchtext, Posts.getAllPostsForSearch(), calc_posts)
-#     urls = [post['url'] for post in posts]
-#     return Posts.getPostsDetailByUrlForSearch(urls)
+    queryStr = "select * from posts_card where url in (select url from posts where ({0}) and url in(select url from posts where published='true'));".format(
+        queryStr)
+
+    posts = db.query_db(queryStr)
+
+    from ..tags.main import getTags
+    tags = getTags()
+
+    for post in posts:
+        post['tags'] = [tags[tag] for tag in post['tags'].split(',')]
+    return posts

@@ -12,7 +12,7 @@ $(document).ready(function() {
         item.needClear = false;
         data.push(item);
     }
-    vue.pages = data;
+    vue.pages = data.sort((a, b) => parseInt(a.idx) - parseInt(b.idx));
     vue.loading = false;
 });
 

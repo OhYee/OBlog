@@ -1,5 +1,5 @@
 __pycache__
-database.db
+*.db
 OBlog/static/img/
 OBlog/del/
 log/*

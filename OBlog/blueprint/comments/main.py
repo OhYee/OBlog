@@ -88,7 +88,7 @@ def addComment(postRequest):
 
     keyList = ['id', 'raw', 'html', 'time', 'username',
                'email', 'sendemail', 'show', 'ad', 'url', 'ip']
-    postRequest = dict((key, postRequest[key])for key in keyList)
+    postRequest = dict((key, postRequest[key] if key in postRequest else "")for key in keyList)
 
     print(postRequest)
 
@@ -101,7 +101,7 @@ def updateComment(postRequest):
     cid = postRequest['id']
 
     keyList = ['sendemail', 'show', 'ad']
-    postRequest = dict((key, postRequest[key])for key in keyList)
+    postRequest = dict((key, postRequest[key] if key in postRequest else "")for key in keyList)
 
     db.update_db("comments", postRequest, {'id': cid})
     return 0

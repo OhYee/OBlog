@@ -18,11 +18,11 @@ var vue = new Vue({
         submit: function (type) {
             queryStr = '';
 
-            queryStr += 'path' + '=' + this.path + '.html&';
+            queryStr += 'path' + '=' + encodeURIComponent(this.path) + '.html&';
             if (type == 'update')
-                queryStr += 'content' + '=' + this.content + '&';
+                queryStr += 'content' + '=' + encodeURIComponent(this.content) + '&';
 
-            postData('/api/pages/edit/' + type + '/', encodeURI(queryStr), (data) => {
+            postData('/api/pages/edit/' + type + '/', queryStr, (data) => {
                 if (data['status'] == 0) {
                     this.pathClass = "has-success";
                     this.hint = "编辑成功";

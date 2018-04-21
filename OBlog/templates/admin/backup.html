@@ -1,0 +1,10 @@
+{% extends "admin/layout.html" %} {% block title %}备份-管理员界面{% endblock %}{% block admin_content %}
+<alert id="alert" :alert="alert" @close="close"></alert>
+
+<div class="form-group" v-for="(button,idx) in buttons">
+    <button @click="submit(button.type,idx)" class="btn btn-default" :class="'btn-'+button.class" v-text="button.hint" :disabled="button.hint=='loading...'">修改</button>
+</div>
+
+
+{% endblock %} {% block script %}{% from 'macro/script.macro' import script with context %}{{ script('admin/js/backup.js') }}{{ super() }}{%
+endblock %}

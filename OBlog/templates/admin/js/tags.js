@@ -32,6 +32,8 @@ var vue = new Vue({
                 if (data['status'] == '0') {
                     this.tags[idx].blockClass = "has-success";
                     this.tags[idx].hint = "修改成功";
+                    this.tags[idx].english = this.tags[idx].newenglish;
+                    
                 } else if (data['status'] == '1') {
                     this.tags[idx].blockClass = "has-warning";
                     this.tags[idx].hint = "修改失败，请检查格式";

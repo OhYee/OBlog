@@ -13,12 +13,15 @@ def existPost(url):
     return db.exist_db('posts', {'url': url})
 
 
+def getPostsNumber():
+    res= db.raw_query_db("select count(url) from posts")
+    return int(res[0][0])
+
+
 def getPostsForList():
-    if not hasattr(g, "getPostsForList"):
-        res = db.query_db("select * from posts_list;")
-        # res.sort(key=lambda x: int(x["idx"]))
-        g.getPostsForList = res
-    return g.getPostsForList
+    res = db.query_db("select * from posts_list order by time;")
+    # res.sor key=lambda x: int(x["idx"]))
+    return res
 
 
 def getPostForEdit(url):
@@ -27,12 +30,9 @@ def getPostForEdit(url):
     input:          text - url of the post
     output:         dict - post
     '''
-    if not hasattr(g, "getPostForEdit"):
-        res = db.query_db(
-            "select * from posts_edit where url='%s';" % url, one=True)
-        # res.sort(key=lambda x: int(x["idx"]))
-        g.getPostForEdit = res
-    return g.getPostForEdit
+    res = db.query_db(
+        "select * from posts_edit where url='%s';" % url, one=True)
+    return res
 
 
 def getPostForShow(url):
@@ -41,22 +41,42 @@ def getPostForShow(url):
     input:          text - url of the post
     output:         dict - post
     '''
-    if not hasattr(g, "getPostForShow"):
-        res = db.query_db(
-            "select * from posts_show where url='%s';" % url, one=True)
-        # res.sort(key=lambda x: int(x["idx"]))
-        tagsList = res['tags'].split(',')
-        from ..tags.main import getTag
-        res['tags'] = [getTag(tag) for tag in tagsList]
-        g.getPostForShow = res
-    return g.getPostForShow
+    res = db.query_db(
+        "select * from posts_show where url='%s';" % url, one=True)
+    # res.sort(key=lambda x: int(x["idx"]))
+    res['tags'] = formatTags(res['tags'])
+    return res
 
 
-# def getPost(url):
-#     post = db.query_db("select * from posts where url='%s'" % url, one=True)
-#     tags = getTags()
-#     #formatTags(post)
-#     return post
+def getPostsByTime(limit, offset=0):
+    posts = db.query_db(
+        "select * from posts_show where published='true' order by time desc limit %s offset %s;" % (limit, offset))
+    for post in posts:
+        post['tags'] = formatTags(post['tags'])
+    return posts
+
+
+def getPostsByTag(tagName):
+    posts = db.query_db(
+        "select * from posts_show where published='true' and tags like '%%%s%%' order by time;" % (tagName))
+    res = []
+    for post in posts:
+        post['tags'] = formatTags(post['tags'])
+        for tag in post['tags']:
+            if tag['chinese'] == tagName:
+                res.append(post)
+                break
+    return res
+
+def getAllPosts():
+    posts = db.query_db(
+        "select * from posts;")
+    return posts
+
+def formatTags(tagStr):
+    from ..tags.main import getTag
+    tagsList = tagStr.split(',')
+    return [getTag(tag) for tag in tagsList if tag != '']
 
 
 '''
@@ -85,15 +105,16 @@ def addPost(postRequest):
 
     from OBlog.markdown import renderMarkdown
     import json
-    from ..search.main import getCntDict, getKeywords
+    from ..search.main import getKeywords
 
     postRequest['html'] = renderMarkdown(postRequest['raw'])
     postRequest['keywords'] = postRequest['tags'] + \
         getKeywords(postRequest['title'] + postRequest['raw'])
-    postRequest['searchdict1'] = json.dumps(
-        getCntDict(postRequest["title"] + " " + postRequest['tags']))
-    postRequest['searchdict2'] = json.dumps(
-        getCntDict(postRequest['abstruct'] + " " + postRequest["raw"]))
+    # postRequest['searchdict1'] = json.dumps(
+    #    getCntDict(postRequest["title"] + " " + postRequest['tags']))
+    # postRequest['searchdict2'] = json.dumps(
+    #    getCntDict(postRequest['abstruct'] + " " + postRequest["raw"]))
+    postRequest['searchdict1'] = postRequest['searchdict2'] = ""
 
     # 新的标签计数加1
     from ..tags.main import tagSplit, addTag
@@ -106,8 +127,8 @@ def addPost(postRequest):
 
     # 删除前端传入的其他参数
     keyList = ['url', 'title', 'time', 'updatetime',
-               'view', 'tags', 'abstruct', 'raw', 'html', 'keywords', 'searchdict1', 'searchdict2', 'published']
-    postRequest = dict((key, postRequest[key])for key in keyList)
+               'view', 'tags', 'abstruct', 'raw', 'html', 'keywords', 'searchdict1', 'searchdict2', 'published', 'img']
+    postRequest = dict((key, postRequest[key] if key in postRequest else "")for key in keyList)
 
     db.insert_db("posts", postRequest)
     return 0
@@ -135,15 +156,16 @@ def updatePost(postRequest):
 
     from OBlog.markdown import renderMarkdown
     import json
-    from ..search.main import getCntDict, getKeywords
+    from ..search.main import getKeywords
 
     postRequest['html'] = renderMarkdown(postRequest['raw'])
     postRequest['keywords'] = postRequest['tags'] + \
         getKeywords(postRequest['title'] + postRequest['raw'])
-    postRequest['searchdict1'] = json.dumps(
-        getCntDict(postRequest["title"] + " " + postRequest['tags']))
-    postRequest['searchdict2'] = json.dumps(
-        getCntDict(postRequest['abstruct'] + " " + postRequest["raw"]))
+    # postRequest['searchdict1'] = json.dumps(
+    #     getCntDict(postRequest["title"] + " " + postRequest['tags']))
+    # postRequest['searchdict2'] = json.dumps(
+    #     getCntDict(postRequest['abstruct'] + " " + postRequest["raw"]))
+    postRequest['searchdict1'] = postRequest['searchdict2'] = ""
 
     # 更新标签
     from ..tags.main import getTagsOfPost, tagSplit, addTag, subtractTag
@@ -162,8 +184,8 @@ def updatePost(postRequest):
 
     # 删除前端传入的其他参数
     keyList = ['url', 'title', 'time', 'updatetime',
-               'view', 'tags', 'abstruct', 'raw', 'html', 'keywords', 'searchdict1', 'searchdict2', 'published']
-    postRequest = dict((key, postRequest[key])for key in keyList)
+               'view', 'tags', 'abstruct', 'raw', 'html', 'keywords', 'searchdict1', 'searchdict2', 'published', 'img']
+    postRequest = dict((key, postRequest[key] if key in postRequest else "")for key in keyList)
 
     db.update_db("posts", postRequest, {'url': oldurl})
     return 0

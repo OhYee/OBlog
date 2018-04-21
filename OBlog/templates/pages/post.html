@@ -21,13 +21,22 @@
                     </a>{% else %}
                     <span class="label label-danger">草稿</span>{% endif %} {% endif %}
                     <time>
-                        <p>{{ post.time }}</p>
+                        <span class="glyphicon glyphicon-calendar"></span>
+                        <span>{{ post.updatetime }}</span>
+                        {% if post.time != post.updatetime %}
+                        <span>({{ post.time }})</span>
+                        {% endif %}
                     </time>
-                    <p>{{ post.view }}</p>
+                    <p>
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                        <span>{{ post.view }}</span>
+                    </p>
 
+                    {% if post.abstruct != '' %}
                     <blockquote>
                         {{ post.abstruct }}
                     </blockquote>
+                    {% endif %}
 
                 </div>
 
