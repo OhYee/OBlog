@@ -1,2 +1,57 @@
-{{ tag }}
-{{ posts }}
+{% extends "layout/layout.html" %}{% block title %}{{ tag['chinese'] }}|{{ super() }}{% endblock %} {% block content %}
+
+
+<div class="row">
+    <div class="col-sm-12 col-lg-8 col-lg-offset-2">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-2 col-sm-4">
+                        <div class="row ">
+                            {% if tag['img']=='' %}
+                            <a href="/static/img/noimg.png" data-lightbox="{{ tag['chinese'] }}" data-title="{{ tag['chinese'] }}">
+                                <img src="/static/img/noimg.png" alt="{{ tag['chinese'] }}" class="img-responsive">
+                            </a>
+                            {% else %}
+                            <a href="{{ tag['img'] }}" data-lightbox="{{ tag['chinese'] }}" data-title="{{ tag['chinese'] }}">
+                                <img src="{{ tag['img'] }}" alt="{{ tag['chinese'] }}" class="img-responsive">
+                            </a>{% endif %}
+                        </div>
+                    </div>
+                    <div class="col-lg-10 col-sm-8">
+                        <div class="row">
+                            <div class="col-sm-4 bold">
+                                标签名
+                            </div>
+                            <div class="col-sm-4 bold">
+                                标签映射
+                            </div>
+                            <div class="col-sm-4 bold">
+                                文章数
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                {{ tag['chinese'] }}
+                            </div>
+                            <div class="col-sm-4 cut">
+                                {{ tag['english'] }}
+                            </div>
+                            <div class="col-sm-4">
+                                {% with cnt=posts.__len__() %}{{ cnt }}{% endwith %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="{{ tag['class'] }}">
+
+            </div>
+        </div>
+
+        {% from 'macro/post.macro' import jinjia_post %} {% for post in posts %}{{ jinjia_post(post) }}{% endfor %}
+
+    </div>
+</div>
+{% endblock %} {% block script %}
+<script>
+</script> {% endblock %}

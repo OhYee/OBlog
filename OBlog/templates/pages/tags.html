@@ -1,0 +1,44 @@
+{% extends "layout/layout.html" %} {% block content %} {% from 'macro/tag.macro' import vue_tag %}
+<div class="container">
+    <div id="app" class="center">
+        <div v-if="loading" class="center">{% include "layout/loading.html" %}</div>
+        <div v-if="!loading">
+            <div class="row" v-for="(letter,idx) in tags" v-if="letter.tags.length!=0">
+                <hr v-if="idx!=1">
+                <div class="col-lg-2 col-sm-12">
+                    <span style="color:#1565C0;font-size:2em" v-text="letter.char"></span>
+                </div>
+                <div class="col-lg-10 col-sm-12">
+                    <ul class="list-inline">
+                        <li v-for="(tag) in letter.tags">
+                            {{ vue_tag(tag) }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+{% endblock %} {% block script %} {% from 'macro/json.macro' import json with context %}{{ json(tags) }}
+<script>
+    $(document).ready(function () {
+        vue.tags = sortTagsByPinYin(jsonData);
+        vue.loading = false;
+    });
+
+    vue = new Vue({
+        el: '#app',
+        data: {
+            tags: [],
+            loading: true,
+        },
+        methods: {},
+        watch: {},
+    });
+</script>{{ super() }} {% endblock %}

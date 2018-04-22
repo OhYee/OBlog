@@ -13,7 +13,6 @@ from flask import session, current_app, request, abort
 
 
 @adminBP.before_request
-@pagesBP.before_request
 @pagesAdminBP.before_request
 @pagesApiBP.before_request
 @postsAdminBP.before_request

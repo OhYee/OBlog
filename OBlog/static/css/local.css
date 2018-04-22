@@ -517,7 +517,7 @@ kbd {
     height: 78px;
     width: 100%;
     /* background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, hsla(0, 0%, 100%, 0)), to(#f6f6f6)); */
-    background-image: radial-gradient(ellipse 70% 90% at bottom, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 70%);
+    background-image: linear-gradient(-180deg, hsla(0, 0%, 100%, 0), #fcfcfc);
 }
 
 .unfold-field_text {
@@ -529,7 +529,8 @@ kbd {
     font-size: 0px;
     line-height: 46px;
     text-align: center;
-    background: radial-gradient(ellipse 70% 200% at top, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 70%);
+    height: 200px;
+    background: #fcfcfc;
 }
 
 .unfold-field_text span {

@@ -28,7 +28,9 @@
                             </label>
                         </div>
                     </td>
-                    <td><a :href="'/'+comment.url" v-text="comment.url"></td>
+                    <td>
+                        <a :href="'/'+comment.url" v-text="comment.url">
+                    </td>
                     <td v-text="comment.time"></td>
                     <td v-text="comment.ip"></td>
                     <td>
@@ -45,7 +47,7 @@
                             </label>
                         </div>
                     </td>
-                    <td v-text="comment.raw"></td>
+                    <td style="max-width:100px" class="cut" v-text="comment.raw" :title="comment.raw"></td>
                     <td>
                         <button @click="submit(idx)" class="btn btn-default" :class="'btn-'+comment.class" v-text="comment.hint" :disabled="comment.hint=='loading...'">修改</button>
                     </td>

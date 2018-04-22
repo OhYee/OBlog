@@ -1,0 +1,11 @@
+{% extends 'layout/layout.html' %}{% block content %}
+<div class="container">
+<div class="row">
+    <div class="col-sm-12 col-lg-8 col-lg-offset-2">
+        {% include 'layout/comments.html' %}
+    </div>
+</div>
+</div>
+
+{% endblock %} {% block script %} {% with comments_url = 'pages/comments'  %} {% from 'macro/script.macro' import script with
+context %}{{ script('layout/comments.js') }} {% endwith %} {{ super() }}{% endblock %};

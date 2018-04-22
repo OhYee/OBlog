@@ -120,4 +120,4 @@
 </div>
 
 {% endblock %} {% block script %} {% with comments_url = 'post/'+post.url %} {% from 'macro/script.macro' import script with
-context %}{{ script('layout/comments.js') }} {% endwith %}{% endblock %};
+context %}{{ script('layout/comments.js') }} {% endwith %} {{ super() }}{% endblock %};

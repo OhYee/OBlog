@@ -1,7 +1,7 @@
 var url = "{{ comments_url }}";
 
-vue = new Vue({
-    el: '#comments',
+var vue = new Vue({
+    el: '#vue_comments',
     data: {
         comments: [],
         loading: true,
@@ -108,7 +108,7 @@ vue = new Vue({
             this.makeSort();
         }
     }
-})
+});
 
 $(document).ready(() => {
     vue.loading = true;

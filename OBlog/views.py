@@ -34,6 +34,27 @@ def tags(page=1):
     return render_template("pages/tags.html", thisPage='tags', tags=getTags())
 
 
+@app.route('/sitemap.xml')
+def sitemapxml():
+    xml = '<?xml version="1.0"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+    from .blueprint.posts.main import getPublishedPostsUrl
+    posts = getPublishedPostsUrl()
+    for post in posts:
+        xml += '<url><loc>%s</loc></url>' % (
+            'http://www.oyohyee.com/' + post['url'])
+    xml += '</urlset>'
+    return xml
+
+
+@app.route('/sitemap.txt')
+def sitemaptxt():
+    xml = ""
+    from .blueprint.posts.main import getPublishedPostsUrl    
+    posts = getPublishedPostsUrl()
+    for post in posts:
+        xml += 'http://www.oyohyee.com/' + post['url'] + '\n'
+    return xml
+
 @app.errorhandler(404)
 def page_not_found(e=None):
     current_app.logger.warning('404 path=%s' % request.path)

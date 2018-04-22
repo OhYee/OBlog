@@ -58,7 +58,7 @@ def getPostsByTime(limit, offset=0):
 
 def getPostsByTag(tagName):
     posts = db.query_db(
-        "select * from posts_show where published='true' and tags like '%%%s%%' order by time;" % (tagName))
+        "select * from posts_card where tags like '%%%s%%' and url in (select url from posts where published='true') order by updatetime;" % (tagName))
     res = []
     for post in posts:
         post['tags'] = formatTags(post['tags'])
@@ -67,6 +67,11 @@ def getPostsByTag(tagName):
                 res.append(post)
                 break
     return res
+
+def getPublishedPostsUrl():
+    posts = db.query_db(
+        "select url from posts where published='true';")
+    return posts
 
 def getAllPosts():
     posts = db.query_db(

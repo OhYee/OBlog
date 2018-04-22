@@ -3,6 +3,5 @@ __pycache__
 OBlog/static/img/
 OBlog/del/
 log/*
-tags.json
-posts.json
+*.json
 .vscode

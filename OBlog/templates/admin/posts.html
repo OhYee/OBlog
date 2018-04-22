@@ -20,9 +20,9 @@
                 <tr v-for="(post,idx) in posts" v-if="post.exist">
                     <td v-text="post.url" class="cut" style="max-width:100px"></td>
                     <td class="cut" style="max-width:150px">
-                        <a :href="'/post/'+post.url+'/'" v-text="post.title"></a>
+                        <a :href="'/post/'+post.url+'/'" v-text="post.title" :title="post.title"></a>
                     </td>
-                    <td v-text="post.abstruct" class="cut" style="max-width:200px"></td>
+                    <td v-text="post.abstruct" class="cut" style="max-width:200px" :title="post.abstruct"></td>
                     <td v-text="post.published"></td>
                     <td>
                         <a class="btn btn-default" v-bind:href="'/admin/posts/edit/'+post.url+'/'" role="button">编辑</a>

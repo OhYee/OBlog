@@ -14,6 +14,6 @@ def query_db(sqlstr, one=False):
     print(res)
     return res
 
-f = open('./posts.json', 'w')
-f.write(json.dumps(query_db("select * from posts;")))
+f = open('./friends.json', 'w')
+f.write(json.dumps(query_db("select * from friends;")))
 f.close()
