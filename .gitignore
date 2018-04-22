@@ -5,3 +5,4 @@ OBlog/del/
 log/*
 *.json
 .vscode
+*.pyc
