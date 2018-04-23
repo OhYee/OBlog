@@ -32,7 +32,6 @@ def raw_query_db(sqlstr, one=False):
     current_app.logger.debug('raw_query_db %s' % sqlstr)
     cur = g.db.execute(sqlstr)
     res = cur.fetchall()
-    # print(res)
     res = (res[0] if res else None) if one else res
     return res
 
@@ -41,12 +40,11 @@ def query_db(sqlstr, one=False):
     current_app.logger.debug('query_db %s' % sqlstr)
     cur = g.db.execute(sqlstr)
     t = cur.fetchall()
-    print(t)
-    rv = [dict((cur.description[idx][0], value.replace(r"$double-quote;", r'"') if value else "")
-               for idx, value in enumerate(row)) for row in t]
+    rv = [dict((cur.description[idx][0], value.replace(r"$double-quote;", r'"')
+                if type(value)==str else "")
+                for idx, value in enumerate(row)) for row in t]
 
     res = (rv[0] if rv else None) if one else rv
-    print(res)
     return res
 
 

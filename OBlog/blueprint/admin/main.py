@@ -13,7 +13,6 @@ def getSiteConfig():
 def getSiteConfigDict():
     if not hasattr(g, 'getSiteConfigDict'):
         siteConfig = getSiteConfig()
-        print(siteConfig)
         res = dict((item['sid'], item) for item in siteConfig)
         g.getSiteConfigDict = res
     return g.getSiteConfigDict
@@ -24,7 +23,6 @@ def checkPassword(postRequest):
     passwd = postRequest.get("password", "")
     status = 0
 
-    print("\n123\n", password, passwd, "\n\n")
 
     import hashlib
     if hashlib.md5(passwd.encode()).hexdigest() == password:

@@ -8,7 +8,6 @@ def exist():
     postRequest = request.form.to_dict()
     from .main import existPost
     status = existPost(postRequest.get('url', ''))
-    print(status)
     return json.dumps({'status': '1' if status == True else '0'})
 
 

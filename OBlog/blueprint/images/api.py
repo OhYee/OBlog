@@ -8,7 +8,6 @@ from flask import request
 def upload():
     dirname = request.form.to_dict().get('path', '/')
     status = uploadFile(request.files['file'], dirname)
-    print(status)
     ret = {}
     if status[0] == 0:
         ret = {'status': '0', 'filename': status[1], 'path': status[2]}

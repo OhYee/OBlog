@@ -24,12 +24,9 @@ def secure_filename(filename):
     return filename
 
 def uploadFile(file, dirname):
-    print(file, dirname)
     filename = secure_filename(file.filename)
     path = getImageFolder() + dirname + filename
-    print(path)
     if file and allowed_file(file.filename) and not os.path.exists(path):
-        print("upload: ", path)
         file.save(path)
         return [0, filename, path]
     else:

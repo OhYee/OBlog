@@ -24,7 +24,6 @@ def getAllComments():
 
 def getLastID():
     res = db.raw_query_db("select count(id) from comments")
-    # print(res[0][0])
     return res[0][0]
 
 
@@ -71,7 +70,6 @@ def mail(postUrl, raw):
 
 
 def addComment(postRequest):
-    print(postRequest)
 
     if not re.match(r'^[A-Za-z0-9\u4e00-\u9fa5]+@[A-Za-z0-9_-]+(\.[a-zA-Z0-9_-]+)+$', postRequest['email']):
         return [1,'']
@@ -90,7 +88,6 @@ def addComment(postRequest):
                'email', 'sendemail', 'show', 'ad', 'url', 'ip']
     postRequest = dict((key, postRequest[key] if key in postRequest else "")for key in keyList)
 
-    print(postRequest)
 
     db.insert_db("comments", postRequest)
 
