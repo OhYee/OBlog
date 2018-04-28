@@ -35,8 +35,8 @@ def uploadFile(file, dirname):
 
 def renameFile(oldfilename, filename):
     # 这里由于前端传入的参数，使用 os.path.join() 会被认为是根目录
-    oldfilename = oldfilename.replace('/', '\\')
-    filename = filename.replace('/', '\\')
+    # oldfilename = oldfilename.replace('/', '\\')
+    # filename = filename.replace('/', '\\')
 
     oldfilename = getImageFolder() + oldfilename
     filename = getImageFolder() + filename
@@ -45,7 +45,7 @@ def renameFile(oldfilename, filename):
 
 
 def deleteFile(filename):
-    filename = filename.replace('/', '\\')
+    # filename = filename.replace('/', '\\')
     filename = getImageFolder() + filename
     os.remove(filename)
     return 0
