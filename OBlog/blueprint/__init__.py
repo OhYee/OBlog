@@ -8,6 +8,7 @@ from .images import imagesAdminBP, imagesApiBP
 from .comments import commentsAdminBP, commentsApiBP
 from .search import searchApiBP
 from .backup import backupAdminBP, backupApiBP
+from .goods import goodsAdminBP,goodsApiBP
 
 from flask import session, current_app, request, abort
 
@@ -26,6 +27,8 @@ from flask import session, current_app, request, abort
 @commentsAdminBP.before_request
 @backupAdminBP.before_request
 @backupApiBP.before_request
+@goodsAdminBP.before_request
+@goodsApiBP.before_request
 def before_request():
     print(session)
     current_app.logger.debug('auth path %s.' % request.path)
@@ -62,3 +65,6 @@ app.register_blueprint(searchApiBP, url_prefix='/api/search')
 
 app.register_blueprint(backupAdminBP, url_prefix='/admin/backup')
 app.register_blueprint(backupApiBP, url_prefix='/api/backup')
+
+app.register_blueprint(goodsAdminBP, url_prefix='/admin/goods')
+app.register_blueprint(goodsApiBP, url_prefix='/api/goods')

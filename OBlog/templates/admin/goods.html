@@ -1,0 +1,66 @@
+{% extends "admin/layout.html" %} {% block title %}商品管理-管理员界面{% endblock %}{% block admin_content %}
+
+<div class="row">
+    <div class="col-sm-2">名称</div>
+    <div class="col-sm-2">简介</div>
+    <div class="col-sm-2">时间</div>
+    <div class="col-sm-2">图片</div>
+    <div class="col-sm-2">金额</div>
+    <div class="col-sm-1">显示</div>
+    <div class="col-sm-1">操作</div>
+</div>
+
+{% from 'macro/form.macro' import simple_input %} {% from 'macro/tag.macro' import vue_tag %}
+
+<div class="row">
+    <div class="form-group" :class="add.class">
+        <div class="row">
+            <div class="col-sm-2">{{ simple_input('add.name',"名称",click="clear(-1)") }}</div>
+            <div class="col-sm-2">{{ simple_input('add.abstruct',"简介",click="clear(-1)") }}</div>
+            <div class="col-sm-2">{{ simple_input('add.time',"时间",click="clear(-1)") }}</div>
+            <div class="col-sm-2">{{ simple_input('add.img',"图片",click="clear(-1)") }}</div>
+            <div class="col-sm-2">{{ simple_input('add.value1',"金额",click="clear(-1)") }}</div>
+            <div class="col-sm-1">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" aria-label="显示" v-model="add.show">
+                    </label>
+                </div>
+            </div>
+
+            <div class="col-sm-1"><button type="submit" class="btn btn-primary" @click="submit('add')">新建</button></div>
+        </div>
+        <div class="row">
+            <span id="helpBlock" class="help-block" v-html="add.hint"></span>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+
+<div v-if="!loading">
+    <div class="form-group" v-for="(good,idx) in goods" v-if="good.exist" :class="good.class">
+        <div class="row">
+            <div class="col-sm-2">{{ simple_input('good.name',"名称",click="clear(idx)") }}</div>
+            <div class="col-sm-2">{{ simple_input('good.abstruct',"简介",click="clear(idx)") }}</div>
+            <div class="col-sm-2">{{ simple_input('good.time',"时间",click="clear(idx)") }}</div>
+            <div class="col-sm-2">{{ simple_input('good.img',"图片",click="clear(idx)") }}</div>
+            <div class="col-sm-2">{{ simple_input('good.value1',"金额",click="clear(idx)") }}</div>
+            <div class="col-sm-1">
+                <div class="checkbox">
+                    <label>
+                                <input type="checkbox" aria-label="显示" v-model="good.show">
+                            </label>
+                </div>
+            </div>
+            <div class="col-sm-1"><button type="submit" class="btn btn-primary" @click="submit('update',idx)">修改</button></div>
+        </div>
+        <div class="row">
+            <span :id="good.gid+'helpBlock'" class="help-block" v-html="good.hint"></span>
+        </div>
+    </div>
+    <div v-if="loading">{% include 'layout/loading.html' %}</div>
+
+
+    {% endblock %} {% block script %}{% from 'macro/json.macro' import json with context %}{{ json(goods) }} {% from 'macro/script.macro' import script with context %}{{ script('admin/js/goods.js') }}{{ super() }} {% endblock %}

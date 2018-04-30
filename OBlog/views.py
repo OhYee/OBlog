@@ -28,11 +28,14 @@ def archives(page=1):
 
 
 @app.route('/tags/')
-@app.route('/tags/<int:page>/')
-def tags(page=1):
+def tags():
     from .blueprint.tags.main import getTags
     return render_template("pages/tags.html", thisPage='tags', tags=getTags())
 
+@app.route('/goods/')
+def goods():
+    from .blueprint.goods.main import getAllShowGoods
+    return render_template("pages/goods.html", thisPage='goods', goods=getAllShowGoods())
 
 @app.route('/sitemap.xml')
 def sitemapxml():

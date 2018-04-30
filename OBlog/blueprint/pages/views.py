@@ -16,6 +16,9 @@ def tags():
 def archives():
     return redirect(url_for('archives'))
 
+@pagesBP.route('/goods/')
+def goods():
+    return redirect(url_for('goods'))
 
 @pagesBP.route('/<path:url>/')
 def pages(url):

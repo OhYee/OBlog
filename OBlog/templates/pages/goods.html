@@ -1,0 +1,40 @@
+{% extends "layout/layout.html" %} {% block content %}
+<div class="container">
+    <div class="row waterfall">
+        {% for good in goods %}
+        <div class="col-lg-4 col-sm-12">
+
+            <div class="thumbnail">
+                {% if good.img!='' %}
+                <img src="{{ good.img }}" alt="{{ good.name }}" class="img-responsive" style="max-height: 100px"> {% endif %}
+                <div class="caption">
+
+                    <!-- <a href="/good/{{ good.gid }}/"> -->
+                    <h3>{{ good.name }}</h3>
+                    <!-- </a> -->
+                    <p>{{ good.abstruct|safe }}</p>
+                    <hr>
+                    <ul class="list-inline">
+                        <li>
+                            <span class="glyphicon glyphicon-yen"></span>
+                            <span>{{ good.value1 }}</span>
+                        </li>
+
+                        <li>
+                            <span class="glyphicon glyphicon-calendar"></span>
+                            <span>{{ good.time }}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %} {% block script %}
+<script>
+    $(document).ready(waterfall('.waterfall'));
+</script>{{ super() }}{% endblock %}

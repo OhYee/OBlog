@@ -32,7 +32,20 @@ create view posts_edit as
 select url,title,abstruct,tags,time,updatetime,view,published,raw,img
 from posts;
 
-
+create table goods(
+    gid         text    not null,   -- id
+    name        text    not null,   -- 标题
+    abstruct    text    not null,   -- 摘要
+    time        text    not null,   -- 时间
+    img         text    not null,   -- 图片
+    show        text    not null,   -- 显示
+    value1      text    not null,   -- 特殊值1
+    value2      text    not null,   -- 特殊值2
+    value3      text    not null,   -- 特殊值3
+    value4      text    not null,   -- 特殊值4
+    value5      text    not null,   -- 特殊值5        
+    primary key(gid)
+);
 
 create table comments(
     id          text    not null,   -- 序号
@@ -99,3 +112,6 @@ insert into siteConfig(idx,sid,name,value) values('14',"recommend","推荐","");
 
 insert into pages (url,title,idx,show) values("index","首页","1","true");
 insert into pages (url,title,idx,show) values("archives","归档","2","true");
+insert into pages (url,title,idx,show) values("tags","标签","3","true");
+insert into pages (url,title,idx,show) values("goods","商品","4","true");
+insert into pages (url,title,idx,show) values("comments","评论区","5","true");
