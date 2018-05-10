@@ -44,7 +44,10 @@ def getPostForShow(url):
     res = db.query_db(
         "select * from posts_show where url='%s';" % url, one=True)
     # res.sort(key=lambda x: int(x["idx"]))
-    res['tags'] = formatTags(res['tags'])
+    
+    # 2018-5-10 文章为404时，对None对象分析标签bug
+    if res:
+        res['tags'] = formatTags(res['tags'])
     return res
 
 
