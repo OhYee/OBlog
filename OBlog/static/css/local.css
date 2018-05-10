@@ -87,6 +87,16 @@ footer .links a:hover {
     border-radius: 50%;
 }
 
+/* 图片居中显示 */
+
+.displayHolder {
+    overflow-y: hidden;
+}
+
+.displayItem {
+    width: 100%;
+}
+
 #masonry-container {
     padding: 20px;
 }

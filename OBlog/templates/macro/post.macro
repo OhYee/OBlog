@@ -1,7 +1,9 @@
 {% macro vue_post(post) -%}
 {% from 'macro/tag.macro' import vue_tag %}
 <div class="thumbnail">
-    <img :src="post.img" :alt="post.title" class="img-responsive" style="max-height: 100px" v-if="post.img!=''">
+    <div class="displayHolder" style="max-height:200px">
+        <img :src="post.img" :alt="post.title" class="img-responsive displayItem" v-if="post.img!=''">
+    </div>
     <div class="caption">
         <time class="small">
             <span class="glyphicon glyphicon-calendar"></span>
@@ -28,7 +30,9 @@
 {% from 'macro/tag.macro' import jinjia_tag %}
 <div class="thumbnail">
     {% if post.img!='' %}
-    <img src="{{ post.img }}" alt="{{ post.title }}" class="img-responsive" style="max-height: 100px">
+    <div class="displayHolder" style="max-height:200px">
+        <img src="{{ post.img }}" alt="{{ post.title }}" class="img-responsive displayItem">
+    </div>
     {% endif %}
     <div class="caption">
         <time class="small">
