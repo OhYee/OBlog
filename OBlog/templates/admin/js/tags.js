@@ -21,7 +21,7 @@ var vue = new Vue({
     methods: {
         submit: function(idx) {
             queryStr = '';
-            keyList = ['english', 'newenglish', 'class', 'img'];
+            keyList = ['chinese','english', 'newenglish', 'class', 'img'];
             keyList.forEach(key => {
                 console.log(idx, key, this.tags[idx])
                 queryStr += key + '=' + encodeURIComponent(this.tags[idx][key]) + '&';
