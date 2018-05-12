@@ -1,1 +1,26 @@
-404
+{% extends "layout/layout.html" %} {% block title %}404 Not Found|{{ super() }}{% endblock %}{% block content %}
+<div class="container">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="text-center">
+                <b>
+                    404 Not Found.
+                </b>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="text-center">
+                您当前访问的页面不存在.
+                <br> 如果您确定链接没有问题,可能是因为内容被删除或者页面被移到别的地方,请使用
+                <a href='/'>搜索</a>功能查找页面.
+            </div>
+        </div>
+
+        <div class="panel-footer">
+            <div class="text-right">
+                <a class="btn btn-default " href="/archives/" role="button">随便看看都有什么</a>
+                <a class="btn btn-primary " href="/" role="button">返回首页</a>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
