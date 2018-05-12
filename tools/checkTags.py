@@ -17,7 +17,7 @@ def raw_query_db(conn,sqlstr, one=False):
     return res
 
 
-conn = sqlite3.connect('C:\\Users\\OhYee\\Documents\\database.db')
+conn = sqlite3.connect('../database.db')
 
 res = raw_query_db(conn,'select chinese from tags;')
 res = [item[0] for item in res]
