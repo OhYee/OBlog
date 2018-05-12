@@ -23,7 +23,7 @@ res = raw_query_db(conn,'select chinese from tags;')
 res = [item[0] for item in res]
 
 for item in res:
-    res1=raw_query_db(conn,"select count(url) from posts where tags like '{0},%%' or tags like '%%,{0},%%' or tags like '%%,{0}';".format(item),one=True)
+    res1=raw_query_db(conn,"select count(url) from posts where tags='{0}' or tags like '{0},%%' or tags like '%%,{0},%%' or tags like '%%,{0}';".format(item),one=True)
     res2=raw_query_db(conn,"select cnt from tags where chinese='"+item+"';",one=True)
     if str(res1[0])!=str(res2[0]):
         print(item,res1[0],res2[0])
