@@ -283,7 +283,7 @@ function searchItem(obj, text) {
             for (var key in thisItem) {
                 var value = thisItem[key];
                 // console.log("    search ", key, " ", value)
-                if (typeof (value) == "string" && value.indexOf(text) > -1) {
+                if (typeof (value) == "string" && value.toLowerCase().indexOf(text.toLowerCase()) > -1) {
                     thisMatch = true;
                 }
 
