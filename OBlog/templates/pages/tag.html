@@ -48,7 +48,7 @@
             </div>
         </div>
 
-        {% from 'macro/post.macro' import jinjia_post %} {% for post in posts %}{{ jinjia_post(post) }}{% endfor %}
+        {% from 'macro/post.macro' import jinjia_post %} {% for post in posts|reverse %}{{ jinjia_post(post) }}{% endfor %}
 
     </div>
 </div>
