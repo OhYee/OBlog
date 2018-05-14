@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     $("ul li#admin-sidebar-5").toggleClass('active');
     vue.loading = true;
     var data = [];
@@ -6,6 +6,7 @@ $(document).ready(function() {
         item.newenglish = item.english;
         item.hint = "";
         item.blockClass = "";
+        item.match = true;
         data.push(item)
     });
     vue.tags = data;
@@ -17,11 +18,12 @@ var vue = new Vue({
     data: {
         tags: {},
         loading: true,
+        searchtext: "",
     },
     methods: {
-        submit: function(idx) {
+        submit: function (idx) {
             queryStr = '';
-            keyList = ['chinese','english', 'newenglish', 'class', 'img'];
+            keyList = ['chinese', 'english', 'newenglish', 'class', 'img'];
             keyList.forEach(key => {
                 console.log(idx, key, this.tags[idx])
                 queryStr += key + '=' + encodeURIComponent(this.tags[idx][key]) + '&';
@@ -33,7 +35,7 @@ var vue = new Vue({
                     this.tags[idx].blockClass = "has-success";
                     this.tags[idx].hint = "修改成功";
                     this.tags[idx].english = this.tags[idx].newenglish;
-                    
+
                 } else if (data['status'] == '1') {
                     this.tags[idx].blockClass = "has-warning";
                     this.tags[idx].hint = "修改失败，请检查格式";
@@ -47,12 +49,20 @@ var vue = new Vue({
                 this.$set(this.tags, idx, this.tags[idx]);
             }, 'submit' + idx);
         },
-        clear: function(idx) {
+        clear: function (idx) {
             this.tags[idx].hint = "";
             this.tags[idx].blockClass = "";
             this.$set(this.tags, idx, this.tags[idx]);
+        },
+        listReverse: function () {
+            this.tags.reverse();
         }
-
     },
-    watch: {},
+    watch: {
+        searchtext: function () {
+            waitUntilLast('searchtext', () => {
+                searchItem(this.tags, this.searchtext);
+            }, 500);
+        }
+    },
 });

@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     $("ul li#admin-sidebar-4").toggleClass('active');
     vue.loading = true;
     var data = [];
@@ -8,6 +8,7 @@ $(document).ready(function() {
         item.exist = true;
         item.class = "";
         item.hint = "";
+        item.match = true;
         data.push(item);
     }
     vue.goods = data.sort((a, b) => parseInt(a.gid) - parseInt(b.gid));
@@ -30,9 +31,10 @@ var vue = new Vue({
         },
         goods: {},
         loading: true,
+        searchtext: "",
     },
     methods: {
-        submit: function(type, idx) {
+        submit: function (type, idx) {
             console.log(type, idx)
             queryStr = '';
             if (type == 'add') {
@@ -65,6 +67,7 @@ var vue = new Vue({
                             hint: "商品新建成功",
                         };
                         temp.exist = true;
+                        temp.match = true; 
                         this.goods.push(temp);
                     } else {
                         this.goods[idx].class = "has-success";
@@ -92,7 +95,7 @@ var vue = new Vue({
                 }
             }, 'submit' + type + idx);
         },
-        clear: function(idx) {
+        clear: function (idx) {
             console.log("clear", idx)
             if (idx == -1) {
                 this.add.hint = "";
@@ -104,6 +107,16 @@ var vue = new Vue({
                     this.$set(this.goods, idx, this.goods[idx]);
                 }
             }
+        },
+        listReverse: function () {
+            this.goods.reverse();
+        }
+    },
+    watch: {
+        searchtext: function () {
+            waitUntilLast('searchtext', () => {
+                searchItem(this.goods, this.searchtext);
+            }, 500);
         }
     }
 });

@@ -5,9 +5,10 @@ $(document).ready(() => {
         var item = jsonData[key];
         if (key == 'pages' || key == 'friends')
             continue;
-        data.class = "";
-        data.hint = "";
-        data.needClear = false;
+        item.class = "";
+        item.hint = "";
+        item.needClear = false;
+        item.match = true;
         data.push(item);
     }
     data.sort((a, b) => parseInt(a.idx) - parseInt(b.idx))
@@ -20,13 +21,14 @@ var vue = new Vue({
     data: {
         siteConfig: [],
         loading: true,
+        searchtext: "",
     },
     methods: {
-        submit: function(idx) {
+        submit: function (idx) {
             queryStr = "";
             keyList = ['sid', 'value']
             keyList.forEach(key => {
-                queryStr += key + '=' + encodeURIComponent( this.siteConfig[idx][key]) + '&';
+                queryStr += key + '=' + encodeURIComponent(this.siteConfig[idx][key]) + '&';
             });
 
             console.log(queryStr)
@@ -46,13 +48,23 @@ var vue = new Vue({
                 console.log('ok');
             }, "update" + idx.toString())
         },
-        clear: function(idx) {
+        clear: function (idx) {
             if (this.siteConfig[idx].needClear == true) {
                 this.siteConfig[idx].class = '';
                 this.siteConfig[idx].hint = '';
                 this.siteConfig[idx].needClear = false;
                 this.$set(this.siteConfig, idx, this.siteConfig[idx]);
             }
+        },
+        listReverse: function () {
+            this.siteConfig.reverse();
+        }
+    },
+    watch: {
+        searchtext: function () {
+            waitUntilLast('searchtext', () => {
+                searchItem(this.siteConfig, this.searchtext);
+            }, 500);
         }
     }
 });

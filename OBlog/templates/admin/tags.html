@@ -1,6 +1,18 @@
 {% extends "admin/layout.html" %} {% block title %}标签管理-管理员界面{% endblock %}{% block admin_content %}
 
 <div class="row">
+    <div class="col-sm-10 col-sm-offset-1">
+        <div class="input-group">
+            <label class="sr-only" for="searchtext">快速搜索</label>
+            <input type="text" class="form-control" id="searchtext" placeholder="快速搜索" v-model="searchtext" aria-describedby="searchtextHint">
+            <span class="input-group-btn">
+                <button class="pull-right btn btn-primary" type="button" @click="listReverse">逆序</button>
+            </span>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="row">
     <div class="col-sm-2">名称</div>
     <div class="col-sm-2">映射</div>
     <div class="col-sm-2">图片</div>
@@ -13,7 +25,7 @@
 
 
 <div v-if="!loading">
-    <div class="form-group" v-for="(tag,idx) in tags" :class="tag.blockClass">
+    <div class="form-group" v-for="(tag,idx) in tags" v-if="tag.match" :class="tag.blockClass">
         <div class="row">
             <div class="col-sm-2">
                 {{ vue_tag('tag') }}

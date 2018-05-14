@@ -1,6 +1,18 @@
 {% extends 'admin/layout.html' %} {% block title %}管理首页{% endblock %} {% block admin_content %}
+<div class="row">
+    <div class="col-sm-10 col-sm-offset-1">
+        <div class="input-group">
+            <label class="sr-only" for="searchtext">快速搜索</label>
+            <input type="text" class="form-control" id="searchtext" placeholder="快速搜索" v-model="searchtext" aria-describedby="searchtextHint">
+            <span class="input-group-btn">
+                <button class="pull-right btn btn-primary" type="button" @click="listReverse">逆序</button>
+            </span>
+        </div>
+    </div>
+</div>
+<hr>
 <div class="form-horizontal">
-    <div class="form-group" v-for="(value,idx) in siteConfig" :class="value.class">
+    <div class="form-group" v-for="(value,idx) in siteConfig" v-if="value.match" :class="value.class">
         <div class="input-group">
             <span class="input-group-addon" :id="value.sid" v-text="value.name"></span>
             <input type="text" class="form-control" :aria-describedby="value.sid" v-model="value.value" :name="value.sid" @keyup.enter="submit(idx)"
@@ -12,5 +24,5 @@
         <span :id="value.sid" class="help-block" v-html="value.hint"></span>
     </div>
 </div>
-{% endblock %} {% block script %} {% from 'macro/json.macro' import json with context %}{{ json(Site) }} {% from 'macro/script.macro' import script with context %}{{ script('admin/js/index.js') }}{{ super() }}
-{% endblock %};
+{% endblock %} {% block script %} {% from 'macro/json.macro' import json with context %}{{ json(Site) }} {% from 'macro/script.macro'
+import script with context %}{{ script('admin/js/index.js') }}{{ super() }} {% endblock %};

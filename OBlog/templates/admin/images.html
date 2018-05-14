@@ -1,6 +1,19 @@
-{% extends "admin/layout.html" %} {% block title %}图片管理-管理员界面{% endblock %}{% block admin_content %} {% from 'macro/form.macro' import simple_input %}
+{% extends "admin/layout.html" %} {% block title %}图片管理-管理员界面{% endblock %}{% block admin_content %} {% from 'macro/form.macro'
+import simple_input %}
 
 <alert id="alert" :alert="alert" @close="close"></alert>
+
+<div class="row">
+    <div class="col-sm-10 col-sm-offset-1">
+        <div class="input-group">
+            <label class="sr-only" for="searchtext">快速搜索</label>
+            <input type="text" class="form-control" id="searchtext" placeholder="快速搜索" v-model="searchtext" aria-describedby="searchtextHint">
+            <span class="input-group-btn">
+                <button class="pull-right btn btn-primary" type="button" @click="listReverse">逆序</button>
+            </span>
+        </div>
+    </div>
+</div>
 
 <ol class="breadcrumb" style="background:white">
     <li v-for="item in pathList">
@@ -10,10 +23,14 @@
 
 <div class="row">
     <div class="form-group">
-        <label for="exampleInputFile">上传文件到<code v-text="path"></code></label>
+        <label for="exampleInputFile">上传文件到
+            <code v-text="path"></code>
+        </label>
         <input type="file" id="updateFile">
         <p class="help-block">请上传图片格式文件.</p>
-        <button type="submit" class="btn btn-warning pull-left" @click="submit('upload')">确认上传 <span class="glyphicon glyphicon-upload" aria-hidden="true"></span></button>
+        <button type="submit" class="btn btn-warning pull-left" @click="submit('upload')">确认上传
+            <span class="glyphicon glyphicon-upload" aria-hidden="true"></span>
+        </button>
     </div>
 </div>
 <hr>
@@ -25,14 +42,18 @@
 </div>
 
 <div class="row" v-if="!loading">
-    <div class="col-sm-4" v-for="(image,idx) in nowList['file']" v-if="image.exist">
+    <div class="col-sm-4" v-for="(image,idx) in nowList['file']" v-if="image.exist&&image.match">
         <div class="thumbnail" style="height:300px">
             <a :href="image.src" :alt="image.name" :data-lightbox="'image-'+name" :data-title="image.name">
                 <img :src="image.src" :alt="image.name" style="height:150px">
             </a>
             {{ simple_input('image.absolutePath','图片路径',other='readonly') }} {{ simple_input('image.name','文件名') }}
-            <button type="submit" class="btn btn-danger pull-left" @click="submit('delete', idx)">删除 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
-            <button type="submit" class="btn btn-primary pull-right" @click="submit('rename', idx)">重命名 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
+            <button type="submit" class="btn btn-danger pull-left" @click="submit('delete', idx)">删除
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            </button>
+            <button type="submit" class="btn btn-primary pull-right" @click="submit('rename', idx)">重命名
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+            </button>
         </div>
     </div>
 </div>
@@ -40,4 +61,5 @@
 
 
 
-{% endblock %} {% block script %}{% from 'macro/json.macro' import json with context %}{{ json(images) }} {% from 'macro/script.macro' import script with context %}{{ script('admin/js/images.js') }}{{ super() }}{% endblock %}
+{% endblock %} {% block script %}{% from 'macro/json.macro' import json with context %}{{ json(images) }} {% from 'macro/script.macro'
+import script with context %}{{ script('admin/js/images.js') }}{{ super() }}{% endblock %}
