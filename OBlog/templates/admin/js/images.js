@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     $("ul li#admin-sidebar-7").toggleClass('active');
     vue.loading = true;
     parseJson(jsonData);
@@ -20,7 +20,8 @@ function parseJson(data, dirname = '/') {
             'absolutePath': absolutePath,
             'relativePath': relativePath,
             'src': src,
-            'exist': true
+            'exist': true,
+            'match': true,
         };
     }
     for (var item in data['dir']) {
@@ -39,10 +40,11 @@ var vue = new Vue({
         alert: {
             class: "",
             content: "",
-        }
+        },
+        searchtext:"",
     },
     methods: {
-        submit: function(type, idx) {
+        submit: function (type, idx) {
             nowFile = this.nowList['file'][idx]
             var queryStr = "";
             var header = {}
@@ -81,7 +83,8 @@ var vue = new Vue({
                             'absolutePath': absolutePath,
                             'relativePath': relativePath,
                             'src': src,
-                            'exist': true
+                            'exist': true,
+                            'match': true,
                         });
                     } else if (type == "rename") {
                         this.alert = {
@@ -101,7 +104,8 @@ var vue = new Vue({
                             'absolutePath': absolutePath,
                             'relativePath': relativePath,
                             'src': src,
-                            'exist': true
+                            'exist': true,
+                            'match': true,
                         };
                     } else {
                         this.alert = {
@@ -142,7 +146,7 @@ var vue = new Vue({
                 this.$nextTick(window.location.href = "#alert");
             }, type + idx, headers);
         },
-        setPath: function(path) {
+        setPath: function (path) {
             this.loading = true;
             this.path = path;
             this.pathList = this.path.substr(1).split("/")
@@ -168,15 +172,22 @@ var vue = new Vue({
                 this.loading = false;
             });
         },
-        close: function() {
+        close: function () {
             this.alert = {
                 class: "",
                 title: "",
                 content: ""
             };
+        },
+        listReverse: function () {
+            this.nowList['file'].reverse();
         }
     },
     watch: {
-
+        searchtext: function () {
+            waitUntilLast('searchtext', () => {
+                searchItem(this.nowList['file'], this.searchtext);
+            }, 500);
+        }
     },
 });

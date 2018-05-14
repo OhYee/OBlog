@@ -264,3 +264,33 @@ Vue.component('alert', {
         }
     }
 });
+
+
+/* 列表搜索 */
+function searchItem(obj, text) {
+    // console.log(obj, text)
+    var len = obj.length;
+    var noMatch = true;
+    if (text == "") {
+        noMatch = false;
+        for (var i = 0; i < len; ++i)
+            obj[i].match = true;
+    } else {
+        for (var i = 0; i < len; ++i) {
+            var thisMatch = false;
+            var thisItem = obj[i];
+            // console.log("search ", thisItem);
+            for (var key in thisItem) {
+                var value = thisItem[key];
+                // console.log("    search ", key, " ", value)
+                if (typeof (value) == "string" && value.indexOf(text) > -1) {
+                    thisMatch = true;
+                }
+
+            }
+            thisItem.match = thisMatch;
+            noMatch |= thisMatch;
+        }
+    }
+    return noMatch;
+}

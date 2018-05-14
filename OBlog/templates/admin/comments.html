@@ -1,5 +1,17 @@
 {% extends "admin/layout.html" %} {% block title %}评论管理-管理员界面{% endblock %}{% block admin_content %}
 
+<div class="row">
+    <div class="col-sm-10 col-sm-offset-1">
+        <div class="input-group">
+            <label class="sr-only" for="searchtext">快速搜索</label>
+            <input type="text" class="form-control" id="searchtext" placeholder="快速搜索" v-model="searchtext" aria-describedby="searchtextHint">
+            <span class="input-group-btn">
+                <button class="pull-right btn btn-primary" type="button" @click="listReverse">逆序</button>
+            </span>
+        </div>
+    </div>
+</div>
+<hr>
 <div class="table-responsive">
     <table class="table table-hover table-striped">
         <thead>
@@ -18,7 +30,7 @@
         </thead>
         <tbody>
             <div v-if="!loading">
-                <tr v-for="(comment,idx) in comments" :class="comment.class">
+                <tr v-for="(comment,idx) in comments" :class="comment.class" v-if="comment.match">
                     <td v-text="comment.id"></td>
                     <td v-text="comment.email"></td>
                     <td>

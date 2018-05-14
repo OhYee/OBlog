@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     $("ul li#admin-sidebar-2").toggleClass('active');
     vue.loading = true;
     var data = [];
@@ -10,6 +10,7 @@ $(document).ready(function() {
         item.class = "";
         item.hint = "";
         item.needClear = false;
+        item.match = true;
         data.push(item);
     }
     vue.pages = data.sort((a, b) => parseInt(a.idx) - parseInt(b.idx));
@@ -28,9 +29,10 @@ var vue = new Vue({
         },
         pages: {},
         loading: true,
+        searchtext: "",
     },
     methods: {
-        submit: function(type, idx) {
+        submit: function (type, idx) {
             console.log(type, idx)
             queryStr = '';
             if (type == 'add') {
@@ -62,6 +64,7 @@ var vue = new Vue({
                             class: "has-success",
                         }
                         temp.exist = true;
+                        temp.match = true; 
                         temp.oldurl = temp.url;
                         this.pages.push(temp);
                         this.pages.sort((a, b) => parseInt(a.idx) - parseInt(b.idx));
@@ -107,7 +110,7 @@ var vue = new Vue({
                 }
             }, 'submit' + type + idx);
         },
-        clear: function(idx) {
+        clear: function (idx) {
             console.log("clear", idx)
             if (idx == -1) {
                 this.add.hint = "";
@@ -120,7 +123,16 @@ var vue = new Vue({
                     this.$set(this.pages, idx, this.pages[idx]);
                 }
             }
+        },
+        listReverse: function () {
+            this.pages.reverse();
         }
     },
-    watch: {},
+    watch: {
+        searchtext: function () {
+            waitUntilLast('searchtext', () => {
+                searchItem(this.pages, this.searchtext);
+            }, 500);
+        }
+    },
 });

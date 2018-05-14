@@ -7,6 +7,7 @@ $(document).ready(function () {
         var item = jsonData[key];
         item.published = item.published == 'true' ? "已发布✔" : "未发布❌";
         item.exist = true;
+        item.match = true;
         data.push(item);
     }
     vue.posts = data;
@@ -18,6 +19,7 @@ var vue = new Vue({
     data: {
         posts: [],
         loading: true,
+        searchtext: "",
         alert: {
             class: "",
             title: "",
@@ -60,7 +62,17 @@ var vue = new Vue({
                 title: "",
                 content: ""
             };
+        },
+        listReverse:function(){
+            this.posts.reverse();
         }
     },
-    watch: {},
+    watch: {
+        searchtext: function () {
+            waitUntilLast('searchtext', () => {
+                searchItem(this.posts, this.searchtext);
+            }, 500);
+        }
+    },
 });
+

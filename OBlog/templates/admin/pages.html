@@ -1,6 +1,18 @@
 {% extends "admin/layout.html" %} {% block title %}页面管理-管理员界面{% endblock %}{% block admin_content %}
 
 <div class="row">
+    <div class="col-sm-10 col-sm-offset-1">
+        <div class="input-group">
+            <label class="sr-only" for="searchtext">快速搜索</label>
+            <input type="text" class="form-control" id="searchtext" placeholder="快速搜索" v-model="searchtext" aria-describedby="searchtextHint">
+            <span class="input-group-btn">
+                <button class="pull-right btn btn-primary" type="button" @click="listReverse">逆序</button>
+            </span>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="row">
     <div class="col-sm-3">链接</div>
     <div class="col-sm-3">标题</div>
     <div class="col-sm-3">索引顺序</div>
@@ -34,7 +46,7 @@
 
 
 <div v-if="!loading">
-    <div class="form-group" v-for="(page,idx) in pages" v-if="page.exist" :class="page.class">
+    <div class="form-group" v-for="(page,idx) in pages" v-if="page.exist&&page.match" :class="page.class">
         <div class="row">
             <div class="col-sm-2">
                 {{ simple_input('page.url',"链接",click="clear(idx)") }}
@@ -65,4 +77,5 @@
 <div v-if="loading">{% include 'layout/loading.html' %}</div>
 
 
-{% endblock %} {% block script %}{% from 'macro/json.macro' import json with context %}{{ json(Site.pages) }} {% from 'macro/script.macro' import script with context %}{{ script('admin/js/pages.js') }}{{ super() }} {% endblock %}
+{% endblock %} {% block script %}{% from 'macro/json.macro' import json with context %}{{ json(Site.pages) }} {% from 'macro/script.macro'
+import script with context %}{{ script('admin/js/pages.js') }}{{ super() }} {% endblock %}

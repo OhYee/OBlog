@@ -4,9 +4,10 @@ $(document).ready(function () {
     jsonData.forEach(item => {
         item.class = "";
         item.hint = "修改";
-        item.ad = item.ad=='true'?true:false;
-        item.show = item.show=='true'?true:false;        
-        item.sendemail = item.sendemail=='true'?true:false;        
+        item.ad = item.ad == 'true' ? true : false;
+        item.show = item.show == 'true' ? true : false;
+        item.sendemail = item.sendemail == 'true' ? true : false;
+        item.match = true;
     });
     vue.comments = jsonData;
     vue.loading = false;
@@ -19,6 +20,7 @@ var vue = new Vue({
     data: {
         comments: [],
         loading: true,
+        searchtext: "",
     },
     methods: {
         submit: function (idx) {
@@ -55,9 +57,16 @@ var vue = new Vue({
             }, 'update' + idx);
 
 
+        },
+        listReverse: function () {
+            this.comments.reverse();
         }
     },
     watch: {
-
+        searchtext: function () {
+            waitUntilLast('searchtext', () => {
+                searchItem(this.comments, this.searchtext);
+            }, 500);
+        }
     },
 });
