@@ -1,6 +1,6 @@
 from OBlog import database as db
 from flask import g, current_app
-import re
+
 
 def getPages():
     if not hasattr(g, "getPages"):
@@ -23,8 +23,6 @@ def addPages(postRequest):
     if db.exist_db('pages', {'url': postRequest['url']}):
         # 已经存在
         return 1
-    if not (re.match(r'^[0-9]+$', postRequest["idx"])):
-        return 2
 
     keyList = ['url', 'title', 'idx']
     postRequest = dict((key, postRequest[key] if key in postRequest else "")for key in keyList)
@@ -43,8 +41,6 @@ def updatePage(postRequest):
     if url != oldurl and db.exist_db('pages', {'url': url}):
         # 重复url
         return 1
-    if not (re.match(r'^[0-9]+$', postRequest["idx"])):
-        return 2
 
     keyList = ['url', 'title', 'idx', 'show']
     postRequest = dict((key, postRequest[key] if key in postRequest else "")for key in keyList)

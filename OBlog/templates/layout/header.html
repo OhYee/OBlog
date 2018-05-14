@@ -4,7 +4,8 @@
         <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand" href="/">
-                    <i class="icon-OhYee"> {{ Site['sitename'].value }}</i>
+                    <span style="bottom: 0"><img src="/static/img/logo-transparent.png" height=32px></span>
+                    <span>{{ Site['sitename'].value }}</span>
                 </a>
 
                 <a type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
@@ -30,6 +31,8 @@
                     <a href="/admin/logout/">退出登陆</a>
                 </li>{% endif %}
             </ul>
+
+            <p class="navbar-text visible-lg-inline">加盟热线:0394-8376969</p>
         </div>
     </nav>
 

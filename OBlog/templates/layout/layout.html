@@ -10,18 +10,6 @@
 
 <body>
     {% include 'layout/header.html' %}
-    <div class="alert alert-info alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        <strong>注意!</strong> 博客从
-        <a class="alert-link" href="https://hexo.io/">Hexo</a>迁移到
-        <a class="alert-link" href="https://github.com/OhYee/OBlog">自己写的系统</a>,若有问题,请反馈到
-        <a class="alert-link" href="mailto:oyohyee@oyohyee.com">oyohyee@oyohyee.com</a>,
-        <a class="alert-link" href="/pages/comments/">评论区</a>,
-        <a class="alert-link" href="https://github.com/OhYee/OBlog/issues">GitHub</a>. 如果无法正常渲染，访问
-        <a class="alert-link" href="http://blog.oyohyee.com">旧版本博客</a>.
-    </div>
     <main>
         {% block content %} {% endblock %}
     </main>

@@ -27,7 +27,7 @@
 <div class="row" v-if="!loading">
     <div class="col-sm-4" v-for="(image,idx) in nowList['file']" v-if="image.exist">
         <div class="thumbnail" style="height:300px">
-            <a :href="image.src" :alt="image.name" :data-lightbox="'image-'+name" :data-title="image.name">
+            <a :href="image.src" :alt="image.name" :data-lightbox="'image-'+name" :data-title="image">
                 <img :src="image.src" :alt="image.name" style="height:150px">
             </a>
             {{ simple_input('image.absolutePath','图片路径',other='readonly') }} {{ simple_input('image.name','文件名') }}

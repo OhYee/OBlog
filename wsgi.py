@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0,'/data/OBlog')
+sys.path.insert(0,'/data/moli')
 
 from OBlog import app
 from werkzeug.contrib.fixers import ProxyFix

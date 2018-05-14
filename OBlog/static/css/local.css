@@ -1,7 +1,7 @@
 /* bootstrap主题本地化修改 */
 
 footer {
-    background-color: #333;
+    background-color: #103e31;
     font-size: 12px;
     color: white;
     padding: 25px 0;
@@ -17,7 +17,7 @@ footer .links a:hover {
 }
 
 .navbar-inverse {
-    background: #1565c0;
+    background: #103e31;
     border: none;
     margin-bottom: 0;
 }
@@ -32,7 +32,7 @@ footer .links a:hover {
 }
 
 .navbar-inverse .navbar-toggle:hover {
-    background: #064d9e;
+    background: #1d6651;
 }
 
 .navbar-inverse .navbar-nav>li>a {
@@ -41,7 +41,7 @@ footer .links a:hover {
 
 .navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
     color: #fff;
-    background-color: #064d9e;
+    background-color: #1d6651;
 }
 
 .navbar-inverse .navbar-nav>li>a:hover {
@@ -85,16 +85,6 @@ footer .links a:hover {
     height: 32px;
     width: 32px;
     border-radius: 50%;
-}
-
-/* 图片居中显示 */
-
-.displayHolder {
-    overflow-y: hidden;
-}
-
-.displayItem {
-    width: 100%;
 }
 
 #masonry-container {

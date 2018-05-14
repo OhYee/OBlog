@@ -1,13 +1,16 @@
 <footer>
     <div class="container">
         <div class="row">
-            <div class="col-sm-2">
-                <img class="center-block" src="/static/img/logo_white.png" alt="logo" width="70px" />
-                <div class="row text-center links bold">
-                    <a href="https://www.oyohyee.com/">OhYee</a>
-                </div>
-            </div>
-            <div class="col-sm-6">
+            <div class="col-lg-5">
+                <p>
+                    <img src="/static/img/logo-reverse.png" alt="logo" width="100px">
+
+                    <address>
+                        <strong>河南省茉莉餐饮管理有限公司</strong>
+                        <br>
+                        <abbr>电话:</abbr>0394-8376969
+                    </address>
+                </p>
                 <p>全站访客
                     <span>{{ Site['view'].value }}</span>
                 </p>
@@ -23,51 +26,48 @@
                         <a href="/sitemap.txt">sitemap.txt</a>
                     </span>
                 </p>
-                <p class="links">致谢:
-                    <span class="links">
-                        <a href="https://www.python.org/">Python</a>
-                    </span>
-                    <span class="links">
-                        <a href="https://github.com/pallets/flask">Flask</a>
-                    </span>
-                    <span class="links">
-                        <a href="https://github.com/vuejs/vue">Vue.js</a>
-                    </span>
-                    <span class="links">
-                        <a href="https://github.com/twbs/bootstrap">Bootstrap</a>
-                    </span>
-                    <span class="links">
-                        <a href="http://glyphicons.com/">Glyphicons</a>
-                    </span>
-                </p>
-                <p>
-                    友情链接:{% for friend in Site["friends"] %}
-                    <span class="links">
-                        <a href="{{ friend['url'] }}">{{ friend['name'] }}</a>
-                    </span> {% endfor %}
-                </p>
             </div>
 
 
-            <div class="col-sm-4">
-                <span class="links">
-                    Powered by
-                    <a href="https://github.com/OhYee/OBlog">OBlog</a>
-                </span>
+            <div class="col-lg-5">
                 <ul class="list-unstyled">
                     <li>
-                        <iframe src="https://ghbtns.com/github-btn.html?user=OhYee&amp;repo=OBlog&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="130px" height="20px"></iframe>
+                        <address>
+                            <strong>茉莉餐厅1店</strong>
+                            <br> 周口市汉阳路与交通路交叉口向南200米路东
+                            <br>
+                            <abbr>电话:</abbr>0394-8968888/8766969
+                        </address>
                     </li>
                     <li>
-                        <iframe src="https://ghbtns.com/github-btn.html?user=OhYee&amp;repo=OBlog&amp;type=watch&amp;count=true&amp;v=2" frameborder="0" scrolling="0" width="130px" height="20px"></iframe>
+                        <address>
+                            <strong>茉莉餐厅2店</strong>
+                            <br> 周口市光荣路与安居路交叉口
+                            <br>
+                            <abbr>电话:</abbr>0394-8756969/8766969
+                        </address>
                     </li>
                     <li>
-                        <iframe src="https://ghbtns.com/github-btn.html?user=OhYee&amp;repo=OBlog&amp;type=fork&amp;count=true" frameborder="0" scrolling="0" width="130px" height="20px"></iframe>
+                        <address>
+                            <strong>茉莉餐厅淮阳店</strong>
+                            <br>
+                            <abbr>电话:</abbr>0394-2886969/2866969
+                        </address>
                     </li>
                     <li>
-                        <iframe src="https://ghbtns.com/github-btn.html?user=OhYee&type=follow&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+                        <address>
+                            <strong>茉莉餐厅鹿邑店</strong>
+                            <br>
+                            <abbr>电话:</abbr>0394-7235555/7233555
+                        </address>
                     </li>
                 </ul>
+            </div>
+
+
+            <div class="col-lg-2">
+                <img src="/static/img/wechat.png" alt="logo" width="100%">
+                <p class="text-center">官方微信</p>
             </div>
 
         </div>

@@ -73,6 +73,7 @@ def i_am_a_tea_pot(e=None):
 @app.before_request
 def before_request():
     current_app.logger.debug('before_request at path=%s' % request.path)
+    print(app.config['DATABASE'])
     g.db = sqlite3.connect(app.config['DATABASE'])
     from .main import viewpath
     viewpath(

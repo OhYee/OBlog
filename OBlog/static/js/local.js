@@ -13,7 +13,7 @@ $(document).ready(function () {
 
     initUnfold($('.unfold-wrap'));
     initFold();
-    displayImage();
+
 });
 
 $(document).resize(autoHeight());
@@ -35,21 +35,6 @@ window.onload = function () {
 window.onresize = function () {
     autoHeight();
 };
-
-
-/* 图片居中显示 */
-function displayImage() {
-    $('.displayItem').each(function () {
-        console.log(this)
-        var parentH = parseInt($(this).parent('.displayHolder').css("max-height"));
-        var thisH = $(this).height()
-        console.log(parentH, thisH)
-        if (parentH < thisH) {
-            var offset = (parentH-thisH) * 0.5;
-            $(this).css("margin-top", offset + "px");
-        }
-    });
-}
 
 /* Get访问 */
 var _getRequestIndex = {};
