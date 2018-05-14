@@ -45,8 +45,8 @@ function displayImage() {
         var thisH = $(this).height()
         console.log(parentH, thisH)
         if (parentH < thisH) {
-            var offset = thisH * 0.5 + 50;
-            $(this).css("margin-top", "-" + offset + "px");
+            var offset = (parentH-thisH) * 0.5;
+            $(this).css("margin-top", offset + "px");
         }
     });
 }
