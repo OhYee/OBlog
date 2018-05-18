@@ -10,6 +10,8 @@ errorlog = './log/error.log'
 
 loglevel = 'error'
 
+proc_name = 'OBlog'
+access_log_format = '%(t)s %({X-Forwarded-For}i)s %(l)s "%(s)s" %(l)s "%(r)s" %(l)s "%(a)s" %(l)s "%(f)s"'
 
 def on_starting(sever):
     import jieba 
