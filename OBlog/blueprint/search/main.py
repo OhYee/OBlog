@@ -34,7 +34,7 @@ def searchPosts(searchWord):
     ]
     queryStr = ' or '.join(queryStr)
 
-    queryStr = "select * from posts_card where url in (select url from posts where ({0}) and url in(select url from posts where published='true'));".format(
+    queryStr = "select * from posts_card where url in (select url from posts where ({0}) and url in(select url from posts where published='true')) order by updatetime DESC;".format(
         queryStr)
 
     posts = db.query_db(queryStr)
