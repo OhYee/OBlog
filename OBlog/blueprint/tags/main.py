@@ -35,7 +35,7 @@ def getRawTags():
     output:         List - tags list
     '''
     if not hasattr(g, "tags_getRawTags"):
-        g.tags_getRawTags = db.query_db("select * from tags")
+        g.tags_getRawTags = db.query_db('select * from tags')
     return g.tags_getRawTags
 
 
@@ -46,7 +46,7 @@ def getTagByEnglish(english):
     output:         dict - tag
     '''
     return db.query_db(
-        "select * from tags where english='%s'" % english, one=True)
+        'select * from tags where english="{}"' , english, one=True)
 
 
 def getTag(chinese):
@@ -56,7 +56,7 @@ def getTag(chinese):
     output:         dict - tag
     '''
     return db.query_db(
-        "select * from tags where chinese='%s'" % chinese, one=True)
+        'select * from tags where chinese="{}"' , chinese, one=True)
 
 
 def getTags():
@@ -100,7 +100,7 @@ def addTag(chinese):
     '''
     if db.exist_db("tags", {"chinese": chinese}) == True:
         cnt = db.query_db(
-            "select cnt from tags where chinese='%s'" % chinese, one=True)['cnt']
+            'select cnt from tags where chinese="{}"' , chinese, one=True)['cnt']
         cnt = str(int(cnt) + 1)
         db.update_db("tags", {'cnt': cnt}, {'chinese': chinese})
     else:
@@ -117,7 +117,7 @@ def subtractTag(chinese):
     '''
     if db.exist_db("tags", {"chinese": chinese}) == True:
         cnt = db.query_db(
-            "select cnt from tags where chinese='%s'" % chinese, one=True)['cnt']
+            'select cnt from tags where chinese="{}"' , chinese, one=True)['cnt']
         cnt = str(int(cnt) - 1)
         db.update_db("tags", {'cnt': cnt}, {'chinese': chinese})
         if int(cnt) <= 0:

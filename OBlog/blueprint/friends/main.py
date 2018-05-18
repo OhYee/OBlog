@@ -3,7 +3,7 @@ from OBlog import database as db
 
 
 def getFriends():
-    friends = db.query_db("select * from friends")
+    friends = db.query_db('select * from friends')
     friends.sort(key=lambda x: int(x["idx"]))
     return friends
 

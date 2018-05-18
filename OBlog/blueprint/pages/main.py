@@ -4,7 +4,7 @@ import re
 
 def getPages():
     if not hasattr(g, "getPages"):
-        res = db.query_db("select * from pages;")
+        res = db.query_db('select * from pages;')
         res.sort(key=lambda x: int(x["idx"]))
         g.getPages = res
     return g.getPages

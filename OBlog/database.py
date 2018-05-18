@@ -5,7 +5,7 @@ def where2str(_where):
     wherestr = ''
     for k in _where:
         wherestr += str(k) + '="' + \
-            str(_where[k]).replace(r'"', r"$double-quote;") + '" and '
+            escapeCharstr(str(_where[k])) + '" and '
     wherestr = wherestr[0:-4]
     return wherestr
 
@@ -15,34 +15,42 @@ def insert2str(_insert):
     _str2 = ''
     for k in _insert:
         _str1 += str(k) + ','
-        _str2 += '"' + str(_insert[k]).replace(r'"', r"$double-quote;") + '",'
+        _str2 += '"' + escapeChar(str(_insert[k])) + '",'
     return (_str1[0:-1], _str2[0:-1])
 
 
 def set2str(_set):
     setstr = ''
     for k in _set:
-        setstr += str(k) + '="' + \
-            str(_set[k]).replace(r'"', r"$double-quote;") + '",'
+        setstr += str(k) + '="' +\
+            str(escapeCharstr(_set[k])) + '",'
     setstr = setstr[0:-1]
     return setstr
 
 
-def raw_query_db(sqlstr, one=False):
-    current_app.logger.debug('raw_query_db %s' % sqlstr)
+def escapeChar(text):
+    return str(text).replace(r'"', r"$double-quote;")
+
+
+def raw_query_db(sqlstr, *args, one=False):
+    args = [escapeChar(arg) for arg in args]
+    sqlstr = sqlstr.format(*args)
+    current_app.logger.debug('raw_query_db %s' %sqlstr)
     cur = g.db.execute(sqlstr)
     res = cur.fetchall()
     res = (res[0] if res else None) if one else res
     return res
 
 
-def query_db(sqlstr, one=False):
+def query_db(sqlstr, *args, one=False):
+    args = [escapeChar(arg) for arg in args]
+    sqlstr = sqlstr.format(*args)
     current_app.logger.debug('query_db %s' % sqlstr)
     cur = g.db.execute(sqlstr)
     t = cur.fetchall()
-    rv = [dict((cur.description[idx][0], value.replace(r"$double-quote;", r'"')
-                if type(value)==str else "")
-                for idx, value in enumerate(row)) for row in t]
+    rv = [dict((cur.description[idx][0], value.replace(r"$double-quote;", r'"').replace(r"$single-quote;", r"'")
+                if type(value) == str else "")
+               for idx, value in enumerate(row)) for row in t]
 
     res = (rv[0] if rv else None) if one else rv
     return res

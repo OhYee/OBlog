@@ -3,18 +3,19 @@ import re
 
 
 def getShowGoodsOfID(_id):
-    return db.query_db("select * from goods where id='%s' and show='true'" % (_id), one=True)
+    return db.query_db('select * from goods where id="{}" and show="true"', _id, one=True)
 
 
 def getAllGoods():
-    return db.query_db("select * from goods;")
+    return db.query_db('select * from goods;')
+
 
 def getAllShowGoods():
-    return db.query_db("select * from goods where show='true';")
+    return db.query_db('select * from goods where show="true";')
 
 
 def getLastID():
-    res = db.raw_query_db("select count(gid) from goods")
+    res = db.raw_query_db('select count(gid) from goods')
     return res[0][0]
 
 

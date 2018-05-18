@@ -13,9 +13,9 @@ def searchTags(searchWord):
     res = []
     for word in searchWordList:
         res += db.query_db(
-            "select chinese from tags where chinese like '%%%s%%';" % word)
+            'select chinese from tags where chinese like "%%{}%%";', word)
         res += db.query_db(
-            "select chinese from tags where english like '%%%s%%';" % word)
+            'select chinese from tags where english like "%%{}%%";', word)
 
     res = [item['chinese'] for item in res]
     res = list(set(res))
@@ -28,13 +28,13 @@ def searchPosts(searchWord):
     searchWordList = jieba.cut_for_search(searchWord)
 
     queryStr = [
-        "title like '%{0}%' or abstruct like '%{0}%' or raw like '%{0}%' or tags like '%{0}%'".format(
-            word)
+        'title like "%{0}%" or abstruct like "%{0}%" or raw like "%{0}%" or tags like "%{0}%"'.format(
+            db.escapeChar(word))
         for word in searchWordList
     ]
     queryStr = ' or '.join(queryStr)
 
-    queryStr = "select * from posts_card where url in (select url from posts where ({0}) and url in(select url from posts where published='true')) order by updatetime DESC;".format(
+    queryStr = 'select * from posts_card where url in (select url from posts where ({0}) and url in(select url from posts where published="true")) order by updatetime DESC;'.format(
         queryStr)
 
     posts = db.query_db(queryStr)

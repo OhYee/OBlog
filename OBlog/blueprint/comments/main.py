@@ -10,20 +10,20 @@ from ..admin.main import getSiteConfigDict
 
 def getCommentsOfUrlForShow(url):
     res = db.query_db(
-        "select id,html,username,time,sendemail,ad from comments where url='%s' and show='true'" % url)
+        'select id,html,username,time,sendemail,ad from comments where url="{}" and show="true"', url)
     return res
 
 
 def getCommentsOfID(_id):
-    return db.query_db("select * from comments where id='%s'" % (_id), one=True)
+    return db.query_db('select * from comments where id="{}"', _id, one=True)
 
 
 def getAllComments():
-    return db.query_db("select * from comments;")
+    return db.query_db('select * from comments;')
 
 
 def getLastID():
-    res = db.raw_query_db("select count(id) from comments")
+    res = db.raw_query_db('select count(id) from comments')
     return res[0][0]
 
 
@@ -72,9 +72,9 @@ def mail(postUrl, raw):
 def addComment(postRequest):
 
     if not re.match(r'^[A-Za-z0-9\u4e00-\u9fa5]+@[A-Za-z0-9_-]+(\.[a-zA-Z0-9_-]+)+$', postRequest['email']):
-        return [1,'']
+        return [1, '']
     if not contain_zh(postRequest['raw']):
-        return [2,'']
+        return [2, '']
 
     postRequest['id'] = str(getLastID() + 1)
     postRequest['html'] = renderMarkdown(postRequest['raw'], allowHtml=False)
@@ -86,19 +86,21 @@ def addComment(postRequest):
 
     keyList = ['id', 'raw', 'html', 'time', 'username',
                'email', 'sendemail', 'show', 'ad', 'url', 'ip']
-    postRequest = dict((key, postRequest[key] if key in postRequest else "")for key in keyList)
-
+    postRequest = dict(
+        (key, postRequest[key] if key in postRequest else "")for key in keyList)
 
     db.insert_db("comments", postRequest)
 
     mail(postRequest['url'], postRequest['raw'])
-    return [0,postRequest]
+    return [0, postRequest]
+
 
 def updateComment(postRequest):
     cid = postRequest['id']
 
     keyList = ['sendemail', 'show', 'ad']
-    postRequest = dict((key, postRequest[key] if key in postRequest else "")for key in keyList)
+    postRequest = dict(
+        (key, postRequest[key] if key in postRequest else "")for key in keyList)
 
     db.update_db("comments", postRequest, {'id': cid})
     return 0

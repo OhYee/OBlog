@@ -5,7 +5,7 @@ from OBlog import database as db
 def getSiteConfig():
     if not hasattr(g, 'getSiteConfig'):
         res = db.query_db(
-            "select * from siteConfig")
+            'select * from siteConfig')
         g.getSiteConfig = res
     return g.getSiteConfig
 
