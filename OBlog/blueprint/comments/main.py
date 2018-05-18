@@ -36,7 +36,7 @@ def contain_zh(word):
     return len(re.findall(u'[\u4e00-\u9fa5]+', word)) != 0
 
 
-def mail(postUrl, raw):
+def mail(postUrl, raw, emailaddress):
     '''
     description:    给该评论@的所有用户以及站长发信
     input:          text - postUrl  评论的页面链接
@@ -44,10 +44,10 @@ def mail(postUrl, raw):
     output:         
     '''
     config = getSiteConfigDict()
-    if config['smtp'] != '1':  # 未开启smtp
+    if config['smtp']['value'] != '1':  # 未开启smtp
         return
 
-    rooturl = config['rooturl']
+    rooturl = config['rooturl']['value']
     if rooturl:  # 未填写相应项
         rooturl = "/"
     rooturl = rooturl + '/' if rooturl[-1] != '/' else rooturl
@@ -57,16 +57,16 @@ def mail(postUrl, raw):
 
     url = rooturl + postUrl
 
-    mailList = re.match(r'@([0-9]+)#', raw)
+    mailList = re.findall(r'@([0-9]+)#', raw)
 
     for _id in mailList:
-        d = getDiscussOfID(_id)
+        d = getCommentsOfID(_id)
         if d and d["sendemail"] == 'true' and d["show"] == 'true':
             Email([d['email']], d['email'],
                   "评论通知", "您好<br>有人在评论中@您，点击链接查看评论内容<br><a href='" +
                   url + "'>" + title + "</a><br>若无法点击链接，可以将网址(" + url + ")复制到地址栏")
-    Email(["oyohyee@oyohyee.com"], config["email"], "评论通知", postRequest['email'] +
-          "评论了文章<a href='" + url + "'>" + title + "</a>(" + url + ")<br>内容如下<br>" + postRequest['html'])
+    Email([config["email"]['value']], config["email"]['value'], "评论通知", emailaddress +
+          "评论了文章<a href='" + url + "'>" + title + "</a>(" + url + ")<br>内容如下<br>" + raw)
 
 
 def addComment(postRequest):
@@ -91,7 +91,7 @@ def addComment(postRequest):
 
     db.insert_db("comments", postRequest)
 
-    mail(postRequest['url'], postRequest['raw'])
+    mail(postRequest['url'], postRequest['raw'], postRequest['email'])
     return [0, postRequest]
 
 

@@ -37,12 +37,12 @@ def sendEmail(_from, _fromname, _to, _toname, _subject, _message, _smtp):
 
 def Email(_to, _toname, _subject, _message):
     config = getSiteConfigDict()
-    if config['smtp'] == '1':
-        sendEmail(config['smtpemail'], config['smtpemail'],
+    if config['smtp']['value'] == '1':
+        sendEmail(config['smtpemail']['value'], config['smtpemail']['value'],
                   _to,  _toname,
                   _subject, _message,
-                  thirdSMTP(config['smtpservice'], config['smtpuser'],
-                            config['smtppassword'], config['smtpport']))
+                  thirdSMTP(config['smtpservice']['value'], config['smtpuser']['value'],
+                            config['smtppassword']['value'], config['smtpport']['value']))
 
 
 if __name__ == '__main__':

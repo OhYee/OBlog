@@ -49,6 +49,8 @@ var vue = new Vue({
                             title: "成功",
                             content: "评论成功发出"
                         };
+                        data['comment'].sendemail = data['comment'].sendemail == 'true' ? true : false;
+                        data['comment'].ad = data['comment'].ad == 'true' ? true : false;
                         this.comments.push(data['comment']);
                         this.makeSort();
                         this.$nextTick(function () {
