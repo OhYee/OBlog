@@ -5,7 +5,7 @@ def where2str(_where):
     wherestr = ''
     for k in _where:
         wherestr += str(k) + '="' + \
-            escapeCharstr(str(_where[k])) + '" and '
+            escapeChar(str(_where[k])) + '" and '
     wherestr = wherestr[0:-4]
     return wherestr
 
@@ -23,7 +23,7 @@ def set2str(_set):
     setstr = ''
     for k in _set:
         setstr += str(k) + '="' +\
-            str(escapeCharstr(_set[k])) + '",'
+            escapeChar(str(_set[k])) + '",'
     setstr = setstr[0:-1]
     return setstr
 
