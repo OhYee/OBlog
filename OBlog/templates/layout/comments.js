@@ -53,6 +53,12 @@ var vue = new Vue({
                         data['comment'].ad = data['comment'].ad == 'true' ? true : false;
                         this.comments.push(data['comment']);
                         this.makeSort();
+                        
+                        //2018年5月24日 发布评论后自动清空,防止重发
+                        this.email = "";
+                        this.sendemail = true;
+                        this.raw = "";
+
                         this.$nextTick(function () {
                             this.refresh();
                         });
