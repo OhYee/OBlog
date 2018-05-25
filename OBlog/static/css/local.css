@@ -39,7 +39,9 @@ footer .links a:hover {
     color: #e6e6e6;
 }
 
-.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
+.navbar-inverse .navbar-nav>.active>a,
+.navbar-inverse .navbar-nav>.active>a:focus,
+.navbar-inverse .navbar-nav>.active>a:hover {
     color: #fff;
     background-color: #064d9e;
 }
@@ -56,6 +58,14 @@ footer .links a:hover {
 .glyphicon {
     padding: 0 0.5em;
 }
+
+
+/* 2018年5月26日 修改文章中图片最大高度 */
+
+article section a img.img-responsive {
+    max-height: 300px;
+}
+
 
 /* bootstrap主题本地化修改 */
 
@@ -86,6 +96,7 @@ footer .links a:hover {
     width: 32px;
     border-radius: 50%;
 }
+
 
 /* 图片居中显示 */
 
@@ -120,6 +131,7 @@ footer p span:not(:first-child)::before {
 body {
     background-color: #fcfcfc;
 }
+
 
 /* 
 h1,
@@ -167,12 +179,14 @@ h6,
     line-height: 8px;
 } */
 
+
 /* main{
     padding: 10px 0 10px 0;
     margin: 10px 0 10px 0;
 } */
 
-strong, .bold {
+strong,
+.bold {
     font-weight: bold;
 }
 
@@ -204,6 +218,7 @@ pre.codeblock codeblock {
     font-family: Consolas;
 }
 
+
 /* code {
     border-radius: 5px;
     border: 1px #ffaaaa dotted;
@@ -219,6 +234,7 @@ pre.codeblock codeblock {
     line-height: 1.5em;
 } */
 
+
 /* nav{
     background-image: url(/static/img/bg.gif);
     background-color: opacity(0.3) !important;
@@ -230,9 +246,11 @@ pre.codeblock codeblock {
     /* z-index: -2; */
 }
 
+
 /* .particles-wrapper{
     z-index: 0; 
 } */
+
 
 /* #particles *{
     z-index: 2;
@@ -269,6 +287,7 @@ table.highlight>tbody>tr:hover {
     font-size: 10px;
 }
 
+
 /* Bootstrap 部分 CSS 效果 */
 
 kbd {
@@ -281,6 +300,7 @@ kbd {
     -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .25);
     box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .25)
 }
+
 
 /* code{
     font-family: Consolas;
@@ -318,6 +338,7 @@ kbd {
     background: #f0ad4e;
 }
 
+
 /* OJ 题目部分 CSS 效果 */
 
 .oj {
@@ -345,7 +366,8 @@ kbd {
     display: block;
 }
 
-.input, .output {
+.input,
+.output {
     display: block;
     width: 45%;
     height: 100%;
@@ -364,6 +386,7 @@ kbd {
     background: #888;
     color: #fff
 }
+
 
 /* 代码段部分隐藏 CSS 效果 */
 
@@ -389,6 +412,7 @@ kbd {
     content: "▲";
 }
 
+
 /* blockquote-center 标签 */
 
 .blockquote-center {
@@ -399,7 +423,8 @@ kbd {
     text-align: center;
 }
 
-.blockquote-center::before, .blockquote-center::after {
+.blockquote-center::before,
+.blockquote-center::after {
     position: absolute;
     content: ' ';
     display: block;
@@ -424,9 +449,11 @@ kbd {
     background-position: 100% 8px;
 }
 
-.blockquote-center p, .blockquote-center div {
+.blockquote-center p,
+.blockquote-center div {
     text-align: center;
 }
+
 
 /* note 标签 */
 
@@ -438,7 +465,11 @@ kbd {
     border-radius: 3px;
 }
 
-.note h2, .note h3, .note h4, .note h5, .note h6 {
+.note h2,
+.note h3,
+.note h4,
+.note h5,
+.note h6 {
     margin-top: 0;
     margin-bottom: 5px;
 }
@@ -459,7 +490,11 @@ kbd {
     border-left-color: #777;
 }
 
-.default h2, .default h3, .default h4, .default h5, .default h6 {
+.default h2,
+.default h3,
+.default h4,
+.default h5,
+.default h6 {
     color: #777;
 }
 
@@ -467,7 +502,11 @@ kbd {
     border-left-color: #428bca;
 }
 
-.primary h2, .primary h3, .primary h4, .primary h5, .primary h6 {
+.primary h2,
+.primary h3,
+.primary h4,
+.primary h5,
+.primary h6 {
     color: #428bca;
 }
 
@@ -475,7 +514,11 @@ kbd {
     border-left-color: #5cb85c;
 }
 
-.success h2, .success h3, .success h4, .success h5, .success h6 {
+.success h2,
+.success h3,
+.success h4,
+.success h5,
+.success h6 {
     color: #5cb85c;
 }
 
@@ -483,7 +526,11 @@ kbd {
     border-left-color: #d9534f;
 }
 
-.danger h2, .danger h3, .danger h4, .danger h5, .danger h6 {
+.danger h2,
+.danger h3,
+.danger h4,
+.danger h5,
+.danger h6 {
     color: #d9534f;
 }
 
@@ -491,7 +538,11 @@ kbd {
     border-left-color: #f0ad4e;
 }
 
-.warning h2, .warning h3, .warning h4, .warning h5, .warning h6 {
+.warning h2,
+.warning h3,
+.warning h4,
+.warning h5,
+.warning h6 {
     color: #f0ad4e;
 }
 
@@ -499,9 +550,14 @@ kbd {
     border-left-color: #5bc0de;
 }
 
-.info h2, .info h3, .info h4, .info h5, .info h6 {
+.info h2,
+.info h3,
+.info h4,
+.info h5,
+.info h6 {
     color: #5bc0de;
 }
+
 
 /* 半透明折叠 */
 
@@ -549,6 +605,7 @@ kbd {
     height: 46px;
     line-height: 46px;
 }
+
 
 /* loading */
 
