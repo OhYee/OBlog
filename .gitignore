@@ -6,3 +6,14 @@ log/*
 *.json
 .vscode
 *.pyc
+OBlog/templates/pages/*
+!OBlog/templates/pages/404.html
+!OBlog/templates/pages/418.html
+!OBlog/templates/pages/archives.html
+!OBlog/templates/pages/comments.html
+!OBlog/templates/pages/goods.html
+!OBlog/templates/pages/index.html
+!OBlog/templates/pages/post.html
+!OBlog/templates/pages/tag.html
+!OBlog/templates/pages/tags.html
+
