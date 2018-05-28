@@ -61,9 +61,10 @@ footer .links a:hover {
 
 
 /* 2018年5月26日 修改文章中图片最大高度 */
-
+/* 2018年5月28日 修改文章中图片居中显示*/
 article section a img.img-responsive {
     max-height: 300px;
+    margin: auto;
 }
 
 
