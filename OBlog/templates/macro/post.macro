@@ -8,6 +8,8 @@
         <time class="small">
             <span class="glyphicon glyphicon-calendar"></span>
             <span v-text="post.updatetime"></span>
+            <span class="glyphicon glyphicon-time" v-if="post.updatetime != post.time"></span>            
+            <span v-text="post.time" v-if="post.updatetime != post.time"></span>       
         </time>
         <a :href="'/post/'+post.url+'/'">
             <h3 v-text="post.title"></h3>
@@ -38,6 +40,10 @@
         <time class="small">
             <span class="glyphicon glyphicon-calendar"></span>
             <span>{{ post.updatetime }}</span>
+            {% if post.time != post.updatetime %}
+            <span class="glyphicon glyphicon-time"></span>
+            <span>{{ post.time }}</span>
+            {% endif %}
         </time>
         <a href="/post/{{ post.url }}/">
             <h3>{{ post.title }}</h3>

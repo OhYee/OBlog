@@ -17,7 +17,7 @@ create table posts(
 );
 
 create view posts_card as 
-select url,title,abstruct,tags,updatetime,img
+select url,title,abstruct,tags,time,updatetime,img
 from posts;
 
 create view posts_show as 
