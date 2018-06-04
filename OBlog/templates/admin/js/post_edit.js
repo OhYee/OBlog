@@ -17,6 +17,8 @@ $(document).ready(function () {
         vue.abstruct = jsonData['abstruct'];
         vue.published = jsonData['published'] == 'true' ? true : false;
         vue.oldurl = vue.url.value;
+        // 2018年6月5日 修复修改文章编辑时间不自动更新的问题
+        vue.updatetime.value = nowTime;
     }
 });
 
