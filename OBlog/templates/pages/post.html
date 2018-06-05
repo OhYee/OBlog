@@ -16,27 +16,20 @@
             <article>
                 <div class="panel-heading">
                     <h3>{{ post.title }}</h3>
-                    {% if post['published']=='false' %} 
-                        {% if session["admin"] %}
-                            <a href="/admin/posts/edit/{{ post['url'] }}/" target="_blank" class="bold">
-                                <span class="label label-danger">草稿</span>
-                            </a><br>
-                        {% else %}
-                            <span class="label label-danger">草稿</span><br>
-                        {% endif %}
-                    {% else %}
-                        {% if session["admin"] %}
-                        <a href="/admin/posts/edit/{{ post['url'] }}/" target="_blank" class="bold">
-                            <span class="label label-danger">编辑</span>
-                        </a><br>
-                        {% endif %}
-                    {% endif %}
+                    {% if post['published']=='false' %} {% if session["admin"] %}
+                    <a href="/admin/posts/edit/{{ post['url'] }}/" target="_blank" class="bold">
+                        <span class="label label-danger">草稿</span>
+                    </a><br> {% else %}
+                    <span class="label label-danger">草稿</span><br> {% endif %} {% else %} {% if session["admin"] %}
+                    <a href="/admin/posts/edit/{{ post['url'] }}/" target="_blank" class="bold">
+                        <span class="label label-danger">编辑</span>
+                    </a><br> {% endif %} {% endif %}
                     <time>
                         <span class="glyphicon glyphicon-calendar"></span>
-                        <span>{{ post.updatetime }}</span>
-                        {% if post.time != post.updatetime %}
-                        <span class="glyphicon glyphicon-time"></span>
                         <span>{{ post.time }}</span>
+                        {% if post.time != post.updatetime %}
+                        <span class="glyphicon glyphicon-edit"></span>
+                        <span>{{ post.updatetime }}</span>
                         {% endif %}
                     </time>
                     <p>
@@ -131,5 +124,4 @@
     </div>
 </div>
 
-{% endblock %} {% block script %} {% with comments_url = 'post/'+post.url %} {% from 'macro/script.macro' import script with
-context %}{{ script('layout/comments.js') }} {% endwith %} {{ super() }}{% endblock %};
+{% endblock %} {% block script %} {% with comments_url = 'post/'+post.url %} {% from 'macro/script.macro' import script with context %}{{ script('layout/comments.js') }} {% endwith %} {{ super() }}{% endblock %};
