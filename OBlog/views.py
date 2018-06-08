@@ -32,10 +32,12 @@ def tags():
     from .blueprint.tags.main import getTags
     return render_template("pages/tags.html", thisPage='tags', tags=getTags())
 
+
 @app.route('/goods/')
 def goods():
     from .blueprint.goods.main import getAllShowGoods
     return render_template("pages/goods.html", thisPage='goods', goods=getAllShowGoods())
+
 
 @app.route('/sitemap.xml')
 def sitemapxml():
@@ -52,11 +54,12 @@ def sitemapxml():
 @app.route('/sitemap.txt')
 def sitemaptxt():
     xml = ""
-    from .blueprint.posts.main import getPublishedPostsUrl    
+    from .blueprint.posts.main import getPublishedPostsUrl
     posts = getPublishedPostsUrl()
     for post in posts:
         xml += 'http://www.oyohyee.com/' + post['url'] + '\n'
     return xml
+
 
 @app.errorhandler(404)
 def page_not_found(e=None):
@@ -73,7 +76,7 @@ def i_am_a_tea_pot(e=None):
 @app.before_request
 def before_request():
     current_app.logger.debug('before_request at path=%s' % request.path)
-    g.db = sqlite3.connect(app.config['DATABASE'])
+    g.db = sqlite3.connect(app.config['DATABASE'], timeout=20)
     from .main import viewpath
     viewpath(
         request.headers.get('X-Forwarded-For', request.remote_addr),
