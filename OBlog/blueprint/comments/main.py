@@ -48,9 +48,6 @@ def mail(postUrl, raw, emailaddress):
         return
 
     rooturl = config['rooturl']['value']
-    if rooturl:  # 未填写相应项
-        rooturl = "/"
-    rooturl = rooturl + '/' if rooturl[-1] != '/' else rooturl
 
     post = getPostForShow(postUrl[5:]) if len(postUrl) > 5 else None
     title = post['title'] if post else '评论区'

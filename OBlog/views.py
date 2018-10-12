@@ -4,7 +4,7 @@ import sqlite3
 
 
 @app.route('/')
-def index():
+def index ():
     from .blueprint.admin.main import getSiteConfigDict
     from .blueprint.posts.main import getPostForShow, getPostsByTime
     Site = getSiteConfigDict()
@@ -41,14 +41,15 @@ def goods():
 
 @app.route('/sitemap.xml')
 def sitemapxml():
-    xml = '<?xml version="1.0"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+    # xml = '<?xml version="1.0"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
     from .blueprint.posts.main import getPublishedPostsUrl
-    posts = getPublishedPostsUrl()
-    for post in posts:
-        xml += '<url><loc>%s</loc></url>' % (
-            'http://www.oyohyee.com/' + post['url'])
-    xml += '</urlset>'
-    return xml
+    from OBlog.main import getRoot
+    # posts = getPublishedPostsUrl()
+    # for post in posts:
+    #     xml += '<url><loc>%s</loc></url>' % (
+    #         'http://www.oyohyee.com/' + post['url'])
+    # xml += '</urlset>'
+    return render_template("layout/sitemap.xml", posts=getPublishedPostsUrl(),root=getRoot() ),{'Content-Type': 'text/xml; charset=utf-8'}
 
 
 @app.route('/sitemap.txt')

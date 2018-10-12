@@ -9,6 +9,7 @@ from .comments import commentsAdminBP, commentsApiBP
 from .search import searchApiBP
 from .backup import backupAdminBP, backupApiBP
 from .goods import goodsAdminBP,goodsApiBP
+from .rss import rssBP
 
 from flask import session, current_app, request, abort
 
@@ -68,3 +69,5 @@ app.register_blueprint(backupApiBP, url_prefix='/api/backup')
 
 app.register_blueprint(goodsAdminBP, url_prefix='/admin/goods')
 app.register_blueprint(goodsApiBP, url_prefix='/api/goods')
+
+app.register_blueprint(rssBP, url_prefix='/rss')

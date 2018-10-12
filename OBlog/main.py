@@ -13,7 +13,15 @@ def getSite():
         from .blueprint.friends.main import getFriends
         res['friends'] = getFriends()
         g.getSite = res
+        
+        rooturl = res['rooturl']['value']
+        if not rooturl:  # 未填写相应项
+            rooturl = "/"
+        res["rooturl"]["value"] = rooturl + '/' if rooturl[-1] != '/' else rooturl
     return g.getSite
+
+def getRoot():
+    return getSite()['rooturl']['value']
 
 
 def viewpath(ip, addr):

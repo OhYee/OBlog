@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    {% for post in posts %}
+    <url>
+        <loc>{{ root }}{{ post.url }}</loc>
+    </url>
+    {% endfor %}
+</urlset>

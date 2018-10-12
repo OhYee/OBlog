@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<rss version="2.0">
+    <channel>
+        <title>{{ site.sitename.value }}</title>
+        <link>{{ site.rooturl.value }}</link>
+        <description>{{ site.sitename.value }} By {{ site.author.value }}</description>
+        <language>zh-cn</language>
+        <webMaster>{{ site.email.value }}</webMaster>
+        <image>
+            <url>{{ site.rooturl.value }}static/img/logo.svg</url>
+            <title>www.oyohyee.com</title>
+            <link>{{ site.rooturl.value }}</link>
+        </image>
+
+        {% for post in posts %}
+        <item>
+            <title>{{ post.title }}</title>
+            <link>{{ site.rooturl.value }}{{ post.url }}</link>
+            <description>{{ post.abstruct }}</description>
+            <pubDate>{{ post.time }}</pubDate>
+        </item>
+        {% endfor %}
+    </channel>
+</rss>
