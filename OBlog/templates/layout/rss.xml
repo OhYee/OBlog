@@ -16,7 +16,7 @@
         {% for post in posts %}
         <item>
             <title>{{ post.title }}</title>
-            <link>{{ site.rooturl.value }}{{ post.url }}</link>
+            <link>{{ site.rooturl.value }}post/{{ post.url }}</link>
             <description>{{ post.abstruct }}</description>
             <pubDate>{{ post.time }}</pubDate>
         </item>

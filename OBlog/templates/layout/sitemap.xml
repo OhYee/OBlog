@@ -3,7 +3,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     {% for post in posts %}
     <url>
-        <loc>{{ root }}{{ post.url }}</loc>
+        <loc>{{ root }}post/{{ post.url }}</loc>
     </url>
     {% endfor %}
 </urlset>
