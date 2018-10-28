@@ -101,3 +101,8 @@ def updateComment(postRequest):
 
     db.update_db("comments", postRequest, {'id': cid})
     return 0
+
+
+def updateCommentUrl(postRequest):
+    db.update_db("comments",{'url':postRequest['url']},{'url':postRequest['oldurl']})
+    return 0

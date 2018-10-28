@@ -14,7 +14,7 @@ def existPost(url):
 
 
 def getPostsNumber():
-    res= db.raw_query_db('select count(url) from posts')
+    res = db.raw_query_db('select count(url) from posts')
     return int(res[0][0])
 
 
@@ -31,7 +31,7 @@ def getPostForEdit(url):
     output:         dict - post
     '''
     res = db.query_db(
-        'select * from posts_edit where url="{}";' , url, one=True)
+        'select * from posts_edit where url="{}";', url, one=True)
     return res
 
 
@@ -42,9 +42,9 @@ def getPostForShow(url):
     output:         dict - post
     '''
     res = db.query_db(
-        'select * from posts_show where url="{}";' , url, one=True)
+        'select * from posts_show where url="{}";', url, one=True)
     # res.sort(key=lambda x: int(x["idx"]))
-    
+
     # 2018-5-10 文章为404时，对None对象分析标签bug
     if res:
         res['tags'] = formatTags(res['tags'])
@@ -53,7 +53,7 @@ def getPostForShow(url):
 
 def getPostsByTime(limit, offset=0):
     posts = db.query_db(
-        'select * from posts_show where published="true" order by time desc limit {} offset {};' , limit, offset)
+        'select * from posts_show where published="true" order by time desc limit {} offset {};', limit, offset)
     for post in posts:
         post['tags'] = formatTags(post['tags'])
     return posts
@@ -61,7 +61,7 @@ def getPostsByTime(limit, offset=0):
 
 def getPostsByTag(tagName):
     posts = db.query_db(
-        'select * from posts_card where tags like "%%{}%%" and url in (select url from posts where published="true") order by updatetime;' ,tagName)
+        'select * from posts_card where tags like "%%{}%%" and url in (select url from posts where published="true") order by updatetime;', tagName)
     res = []
     for post in posts:
         post['tags'] = formatTags(post['tags'])
@@ -71,15 +71,18 @@ def getPostsByTag(tagName):
                 break
     return res
 
+
 def getPublishedPostsUrl():
     posts = db.query_db(
         'select url from posts where published="true";')
     return posts
 
+
 def getAllPosts():
     posts = db.query_db(
         'select * from posts;')
     return posts
+
 
 def formatTags(tagStr):
     from ..tags.main import getTag
@@ -136,7 +139,8 @@ def addPost(postRequest):
     # 删除前端传入的其他参数
     keyList = ['url', 'title', 'time', 'updatetime',
                'view', 'tags', 'abstruct', 'raw', 'html', 'keywords', 'searchdict1', 'searchdict2', 'published', 'img']
-    postRequest = dict((key, postRequest[key] if key in postRequest else "")for key in keyList)
+    postRequest = dict(
+        (key, postRequest[key] if key in postRequest else "")for key in keyList)
 
     db.insert_db("posts", postRequest)
     return 0
@@ -187,13 +191,20 @@ def updatePost(postRequest):
         elif tag not in oldtags and tag in newtags:
             addTag(tag)
 
+    if oldurl != postRequest['url']:
+        # update comments
+        from ..comments.main import updateCommentUrl
+        updateCommentUrl(
+            {'url': 'post/'+postRequest['url'], 'oldurl': 'post/'+oldurl})
+
     # 去除前导零
     postRequest["view"] = str(int(postRequest["view"]))
 
     # 删除前端传入的其他参数
     keyList = ['url', 'title', 'time', 'updatetime',
                'view', 'tags', 'abstruct', 'raw', 'html', 'keywords', 'searchdict1', 'searchdict2', 'published', 'img']
-    postRequest = dict((key, postRequest[key] if key in postRequest else "")for key in keyList)
+    postRequest = dict(
+        (key, postRequest[key] if key in postRequest else "")for key in keyList)
 
     db.update_db("posts", postRequest, {'url': oldurl})
     return 0
