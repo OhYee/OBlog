@@ -316,6 +316,14 @@ kbd {
     background: #f0ad4e;
 }
 
+blockquote{
+    padding: 10px 20px;
+    margin: 0 0 20px;
+    font-size: initial;
+    border-left: 5px solid #1565c0;
+    background: #f5f5f5;
+}
+
 /* OJ 题目部分 CSS 效果 */
 
 .oj {
