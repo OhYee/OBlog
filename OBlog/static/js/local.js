@@ -8,6 +8,17 @@ $(document).ready(function () {
         hljs.highlightBlock(block);
     });
 
+    var mathId = document.getElementById("post-content");
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [['$', '$'], ["\\(", "\\)"]],
+            displayMath: [['$$', '$$'], ["\\[", "\\]"]]
+        },
+        showProcessingMessages: false,
+        messageStyle: "none"
+    });
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, mathId]);
+
     autoHeight();
     //showMessage();
 
@@ -45,7 +56,7 @@ function displayImage() {
         var thisH = $(this).height()
         console.log(parentH, thisH)
         if (parentH < thisH) {
-            var offset = (parentH-thisH) * 0.5;
+            var offset = (parentH - thisH) * 0.5;
             $(this).css("margin-top", offset + "px");
         }
     });
