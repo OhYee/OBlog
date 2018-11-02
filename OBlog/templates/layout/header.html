@@ -21,8 +21,7 @@
                 <li id="{{ Site['pages'][page]['url'] }}">
                     <a href="/pages/{{ Site['pages'][page]['url'] }}/">{{ Site['pages'][page]['title'] }}
                     </a>
-                    {% endif %}
-                </li> {% endfor %} {% if session['admin'] %}
+                </li> {% endif %}{% endfor %} {% if session['admin'] %}
                 <li id='admin'>
                     <a href="/admin/">管理后台</a>
                 </li>
