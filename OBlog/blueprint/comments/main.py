@@ -1,7 +1,7 @@
 from OBlog import database as db
 from .sendEmail import Email
 from ..posts.main import getPostForShow
-from OBlog.markdown import renderMarkdown
+from OBlog.markdown import render_markdown
 import re
 import time
 
@@ -74,7 +74,7 @@ def addComment(postRequest):
         return [2, '']
 
     postRequest['id'] = str(getLastID() + 1)
-    postRequest['html'] = renderMarkdown(postRequest['raw'], allowHtml=False)
+    postRequest['html'] = render_markdown(postRequest['raw'], allow_html=False)
     postRequest['time'] = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     postRequest['username'] = postRequest['email'][0:2] + \
         '******' + postRequest['email'][-2:]

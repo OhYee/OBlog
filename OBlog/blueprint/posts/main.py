@@ -114,11 +114,11 @@ def addPost(postRequest):
     if postRequest['tags'] == '':
         postRequest['tags'] = '无标签'
 
-    from OBlog.markdown import renderMarkdown
+    from OBlog.markdown import render_markdown
     import json
     from ..search.main import getKeywords
 
-    postRequest['html'] = renderMarkdown(postRequest['raw'])
+    postRequest['html'] = render_markdown(postRequest['raw'])
     postRequest['keywords'] = postRequest['tags'] + \
         getKeywords(postRequest['title'] + postRequest['raw'])
     # postRequest['searchdict1'] = json.dumps(
@@ -166,11 +166,11 @@ def updatePost(postRequest):
     if postRequest['tags'] == '':
         postRequest['tags'] = '无标签'
 
-    from OBlog.markdown import renderMarkdown
+    from OBlog.markdown import render_markdown
     import json
     from ..search.main import getKeywords
 
-    postRequest['html'] = renderMarkdown(postRequest['raw'])
+    postRequest['html'] = render_markdown(postRequest['raw'])
     postRequest['keywords'] = postRequest['tags'] + \
         getKeywords(postRequest['title'] + postRequest['raw'])
     # postRequest['searchdict1'] = json.dumps(
