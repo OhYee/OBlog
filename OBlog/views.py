@@ -4,7 +4,7 @@ import sqlite3
 
 
 @app.route('/')
-def index ():
+def index():
     from .blueprint.admin.main import getSiteConfigDict
     from .blueprint.posts.main import getPostForShow, getPostsByTime
     Site = getSiteConfigDict()
@@ -49,7 +49,7 @@ def sitemapxml():
     #     xml += '<url><loc>%s</loc></url>' % (
     #         'http://www.oyohyee.com/' + post['url'])
     # xml += '</urlset>'
-    return render_template("layout/sitemap.xml", posts=getPublishedPostsUrl(),root=getRoot() ),{'Content-Type': 'text/xml; charset=utf-8'}
+    return render_template("layout/sitemap.xml", posts=getPublishedPostsUrl(), root=getRoot()), {'Content-Type': 'text/xml; charset=utf-8'}
 
 
 @app.route('/sitemap.txt')
@@ -60,6 +60,11 @@ def sitemaptxt():
     for post in posts:
         xml += 'http://www.oyohyee.com/' + post['url'] + '\n'
     return xml
+
+
+@app.route('/robot.txt')
+def robot():
+    return render_template("layout/robot.txt"),{'Content-Type': 'text/txt; charset=utf-8'}
 
 
 @app.errorhandler(404)
