@@ -48,7 +48,7 @@
 
 
                 <div class="panel-body">
-                    <section id="post-cotent">
+                    <section id="post-content">
                         {{ post.html|safe }}
                     </section>
 
@@ -124,4 +124,23 @@
     </div>
 </div>
 
-{% endblock %} {% block script %} {% with comments_url = 'post/'+post.url %} {% from 'macro/script.macro' import script with context %}{{ script('layout/comments.js') }} {% endwith %} {{ super() }}{% endblock %};
+{% endblock %}
+{% block script %}
+{% with comments_url = 'post/'+post.url %} {% from 'macro/script.macro' import script with context %}{{ script('layout/comments.js') }}
+{% endwith %}
+{{ super() }}
+<script>
+    $(document).ready(function () {
+        var mathId = document.getElementById("post-content");
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [['$', '$'], ["\\(", "\\)"]],
+                displayMath: [['$$', '$$'], ["\\[", "\\]"]]
+            },
+            showProcessingMessages: false,
+            messageStyle: "none"
+        });
+        MathJax.Hub.Queue(["Typeset", MathJax.Hub, mathId]);
+    });
+</script>
+{% endblock %};

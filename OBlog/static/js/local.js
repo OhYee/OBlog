@@ -8,17 +8,6 @@ $(document).ready(function () {
         hljs.highlightBlock(block);
     });
 
-    var mathId = document.getElementById("post-content");
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [['$', '$'], ["\\(", "\\)"]],
-            displayMath: [['$$', '$$'], ["\\[", "\\]"]]
-        },
-        showProcessingMessages: false,
-        messageStyle: "none"
-    });
-    MathJax.Hub.Queue(["Typeset", MathJax.Hub, mathId]);
-
     autoHeight();
     //showMessage();
 
