@@ -57,6 +57,12 @@ footer .links a:hover {
     padding: 0 0.5em;
 }
 
+
+/* 2018年11月10日 修改code标签过长自动换行 */
+code{
+    word-wrap: break-word;
+}
+
 /* 2018年5月26日 修改文章中图片最大高度 */
 
 /* 2018年5月28日 修改文章中图片居中显示*/
