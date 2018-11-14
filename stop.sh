@@ -1,2 +1,2 @@
 #!/bin/sh
-killall gunicorn
+cat PID | xargs kill
