@@ -91,10 +91,7 @@ var vue = new Vue({
             }
         },
         refresh: function () {
-            $("div.fold").css("display", "none");
-            $('pre codeblock').each(function (i, block) {
-                hljs.highlightBlock(block);
-            });
+            init();
         },
         close: function () {
             this.alert = {

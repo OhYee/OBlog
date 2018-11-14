@@ -1,20 +1,15 @@
 /* 加载完成后自动执行 */
-$(document).ready(function () {
-    // 移动端侧边栏
-    // $(".button-collapse").sideNav();
-
-    // 代码高亮
+function init() {
     $('pre codeblock').each(function (i, block) {
         hljs.highlightBlock(block);
     });
-
     autoHeight();
-    //showMessage();
-
-    initUnfold($('.unfold-wrap'));
+    initUnfold();
     initFold();
     displayImage();
-});
+}
+
+$(document).ready(init);
 
 $(document).resize(autoHeight());
 
@@ -40,10 +35,8 @@ window.onresize = function () {
 /* 图片居中显示 */
 function displayImage() {
     $('.displayItem').each(function () {
-        console.log(this)
         var parentH = parseInt($(this).parent('.displayHolder').css("max-height"));
         var thisH = $(this).height()
-        console.log(parentH, thisH)
         if (parentH < thisH) {
             var offset = (parentH - thisH) * 0.5;
             $(this).css("margin-top", offset + "px");
@@ -180,32 +173,41 @@ function removeMessage() {
 }
 
 // 初始化查看全部
-function initUnfold(e) {
-    e.css('maxHeight', "");
-    if (e.children('.unfold-content').height() > e.height()) {
-        var tips = $(e).attr('tips');
+function initUnfold() {
+    var unfold_wrap = $('.unfold-wrap').css('visibility', "visible").css('maxHeight', "");
+    if (!unfold_wrap.children('.unfold-field').length && unfold_wrap.children('.unfold-content').height() > unfold_wrap.height()) {
+        var tips = unfold_wrap.attr('tips');
         if (!tips) tips = '显示更多';
-        $(e).append('<div class="unfold-field"><div class="unflod-field_mask"></div><div class="unfold-field_text"><span>' + tips + '</span></div></div>')
-        e.children('.unfold-field').css("display", "block");
+        unfold_wrap.append('<div class="unfold-field"><div class="unflod-field_mask"></div><div class="unfold-field_text"><span>' + tips + '</span></div></div>')
+        unfold_wrap.children('.unfold-field').css("display", "block");
     }
-    e.css('visibility', "visible");
 
-    e.children('.unfold-field').click(() => {
-        e.css('maxHeight', "100%");
-        e.children('.unfold-field').remove();
+    unfold_wrap.children(".unfold-field").on("click", function () {
+        $(this).parent().css("maxHeight", "100%");
+        $(this).remove();
     });
+    // e.css('visibility', "visible");
+    // e.children('.unfold-field').click(function (ee) {
+    //     ee.currentTarget.parentNode.style.maxHeight = "100%";
+    //     ee.currentTarget.remove();
+    // });
 }
 
 // 初始化折叠
 function initFold() {
-    $(document).on('click', '.fold_hider', function () {
-        $('>.fold', this.parentNode).slideToggle();
-        $('>:first', this).toggleClass('fold_open');
+    $('.fold_hider').off('click').on('click', function () {
+        if ($(this).children(".fold_close").hasClass('fold_open')) {
+            $(this).parent().children(".fold").slideDown();
+            $(this).children(".fold_close").removeClass('fold_open');
+        } else {
+            $(this).parent().children(".fold").slideUp();
+            $(this).children(".fold_close").addClass('fold_open');
+        }
     });
-    //默认情况下折叠
-    $("div.fold").css("display", "none");
+    // 初始化状态
+    $(".fold").slideUp();
+    $(".fold_close").addClass('fold_open');
 }
-
 // 统计
 var _hmt = _hmt || [];
 (function () {
