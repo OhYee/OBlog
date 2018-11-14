@@ -62,9 +62,9 @@ def sitemaptxt():
     return xml
 
 
-@app.route('/robot.txt')
+@app.route('/robots.txt')
 def robot():
-    return render_template("layout/robot.txt"),{'Content-Type': 'text/txt; charset=utf-8'}
+    return render_template("layout/robots.txt"),{'Content-Type': 'text/txt; charset=utf-8'}
 
 
 @app.errorhandler(404)
