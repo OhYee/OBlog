@@ -1,36 +1,44 @@
 <!doctype html>
 <html lang="zh">
 
-<head>
-    <title>
-        {% block title %}{% if thisPage and thisPage in Site['pages'] %}{{ Site['pages'][thisPage].title }}|{% endif %}{{ Site['sitename'].value }} {% endblock %}
-    </title>
-    {% block meta %}{% endblock %} {% include 'layout/head.html' %}
-</head>
+    <head>
+        <title>
+            {% block title %}{% if thisPage and thisPage in Site['pages'] %}{{ Site['pages'][thisPage].title }}|{%
+            endif %}{{ Site['sitename'].value }} {% endblock %}
+        </title>
+        {% block meta %}{% endblock %} {% include 'layout/head.html' %}
+    </head>
 
-<body>
-    {% include 'layout/header.html' %}
-    <div class="alert alert-info alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <body>
+        {% include 'layout/header.html' %}
+        <div class="alert alert-info alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
-        <strong>注意!</strong> 博客从
-        <a class="alert-link" href="https://hexo.io/">Hexo</a>迁移到
-        <a class="alert-link" href="https://github.com/OhYee/OBlog">自己写的系统</a>,若有问题,请反馈到
-        <a class="alert-link" href="mailto:oyohyee@oyohyee.com">oyohyee@oyohyee.com</a>,
-        <a class="alert-link" href="/pages/comments/">评论区</a>,
-        <a class="alert-link" href="https://github.com/OhYee/OBlog/issues">GitHub</a>. 如果无法正常渲染，访问
-        <a class="alert-link" href="http://blog.oyohyee.com">旧版本博客</a>.
-    </div>
-    <main>
-        {% block content %} {% endblock %}
-    </main>
+            <strong>注意!</strong> 博客从
+            <a class="alert-link" href="https://hexo.io/">Hexo</a>迁移到
+            <a class="alert-link" href="https://github.com/OhYee/OBlog">自己写的系统</a>,若有问题,请反馈到
+            <a class="alert-link" href="mailto:oyohyee@oyohyee.com">oyohyee@oyohyee.com</a>,
+            <a class="alert-link" href="/pages/comments/">评论区</a>,
+            <a class="alert-link" href="https://github.com/OhYee/OBlog/issues">GitHub</a>. 如果无法正常渲染，访问
+            <a class="alert-link" href="http://blog.oyohyee.com">旧版本博客</a>.
+        </div>
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <strong>警告!</strong> 网站系统出现问题，正在修复中，存在任何奇怪的问题请谅解。预计将在1天内修复完毕。
+        </div>
+
+        <main>
+            {% block content %} {% endblock %}
+        </main>
 
 
-    {% include 'layout/footer.html' %} {% block script %} {% if thisPage and thisPage in Site['pages'] %}
-    <script>
-        $("ul li#{{ thisPage }}").toggleClass('active');
-    </script> {% endif %} {% endblock %}
-</body>
+        {% include 'layout/footer.html' %} {% block script %} {% if thisPage and thisPage in Site['pages'] %}
+        <script>
+            $("ul li#{{ thisPage }}").toggleClass('active');
+        </script> {% endif %} {% endblock %}
+    </body>
 
 </html>
