@@ -1,5 +1,8 @@
 /* 加载完成后自动执行 */
 function init() {
+    hljs.configure({
+        useBR: true
+    });
     $('pre codeblock').each(function (i, block) {
         hljs.highlightBlock(block);
     });
@@ -14,9 +17,7 @@ $(document).ready(init);
 $(document).resize(autoHeight());
 
 // 代码高亮配置
-hljs.configure({
-    useBR: false
-});
+
 
 
 /* 自适应高度 */
