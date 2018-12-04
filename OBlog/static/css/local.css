@@ -1,7 +1,7 @@
 body{
     font-family: -apple-system,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,WenQuanYi Micro Hei,sans-serif;
-    font-size: 18px;
-    line-height: 2em;
+    /* font-size: 18px; */
+    /* line-height: 2em; */
 }
 
 /* bootstrap主题本地化修改 */
@@ -144,6 +144,7 @@ body {
 
 section {
     font-size: 18px;
+    line-height: 2em;
 }
 
 h1, .h1 {
