@@ -11,7 +11,7 @@ def localSMTP():
 
 
 def thirdSMTP(_host, _user, _password, _port=25):
-    smtpObj = smtplib.SMTP_SSL()
+    smtpObj = smtplib.SMTP_SSL(_host, _port)
     print("connecting...")
     smtpObj.connect(_host, _port)
     print("loging...")
