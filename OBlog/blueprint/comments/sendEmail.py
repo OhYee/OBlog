@@ -1,7 +1,7 @@
 import smtplib
 from email.mime.text import MIMEText
 from email.header import Header
-
+from email.utils import formataddr
 from ..admin.main import getSiteConfigDict
 
 
@@ -20,10 +20,11 @@ def thirdSMTP(_host, _user, _password, _port=25):
 
 
 def sendEmail(_from, _fromname, _to, _toname, _subject, _message, _smtp):
-
     message = MIMEText(_message, 'html', 'utf-8')
-    message['From'] = Header(_fromname, 'utf-8')
-    message['To'] = Header(_toname, 'utf-8')
+    # message['From'] = Header(_fromname, 'utf-8')
+    # message['To'] = Header(_toname, 'utf-8')
+    message['From']=formataddr([_fromname, _from])  # 括号里的对应发件人邮箱昵称、发件人邮箱账号
+    message['To']=formataddr([_toname, _to]) 
     message['Subject'] = Header(_subject, 'utf-8')
 
     print('\n【sendemail】 from:%s(%s) to:%s(%s) subject:%s message:%s'
@@ -35,11 +36,11 @@ def sendEmail(_from, _fromname, _to, _toname, _subject, _message, _smtp):
         print("Error: 无法发送邮件")
 
 
-def Email(_to, _toname, _subject, _message):
+def Email(_to, _subject, _message):
     config = getSiteConfigDict()
     if config['smtp']['value'] == '1':
         sendEmail(config['smtpemail']['value'], config['smtpemail']['value'],
-                  _to,  _toname,
+                  _to,  _to,
                   _subject, _message,
                   thirdSMTP(config['smtpservice']['value'], config['smtpuser']['value'],
                             config['smtppassword']['value'], config['smtpport']['value']))
@@ -47,8 +48,8 @@ def Email(_to, _toname, _subject, _message):
 
 if __name__ == '__main__':
     TencentExMail = thirdSMTP("smtp.exmail.qq.com",
-                              "", "", 465)
-    sendEmail("oyohyee@oyohyee.com", "oyohyee@oyohyee.com",
-              ["oyohyee@oyohyee.com"], "896817156",
+                              "sender@oyohyee.com", "OBlogsend0", 465)
+    sendEmail("sender@oyohyee.com", "sender",
+              "oyohyee@oyohyee.com", "OhYee",
               "测试", "<a href='www.oyohyee.com'>OhYee</a>",
               TencentExMail)

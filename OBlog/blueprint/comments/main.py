@@ -41,7 +41,7 @@ def mail(postUrl, raw, emailaddress):
     description:    给该评论@的所有用户以及站长发信
     input:          text - postUrl  评论的页面链接
                     text - raw      评论内容
-    output:         
+    output:
     '''
     config = getSiteConfigDict()
     if config['smtp']['value'] != '1':  # 未开启smtp
@@ -59,10 +59,23 @@ def mail(postUrl, raw, emailaddress):
     for _id in mailList:
         d = getCommentsOfID(_id)
         if d and d["sendemail"] == 'true' and d["show"] == 'true':
-            Email([d['email']], d['email'],
-                  "评论通知", "您好<br>有人在评论中@您，点击链接查看评论内容<br><a href='" +
-                  url + "'>" + title + "</a><br>若无法点击链接，可以将网址(" + url + ")复制到地址栏")
-    Email([config["email"]['value']], config["email"]['value'], "评论通知", emailaddress +
+            Email(
+                d['email'],
+                "评论通知",
+                '''您好:<br>
+                  有人在评论中@您，点击链接查看评论内容<br>
+                  <a href='{url}'>{title}</a><br>
+                  若无法点击链接，可以将网址({url})复制到地址栏<br>
+                  <br>
+                  From:{sitename}评论自动通知系统<br>
+                  该邮件无需回复，如有问题请联系{email}
+                  '''.format(
+                    url=url,
+                    title=title,
+                    sitename=config["sitename"]['value'],
+                    email=config["email"]['value']
+                ))
+    Email(config["email"]['value'], "评论通知", emailaddress +
           "评论了文章<a href='" + url + "'>" + title + "</a>(" + url + ")<br>内容如下<br>" + raw)
 
 
@@ -87,8 +100,10 @@ def addComment(postRequest):
         (key, postRequest[key] if key in postRequest else "")for key in keyList)
 
     db.insert_db("comments", postRequest)
-
-    mail(postRequest['url'], postRequest['raw'], postRequest['email'])
+    try:
+        mail(postRequest['url'], postRequest['raw'], postRequest['email'])
+    except Exception as e:
+        print(e.args)
     return [0, postRequest]
 
 
@@ -104,5 +119,6 @@ def updateComment(postRequest):
 
 
 def updateCommentUrl(postRequest):
-    db.update_db("comments",{'url':postRequest['url']},{'url':postRequest['oldurl']})
+    db.update_db("comments", {'url': postRequest['url']}, {
+                 'url': postRequest['oldurl']})
     return 0
