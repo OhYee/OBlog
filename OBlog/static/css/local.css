@@ -147,33 +147,97 @@ section {
     line-height: 2em;
 }
 
-h1, .h1 {
+#post-content h1 a,
+#post-content .h1 a,
+#post-content h2 a,
+#post-content .h2 a,
+#post-content h3 a,
+#post-content .h3 a,
+#post-content h4 a,
+#post-content .h4 a,
+#post-content h5 a,
+#post-content .h5 a,
+#post-content h6 a,
+#post-content .h6 a {
+    color: unset;
+    text-decoration: none;
+}
+
+#post-content h1 a:hover,
+#post-content .h1 a:hover,
+#post-content h2 a:hover,
+#post-content .h2 a:hover,
+#post-content h3 a:hover,
+#post-content .h3 a:hover,
+#post-content h4 a:hover,
+#post-content .h4 a:hover,
+#post-content h5 a:hover,
+#post-content .h5 a:hover,
+#post-content h6 a:hover,
+#post-content .h6 a:hover {
+    color: unset;
+    text-decoration: none;
+}
+
+#post-content h1 a:hover::before,
+#post-content .h1 a:hover::before,
+#post-content h2 a:hover::before,
+#post-content .h2 a:hover::before,
+#post-content h3 a:hover::before,
+#post-content .h3 a:hover::before,
+#post-content h4 a:hover::before,
+#post-content .h4 a:hover::before,
+#post-content h5 a:hover::before,
+#post-content .h5 a:hover::before,
+#post-content h6 a:hover::before,
+#post-content .h6 a:hover::before {
+    color: #337ab7;
+    content:"#";
+}
+
+#post-content h1,
+#post-content .h1 {
     font-size: 30px;
     font-weight: 1000;
+
+    border-bottom: 2px solid #eee;
+    text-align: center;
+    padding-bottom: 10px;
 }
 
-h2, .h2 {
+#post-content h2,
+#post-content .h2 {
     font-size: 25px;
-    line-weight: 800;
+    font-weight: 800;
+
+    border-left: 3px solid #1565C0;
+    padding-left: 10px;
 }
 
-h3, .h3 {
-    font-size: 20px;
-    line-weight: 700;
+#post-content h3, 
+#post-content .h3 {
+    font-size: 23px;
+    font-weight: 700;
+}
+
+#post-content h3::before, 
+#post-content .h3::before {
+    content: "\25E6";
+    color: #1565C0;
 }
 
 h4, .h4 {
-    font-size: 20px;
+    font-size: 23px;
     font-weight: 600;
 }
 
 h5, .h5 {
-    font-size: 20px;
+    font-size: 23px;
     font-weight: 500;
 }
 
 h6, .h6 {
-    font-size: 20px;
+    font-size: 23px;
     font-weight: 400;
 }
 

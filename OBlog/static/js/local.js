@@ -1,7 +1,7 @@
 /* 加载完成后自动执行 */
 function init() {
     hljs.configure({
-        useBR: true
+        useBR: false
     });
     $('pre codeblock').each(function (i, block) {
         hljs.highlightBlock(block);

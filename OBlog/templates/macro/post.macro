@@ -14,7 +14,7 @@
         <a :href="'/post/'+post.url+'/'">
             <h3 v-text="post.title"></h3>
         </a>
-        <p v-text="post.abstruct"></p>
+        <p style="white-space: pre-line" v-text="post.abstruct"></p>
         <hr>
         <ul class="list-inline">
             <li>
@@ -48,7 +48,7 @@
         <a href="/post/{{ post.url }}/">
             <h3>{{ post.title }}</h3>
         </a>
-        <p>{{ post.abstruct }}</p>
+        <p style="white-space: pre-line">{{ post.abstruct }}</p>
         <hr>
         <ul class="list-inline">
             <li>
