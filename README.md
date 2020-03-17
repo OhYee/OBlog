@@ -1,4 +1,7 @@
 # OBlog
+
+**弃坑，用 Go 重构——[blotter](https://github.com/OhYee/blotter) [blotter_page](https://github.com/OhYee/blotter_page)**
+
 基于flask的博客系统
 
 后端使用了flask、jieba、sqlite3
